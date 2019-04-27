@@ -6,4 +6,4 @@ languages:
 #    - pyerge
 #test:
 #  include:
-#    - test
+#    - tests
