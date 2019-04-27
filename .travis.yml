@@ -15,6 +15,6 @@ script:
   - coverage run --source=pyerge -m pytest -v --random
   - pycodestyle --statistics --count pyerge
   - pydocstyle --count pyerge
-  - pylint pyerge
+#  - pylint pyerge
 #after_success:
   - if [[ $TRAVIS_PYTHON_VERSION == 3.6 && $TRAVIS_OS_NAME == "linux" ]]; then coveralls; fi
