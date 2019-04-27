@@ -17,4 +17,3 @@ with open(logfile) as fd:
             break
     else:
         print('Unknown')
-
