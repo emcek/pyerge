@@ -8,10 +8,7 @@ from typing import List, Tuple
 from urllib.request import urlopen
 
 from bs4 import BeautifulSoup
-
-__author__ = 'emc'
-__license__ = 'GPL'
-__version__ = '0.3.0'
+from pyerge import __version__
 
 
 def _collect_all_maching_entries(html: str, regex: str) -> List[str]:

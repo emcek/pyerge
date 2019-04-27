@@ -2,8 +2,6 @@
 from datetime import datetime
 from re import search
 
-__author__ = 'emc'
-__license__ = 'GPL'
 __version__ = '0.3.0'
 
 logfile = '/var/log/emerge.log'

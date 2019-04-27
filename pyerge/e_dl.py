@@ -1,8 +1,6 @@
 #!/usr/bin/python3.6
 from re import search
 
-__author__ = 'emc'
-__license__ = 'GPL'
 __version__ = '0.3'
 
 logfile = '/var/log/portage/tmerge/emerge.log'

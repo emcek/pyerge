@@ -3,9 +3,6 @@ from re import search
 from shlex import split
 from subprocess import Popen, PIPE
 
-
-__author__ = 'emc'
-__license__ = 'GPL'
 __version__ = '0.3'
 
 

@@ -8,16 +8,8 @@ from subprocess import Popen, PIPE
 from time import strftime
 from typing import List, Union, Tuple
 
-__author__ = 'emc'
-__license__ = 'GPL'
-__version__ = '0.3.0'
+from pyerge import __version__, PORTAGE_TMPDIR, tmplogfile, logfile, SERVER1, DEVNULL
 
-PORTAGE_TMPDIR = '/var/tmp/portage'
-tmplogfile = '/var/log/portage/tmerge/tmp.emerge.log'
-logfile = '/var/log/portage/tmerge/emerge.log'
-SERVER1 = '89.16.167.134'
-SERVER2 = '85.17.140.211'
-DEVNULL = '/dev/null 2>&1'
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
