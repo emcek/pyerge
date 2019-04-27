@@ -1,0 +1,5 @@
+[run]
+source = pyerge
+
+[report]
+omit = tests/*
