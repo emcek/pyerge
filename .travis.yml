@@ -16,5 +16,5 @@ script:
   - pycodestyle --statistics --count pyerge
   - pydocstyle --count pyerge
 #  - pylint pyerge
-#after_success:
+after_success:
   - if [[ $TRAVIS_PYTHON_VERSION == 3.6 && $TRAVIS_OS_NAME == "linux" ]]; then coveralls; fi
