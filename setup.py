@@ -1,3 +1,4 @@
+"""Various tools to emerge and to show status for conky."""
 import io
 from os.path import abspath, dirname, join
 
