@@ -11,7 +11,8 @@ basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
 def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
-    info(f"running emerge with: {' '.join(arguments)}") if verbose else None
+    if verbose:
+        info(f"running emerge with: {' '.join(arguments)}")
     if build:
         return_code = system(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return bytes(return_code)
@@ -28,35 +29,39 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
     log = open(tmerge_logfile, 'w')
     tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
     if not local_chk:
-        # info('Start syncing overlays...') if verbose else None
-        # system(f'sudo layman -SN >> {tmplogfile} > {DEVNULL}')
-        # info('Layman Done') if verbose else None
-        info('Start syncing portage...') if verbose else None
-        debug(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}') if verbose else None
+        if verbose:
+            # info('Start syncing overlays...')
+            # system(f'sudo layman -SN >> {tmplogfile} > {DEVNULL}')
+            info('Start syncing portage...')
+            debug(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
         system(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
-        info('Sync Done.') if verbose else None
-
-    info('Checking updates...') if verbose else None
+        if verbose:
+            info('Checking updates...')
     output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
-    info('Updates checked') if verbose else None
+    if verbose:
+        info('Updates checked')
     log.write(output.decode(encoding='utf-8'))
     tmp.close()
     log.close()
 
     # system('sudo /usr/local/sbin/tmerge.py 1G -pvNDu --with-bdeps=y --color n @world >> %s' % logfile)
-    info('Creating log file...') if verbose else None
-    debug(f'cat {tmerge_logfile} >> {tmplogfile}') if verbose else None
+    if verbose:
+        info('Creating log file...')
+        debug(f'cat {tmerge_logfile} >> {tmplogfile}')
     system(f'cat {tmerge_logfile} >> {tmplogfile}')
-    debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}') if verbose else None
+    if verbose:
+        debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
     system(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
-    info('Wrote to logs file') if verbose else None
+    if verbose:
+        info('Wrote to logs file')
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
 def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
     pretend, world = check_emerge_opts(args)
     if len(return_code) is 0 and not pretend and world:
-        info('Clearing emerge log') if verbose else None
+        if verbose:
+            info('Clearing emerge log')
         tmp = open(tmplogfile, 'w')
         log = open(tmerge_logfile, 'w')
         log.write('Total: 0 packages, Size of downloads: 0 KiB')
@@ -68,8 +73,9 @@ def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
     pretend, world = check_emerge_opts(args)
     if len(return_code) is 0 and not pretend and world:
         out = emerge(['-pc'], verbose, build=False)
-        info('Deep clean') if verbose else None
-        debug(f'Details:{out.decode(encoding="utf-8")}') if verbose else None
+        if verbose:
+            info('Deep clean')
+            debug(f'Details:{out.decode(encoding="utf-8")}')
 
 
 def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
@@ -123,7 +129,8 @@ if __name__ == '__main__':
         elif utils.size_of_mounted_tmpfs(PORTAGE_TMPDIR) != utils.convert2blocks(opts.size):
             utils.remounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
         else:
-            info('tmpfs is already mounted with requested size!') if opts.verbose else None
+            if opts.verbose:
+                info('tmpfs is already mounted with requested size!')
 
         if opts.action == 'emerge':
             rc = emerge(emerge_opts, opts.verbose, build=True)
@@ -132,10 +139,13 @@ if __name__ == '__main__':
                 deep_clean(emerge_opts, opts.verbose, rc)
         elif opts.action == 'check':
             if utils.is_internet_connected() or opts.local:
-                info('There is internet connecton') if opts.verbose else None
+                if opts.verbose:
+                    info('There is internet connecton')
                 check_upd(opts.local, opts.verbose)
             else:
-                warning('No internet connection!\n') if opts.verbose else None
+                if opts.verbose:
+                    warning('No internet connection!\n')
     else:
-        info('emerge already running!') if opts.verbose else None
+        if opts.verbose:
+            info('emerge already running!')
     utils.unmounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
