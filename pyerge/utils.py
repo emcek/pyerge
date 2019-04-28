@@ -101,10 +101,7 @@ def is_tmpfs_mounted(port_tmp_dir: str) -> bool:
     """
     mount_cmd, _ = run_cmd('mount')
     match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % port_tmp_dir, mount_cmd.decode())
-    if match is not None and match.group(2) == port_tmp_dir:
-        return True
-    else:
-        return False
+    return bool(match is not None and match.group(2) == port_tmp_dir)
 
 
 def convert2blocks(size: str) -> int:
