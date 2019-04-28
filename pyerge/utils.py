@@ -12,14 +12,18 @@ from pyerge import server
 def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     """
     Run any system command.
+    If use_system is set cmd is run via os.system and function
+    return RC from comand as bytes and b''.
+    If use_system is not set (default) cmd is run via subprocess.Popen and
+    function return cmd stdout and stderr as bytes.
 
     :param cmd: command string
     :param use_system: os.system use insted of subprocess
     :return: tuple of bytes with output and error
     """
     if use_system:
-        rc = system(cmd)
-        out, err = str(rc).encode(), b''
+        ret_code = system(cmd)
+        out, err = str(ret_code).encode(), b''
     else:
         out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
     return out, err
