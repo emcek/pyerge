@@ -13,6 +13,7 @@ basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
     """
+    Run emerge command.
 
     :param arguments:
     :param verbose:
@@ -32,6 +33,7 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
 def check_upd(local_chk: bool, verbose: bool) -> None:
     """
+    Check system updates.
 
     :param local_chk:
     :param verbose:
@@ -72,6 +74,7 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
 def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
     """
+    Run actions after emerge.
 
     :param args:
     :param verbose:
@@ -90,6 +93,7 @@ def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
 
 def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
     """
+    Run deep clean after emerge.
 
     :param args:
     :param verbose:
@@ -105,6 +109,7 @@ def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
 
 def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
     """
+    Check options in emerge command.
 
     :param args:
     :return:
