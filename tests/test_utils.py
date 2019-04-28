@@ -13,7 +13,7 @@ def test_convert2blocks(size, result):
     assert utils.convert2blocks(size) == result
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_tmpfs_not_mounted(run_cmd_mock):
     run_cmd_mock.return_value = b'/dev/sda2 on /boot type ext2 (rw,noatime,errors=continue,user_xattr,acl)\n' \
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
@@ -21,7 +21,7 @@ def test_tmpfs_not_mounted(run_cmd_mock):
     assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is False
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_tmpfs_mounted(run_cmd_mock):
     run_cmd_mock.return_value = b'/dev/sda2 on /boot type ext2 (rw,noatime,errors=continue,user_xattr,acl)\n' \
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
@@ -30,26 +30,26 @@ def test_tmpfs_mounted(run_cmd_mock):
     assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is True
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_unmounttmpfs(run_cmd_mock):
     utils.unmounttmpfs('2G', True, PORT_TMP_DIR)
     run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_mounttmpfs(run_cmd_mock):
     utils.mounttmpfs('2G', True, PORT_TMP_DIR)
     run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_remounttmpfs(run_cmd_mock):
     utils.remounttmpfs('2G', True, PORT_TMP_DIR)
     run_cmd_mock.assert_has_calls([call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                    call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_size_of_not_mounted_tmpfs(run_cmd_mock):
     run_cmd_mock.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
@@ -58,7 +58,7 @@ def test_size_of_not_mounted_tmpfs(run_cmd_mock):
     assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 1000
 
 
-@patch('utils.run_cmd')
+@patch('pyerge.utils.run_cmd')
 def test_size_of_mounted_tmpfs(run_cmd_mock):
     run_cmd_mock.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
@@ -66,8 +66,8 @@ def test_size_of_mounted_tmpfs(run_cmd_mock):
     assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 0
 
 
-@patch('utils.run_cmd')
-def test_ping_test(run_cmd_mock):
+@patch('pyerge.utils.run_cmd')
+def test_is_internet_connected(run_cmd_mock):
     run_cmd_mock.return_value = b'PING 89.16.167.134 (89.16.167.134) 56(84) bytes of data.\n' \
                                 b'64 bytes from 89.16.167.134: icmp_seq=1 ttl=47 time=52.2 ms\n\n' \
                                 b'--- 89.16.167.134 ping statistics ---\n' \
@@ -76,19 +76,19 @@ def test_ping_test(run_cmd_mock):
     assert utils.is_internet_connected() is True
 
 
-@patch('utils.run_cmd')
-def test_ping_test_failed(run_cmd_mock):
+@patch('pyerge.utils.run_cmd')
+def test_is_internet_not_connected(run_cmd_mock):
     run_cmd_mock.return_value = b''
     assert utils.is_internet_connected() is False
 
 
-@patch('utils.open')
+@patch('pyerge.utils.open')
 def test_delete_content(open_mock):
     utils.delete_content('/tmp/emerge.log')
     open_mock.assert_called_once_with('/tmp/emerge.log', 'w')
 
 
-# @patch('utils.Popen')
+# @patch('pyerge.utils.Popen')
 # def test_run_cmd(popen_mock):
 #     popen_mock.communicate.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
 #                                           b'/dev/sda2          126931    76647      43731  64% /boot\n', \
