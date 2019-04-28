@@ -11,6 +11,13 @@ from pyerge import utils, __version__
 
 
 def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
+    """
+    Parse web page and find all matching tags.
+
+    :param html: web page
+    :param regex: regural expresion
+    :return: list of strings
+    """
     tmp_list = []
     soup = BeautifulSoup(html, 'html.parser')
     all_a_tags = soup.find_all('title')
@@ -22,6 +29,14 @@ def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
 
 
 def rss(webpage: str, regex: str, elements: int) -> List[str]:
+    """
+    Parse web page and find all matching tags.
+
+    :param webpage: addres of web page
+    :param regex: regural expresion
+    :param elements: number of elements to return
+    :return: list of strings
+    """
     with closing(urlopen(webpage)) as rss_page:
         rss_html = rss_page.read().decode('UTF-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)

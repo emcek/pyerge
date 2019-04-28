@@ -12,6 +12,13 @@ basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
 def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
+    """
+
+    :param arguments:
+    :param verbose:
+    :param build:
+    :return:
+    """
     if verbose:
         info(f"running emerge with: {' '.join(arguments)}")
     if build:
@@ -24,6 +31,11 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
 def check_upd(local_chk: bool, verbose: bool) -> None:
+    """
+
+    :param local_chk:
+    :param verbose:
+    """
     utils.delete_content(tmplogfile)
     utils.delete_content(tmerge_logfile)
     tmp = open(tmplogfile, 'w')
@@ -59,6 +71,12 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
 def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
+    """
+
+    :param args:
+    :param verbose:
+    :param return_code:
+    """
     pretend, world = check_emerge_opts(args)
     if len(return_code) is 0 and not pretend and world:
         if verbose:
@@ -71,6 +89,12 @@ def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
 
 
 def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
+    """
+
+    :param args:
+    :param verbose:
+    :param return_code:
+    """
     pretend, world = check_emerge_opts(args)
     if len(return_code) is 0 and not pretend and world:
         out = emerge(['-pc'], verbose, build=False)
@@ -80,6 +104,11 @@ def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
 
 
 def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
+    """
+
+    :param args:
+    :return:
+    """
     pretend = True
     world = False
     if 'p' not in args[0] or 'f' in args[0]:
@@ -90,6 +119,11 @@ def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
 
 
 def is_portage_running() -> bool:
+    """
+    Check if potrage command in currently running.
+
+    :return: True if is running, False otherwise
+    """
     running = utils.run_cmd('pgrep -f /usr/bin/emerge')
     if running:
         return True
@@ -98,6 +132,7 @@ def is_portage_running() -> bool:
 
 
 def set_portage_tmpdir() -> None:
+    """Set system variable."""
     if environ.get('PORTAGE_TMPDIR') is None:
         environ['PORTAGE_TMPDIR'] = PORTAGE_TMPDIR
 
