@@ -5,7 +5,7 @@ from shlex import split
 from subprocess import Popen, PIPE
 from typing import Union, Tuple
 
-from pyerge import SERVER1
+from pyerge import server
 
 
 def mounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
@@ -71,7 +71,7 @@ def is_internet_connected() -> bool:
     :return: True is connected, False otherwise
     """
     ret = False
-    cmd, _ = run_cmd(f'ping -W1 -c1 {SERVER1}')
+    cmd, _ = run_cmd(f'ping -W1 -c1 {server}')
     match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
         ret = True

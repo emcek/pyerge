@@ -6,7 +6,7 @@ from os import environ, system
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, __version__, PORTAGE_TMPDIR, tmplogfile, tmerge_logfile, DEVNULL
+from pyerge import utils, __version__, portage_tmpdir, tmplogfile, tmerge_logfile, dev_null
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -47,8 +47,8 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
             # info('Start syncing overlays...')
             # system(f'sudo layman -SN >> {tmplogfile} > {DEVNULL}')
             info('Start syncing portage...')
-            debug(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
-        system(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
+            debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
+        system(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
         if verbose:
             info('Checking updates...')
     output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
@@ -134,7 +134,7 @@ def is_portage_running() -> bool:
 def set_portage_tmpdir() -> None:
     """Set system variable."""
     if environ.get('PORTAGE_TMPDIR') is None:
-        environ['PORTAGE_TMPDIR'] = PORTAGE_TMPDIR
+        environ['PORTAGE_TMPDIR'] = portage_tmpdir
 
 
 if __name__ == '__main__':
@@ -160,10 +160,10 @@ if __name__ == '__main__':
     set_portage_tmpdir()
 
     if not is_portage_running():
-        if not utils.is_tmpfs_mounted(PORTAGE_TMPDIR):
-            utils.mounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
-        elif utils.size_of_mounted_tmpfs(PORTAGE_TMPDIR) != utils.convert2blocks(opts.size):
-            utils.remounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
+        if not utils.is_tmpfs_mounted(portage_tmpdir):
+            utils.mounttmpfs(opts.size, opts.verbose, portage_tmpdir)
+        elif utils.size_of_mounted_tmpfs(portage_tmpdir) != utils.convert2blocks(opts.size):
+            utils.remounttmpfs(opts.size, opts.verbose, portage_tmpdir)
         else:
             if opts.verbose:
                 info('tmpfs is already mounted with requested size!')
@@ -184,4 +184,4 @@ if __name__ == '__main__':
     else:
         if opts.verbose:
             info('emerge already running!')
-    utils.unmounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
+    utils.unmounttmpfs(opts.size, opts.verbose, portage_tmpdir)
