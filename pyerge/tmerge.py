@@ -25,9 +25,8 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
     if build:
         return_code = system(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return bytes(return_code)
-    else:
-        output, _ = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
-        return output
+    output, _ = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
+    return output
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
@@ -129,11 +128,7 @@ def is_portage_running() -> bool:
 
     :return: True if is running, False otherwise
     """
-    running = utils.run_cmd('pgrep -f /usr/bin/emerge')
-    if running:
-        return True
-    else:
-        return False
+    return bool(utils.run_cmd('pgrep -f /usr/bin/emerge'))
 
 
 def set_portage_tmpdir() -> None:
