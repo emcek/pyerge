@@ -2,7 +2,7 @@ from logging import info, debug
 from re import search
 from shlex import split
 from subprocess import Popen, PIPE
-from typing import Union
+from typing import Union, Tuple
 
 from pyerge import SERVER1
 
@@ -31,21 +31,22 @@ def remounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
 
 
-def run_cmd(cmd: str) -> bytes:
+def run_cmd(cmd: str) -> Tuple[bytes, bytes]:
     out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
-    return out
+    return out, err
 
 
 def is_internet_connected() -> bool:
     ret = False
-    match = search(b'[1].*, [1].*, [0]%.*,', run_cmd(f'ping -W1 -c1 {SERVER1}'))
+    cmd, _ = run_cmd(f'ping -W1 -c1 {SERVER1}')
+    match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
         ret = True
     return ret
 
 
 def size_of_mounted_tmpfs(port_tmp_dir: str) -> int:
-    df_cmd = run_cmd('df')
+    df_cmd, _ = run_cmd('df')
     match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % port_tmp_dir, df_cmd.decode())
     if match is not None:
         return int(match.group(2))
@@ -53,7 +54,7 @@ def size_of_mounted_tmpfs(port_tmp_dir: str) -> int:
 
 
 def is_tmpfs_mounted(port_tmp_dir: str) -> bool:
-    mount_cmd = run_cmd('mount')
+    mount_cmd, _ = run_cmd('mount')
     match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % port_tmp_dir, mount_cmd.decode())
     if match is not None and match.group(2) == port_tmp_dir:
         return True

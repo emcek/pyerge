@@ -2,11 +2,12 @@
 from datetime import datetime
 from re import search
 
+from pyerge import emerge_logfile
+
 __version__ = '0.3.0'
 
-logfile = '/var/log/emerge.log'
 
-with open(logfile) as fd:
+with open(emerge_logfile) as fd:
     for line in reversed(list(fd)):
         match = search(r'(\d+)(:\s===\sSync completed)', line)
         if match is not None:

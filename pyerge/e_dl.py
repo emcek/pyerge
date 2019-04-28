@@ -1,9 +1,10 @@
 #!/usr/bin/python3.6
 from re import search
 
+from pyerge import logfile
+
 __version__ = '0.3'
 
-logfile = '/var/log/portage/tmerge/emerge.log'
 size = None
 
 with open(logfile, 'r') as log:

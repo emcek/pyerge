@@ -17,7 +17,7 @@ def test_convert2blocks(size, result):
 def test_tmpfs_not_mounted(run_cmd_mock):
     run_cmd_mock.return_value = b'/dev/sda2 on /boot type ext2 (rw,noatime,errors=continue,user_xattr,acl)\n' \
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
-                                b'none on /run/user/1000 type tmpfs (rw,relatime,mode=700,uid=1000)\n'
+                                b'none on /run/user/1000 type tmpfs (rw,relatime,mode=700,uid=1000)\n', b''
     assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is False
 
 
@@ -26,7 +26,7 @@ def test_tmpfs_mounted(run_cmd_mock):
     run_cmd_mock.return_value = b'/dev/sda2 on /boot type ext2 (rw,noatime,errors=continue,user_xattr,acl)\n' \
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
                                 b'none on /run/user/1000 type tmpfs (rw,relatime,mode=700,uid=1000)\n' \
-                                b'tmpfs on /var/tmp/portage type tmpfs (rw,relatime,size=1000k,nr_inodes=1048576)\n'
+                                b'tmpfs on /var/tmp/portage type tmpfs (rw,relatime,size=1000k,nr_inodes=1048576)\n', b''
     assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is True
 
 
@@ -54,7 +54,7 @@ def test_size_of_not_mounted_tmpfs(run_cmd_mock):
     run_cmd_mock.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
                                 b'none              4043868        0    4043868   0% /run/user/1000\n' \
-                                b'tmpfs                1000        0       1000   0% /var/tmp/portage\n'
+                                b'tmpfs                1000        0       1000   0% /var/tmp/portage\n', b''
     assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 1000
 
 
@@ -62,7 +62,7 @@ def test_size_of_not_mounted_tmpfs(run_cmd_mock):
 def test_size_of_mounted_tmpfs(run_cmd_mock):
     run_cmd_mock.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
-                                b'none              4043868        0    4043868   0% /run/user/1000\n'
+                                b'none              4043868        0    4043868   0% /run/user/1000\n', b''
     assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 0
 
 
@@ -72,13 +72,13 @@ def test_is_internet_connected(run_cmd_mock):
                                 b'64 bytes from 89.16.167.134: icmp_seq=1 ttl=47 time=52.2 ms\n\n' \
                                 b'--- 89.16.167.134 ping statistics ---\n' \
                                 b'1 packets transmitted, 1 received, 0% packet loss, time 0ms\n' \
-                                b'rtt min/avg/max/mdev = 52.212/52.212/52.212/0.000 ms\n'
+                                b'rtt min/avg/max/mdev = 52.212/52.212/52.212/0.000 ms\n', b''
     assert utils.is_internet_connected() is True
 
 
 @patch('pyerge.utils.run_cmd')
 def test_is_internet_not_connected(run_cmd_mock):
-    run_cmd_mock.return_value = b''
+    run_cmd_mock.return_value = b'', b''
     assert utils.is_internet_connected() is False
 
 

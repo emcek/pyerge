@@ -1,22 +1,17 @@
 #!/usr/bin/python3.6
 from re import search
-from shlex import split
-from subprocess import Popen, PIPE
+
+from pyerge import utils
 
 __version__ = '0.3'
 
 
-def run_cmd(cmd: str) -> bytes:
-    out, _ = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
-    return out
-
-
 if __name__ == '__main__':
-    output = run_cmd('genlop -cn').decode()
-    if search(r'Error.*no working merge found', output):
+    output, _ = utils.run_cmd('genlop -cn')
+    if search(r'Error.*no working merge found', output.decode()):
         print('Unknown')
         exit()
 
-    match = search(r'ETA:\s(.*)\.', output)
+    match = search(r'ETA:\s(.*)\.', output.decode())
     if match:
         print(match.group(1))
