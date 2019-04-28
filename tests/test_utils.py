@@ -2,7 +2,7 @@ from unittest.mock import patch, call
 
 from pytest import mark
 
-import utils
+from pyerge import utils
 
 PORT_TMP_DIR = '/var/tmp/portage'
 
