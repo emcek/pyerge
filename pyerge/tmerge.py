@@ -5,8 +5,7 @@ from os import environ, system
 from time import strftime
 from typing import List, Tuple
 
-import utils
-from pyerge import __version__, PORTAGE_TMPDIR, tmplogfile, logfile, DEVNULL
+from pyerge import utils, __version__, PORTAGE_TMPDIR, tmplogfile, logfile, DEVNULL
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
