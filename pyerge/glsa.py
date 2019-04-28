@@ -1,4 +1,5 @@
 #!/usr/bin/python3.6
+"""Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser
 from contextlib import closing
 from re import match
