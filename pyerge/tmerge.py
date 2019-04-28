@@ -5,7 +5,7 @@ from os import environ, system
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, __version__, PORTAGE_TMPDIR, tmplogfile, logfile, DEVNULL
+from pyerge import utils, __version__, PORTAGE_TMPDIR, tmplogfile, tmerge_logfile, DEVNULL
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -23,9 +23,9 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
 def check_upd(local_chk: bool, verbose: bool) -> None:
     utils.delete_content(tmplogfile)
-    utils.delete_content(logfile)
+    utils.delete_content(tmerge_logfile)
     tmp = open(tmplogfile, 'w')
-    log = open(logfile, 'w')
+    log = open(tmerge_logfile, 'w')
     tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
     if not local_chk:
         # info('Start syncing overlays...') if verbose else None
@@ -45,10 +45,10 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 
     # system('sudo /usr/local/sbin/tmerge.py 1G -pvNDu --with-bdeps=y --color n @world >> %s' % logfile)
     info('Creating log file...') if verbose else None
-    debug(f'cat {logfile} >> {tmplogfile}') if verbose else None
-    system(f'cat {logfile} >> {tmplogfile}')
-    debug(f'cat {logfile} | genlop -pn >> {tmplogfile}') if verbose else None
-    system(f'cat {logfile} | genlop -pn >> {tmplogfile}')
+    debug(f'cat {tmerge_logfile} >> {tmplogfile}') if verbose else None
+    system(f'cat {tmerge_logfile} >> {tmplogfile}')
+    debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}') if verbose else None
+    system(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
     info('Wrote to logs file') if verbose else None
 
 
@@ -58,7 +58,7 @@ def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
     if len(return_code) is 0 and not pretend and world:
         info('Clearing emerge log') if verbose else None
         tmp = open(tmplogfile, 'w')
-        log = open(logfile, 'w')
+        log = open(tmerge_logfile, 'w')
         log.write('Total: 0 packages, Size of downloads: 0 KiB')
         tmp.close()
         log.close()
