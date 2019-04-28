@@ -128,7 +128,8 @@ def is_portage_running() -> bool:
 
     :return: True if is running, False otherwise
     """
-    return bool(utils.run_cmd('pgrep -f /usr/bin/emerge'))
+    out, _ = utils.run_cmd('pgrep -f /usr/bin/emerge')
+    return bool(out)
 
 
 def set_portage_tmpdir() -> None:
