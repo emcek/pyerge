@@ -45,7 +45,8 @@ def rss(webpage: str, regex: str, elements: int) -> List[str]:
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Check and list GLSA easly')
-    parser.add_argument('-e', '--elements', action='store', dest='elements', type=int, default='5', help='number of elements')
+    parser.add_argument('-e', '--elements', action='store', dest='elements', type=int,
+                        default='5', help='number of elements')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='list or test')
     opts, _ = parser.parse_known_args()
