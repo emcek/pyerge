@@ -2,22 +2,13 @@
 from argparse import ArgumentParser
 from logging import debug, basicConfig, warning, DEBUG, info, error
 from os import environ, system
-from re import search
-from shlex import split
-from subprocess import Popen, PIPE
 from time import strftime
-from typing import List, Union, Tuple
+from typing import List, Tuple
 
-from pyerge import __version__, PORTAGE_TMPDIR, tmplogfile, logfile, SERVER1, DEVNULL
+import utils
+from pyerge import __version__, PORTAGE_TMPDIR, tmplogfile, logfile, DEVNULL
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
-
-
-# <=><=><=><=><=><=><=><=><=><=><=><=> General <=><=><=><=><=><=><=><=><=><=><=><=>
-def mounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
-    info(f'Mounting {size} of memory to {port_tmp_dir}') if verbose else None
-    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}') if verbose else None
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
 
 
 def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
@@ -26,35 +17,14 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
         return_code = system(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return bytes(return_code)
     else:
-        output = run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
+        output = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return output
 
 
-def unmounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
-    info(f'Unmounting {size} of memory from {port_tmp_dir}') if verbose else None
-    debug(f'sudo umount -f {port_tmp_dir}') if verbose else None
-    run_cmd(f'sudo umount -f {port_tmp_dir}')
-
-
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
-def ping_test() -> bool:
-    ret = False
-    cmd = f'ping -W1 -c1 {SERVER1}'
-    out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
-    match = search(b'[1].*, [1].*, [0]%.*,', out)
-    if match is not None:
-        ret = True
-    return ret
-
-
-def delete_content(fname: Union[str, bytes, int]) -> None:
-    with open(fname, "w"):
-        pass
-
-
 def check_upd(local_chk: bool, verbose: bool) -> None:
-    delete_content(tmplogfile)
-    delete_content(logfile)
+    utils.delete_content(tmplogfile)
+    utils.delete_content(logfile)
     tmp = open(tmplogfile, 'w')
     log = open(logfile, 'w')
     tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
@@ -84,27 +54,6 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
-def size_of_mounted_tmpfs(port_tmp_dir: str) -> int:
-    df_cmd = run_cmd('df')
-    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % port_tmp_dir, df_cmd.decode())
-    if match is not None:
-        return int(match.group(2))
-    return 0
-
-
-def remounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
-    info(f'Remounting {size} of memory to {port_tmp_dir}') if verbose else None
-    debug(f'sudo umount -f {port_tmp_dir}') if verbose else None
-    run_cmd(f'sudo umount -f {port_tmp_dir}')
-    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}') if verbose else None
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
-
-
-def run_cmd(cmd: str) -> bytes:
-    out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
-    return out
-
-
 def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
     pretend, world = check_emerge_opts(args)
     if len(return_code) is 0 and not pretend and world:
@@ -134,31 +83,12 @@ def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
     return pretend, world
 
 
-def is_tmpfs_mounted(port_tmp_dir: str) -> bool:
-    mount_cmd = run_cmd('mount')
-    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % port_tmp_dir, mount_cmd.decode())
-    if match is not None and match.group(2) == port_tmp_dir:
-        return True
-    else:
-        return False
-
-
 def is_portage_running() -> bool:
-    running = run_cmd('pgrep -f /usr/bin/emerge')
+    running = utils.run_cmd('pgrep -f /usr/bin/emerge')
     if running:
         return True
     else:
         return False
-
-
-def convert2blocks(size: str) -> int:
-    match = search(r'(?i)(\d+)([KMG])', size)
-    if match.group(2).upper() == 'K':
-        return int(match.group(1))
-    if match.group(2).upper() == 'M':
-        return int(match.group(1)) * 1024
-    if match.group(2).upper() == 'G':
-        return int(match.group(1)) * 1024 * 1024
 
 
 def set_portage_tmpdir() -> None:
@@ -189,10 +119,10 @@ if __name__ == '__main__':
     set_portage_tmpdir()
 
     if not is_portage_running():
-        if not is_tmpfs_mounted(PORTAGE_TMPDIR):
-            mounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
-        elif size_of_mounted_tmpfs(PORTAGE_TMPDIR) != convert2blocks(opts.size):
-            remounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
+        if not utils.is_tmpfs_mounted(PORTAGE_TMPDIR):
+            utils.mounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
+        elif utils.size_of_mounted_tmpfs(PORTAGE_TMPDIR) != utils.convert2blocks(opts.size):
+            utils.remounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
         else:
             info('tmpfs is already mounted with requested size!') if opts.verbose else None
 
@@ -202,11 +132,11 @@ if __name__ == '__main__':
             if opts.deep:
                 deep_clean(emerge_opts, opts.verbose, rc)
         elif opts.action == 'check':
-            if ping_test() or opts.local:
+            if utils.is_internet_connected() or opts.local:
                 info('There is internet connecton') if opts.verbose else None
                 check_upd(opts.local, opts.verbose)
             else:
                 warning('No internet connection!\n') if opts.verbose else None
     else:
         info('emerge already running!') if opts.verbose else None
-    unmounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
+    utils.unmounttmpfs(opts.size, opts.verbose, PORTAGE_TMPDIR)
