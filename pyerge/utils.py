@@ -12,6 +12,7 @@ from pyerge import server
 def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     """
     Run any system command.
+
     If use_system is set cmd is run via os.system and function
     return RC from comand as bytes and b''.
     If use_system is not set (default) cmd is run via subprocess.Popen and
