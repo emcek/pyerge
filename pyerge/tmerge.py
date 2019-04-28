@@ -2,7 +2,7 @@
 """Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser
 from logging import debug, basicConfig, warning, DEBUG, info, error
-from os import environ, system
+from os import environ
 from time import strftime
 from typing import List, Tuple
 
@@ -22,10 +22,11 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
     """
     if verbose:
         info(f"running emerge with: {' '.join(arguments)}")
+    cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}"
     if build:
-        return_code = system(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
-        return bytes(return_code)
-    output, _ = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
+        return_code, _ = utils.run_cmd(cmd, use_system=True)
+        return return_code
+    output, _ = utils.run_cmd(cmd)
     return output
 
 
@@ -45,10 +46,10 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
     if not local_chk:
         if verbose:
             # info('Start syncing overlays...')
-            # system(f'sudo layman -SN >> {tmplogfile} > {DEVNULL}')
+            # utils.run_cmd(f'sudo layman -SN >> {tmplogfile} > {dev_null}', use_subproc=False)
             info('Start syncing portage...')
             debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
-        system(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
+        utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
         if verbose:
             info('Checking updates...')
     output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
@@ -61,10 +62,10 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
     if verbose:
         info('Creating log file...')
         debug(f'cat {tmerge_logfile} >> {tmplogfile}')
-    system(f'cat {tmerge_logfile} >> {tmplogfile}')
+    utils.run_cmd(f'cat {tmerge_logfile} >> {tmplogfile}', use_system=True)
     if verbose:
         debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
-    system(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
+    utils.run_cmd(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}', use_system=True)
     if verbose:
         info('Wrote to logs file')
 

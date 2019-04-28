@@ -1,11 +1,28 @@
 """Various tools to emerge and to show status for conky."""
 from logging import info, debug
+from os import system
 from re import search
 from shlex import split
 from subprocess import Popen, PIPE
 from typing import Union, Tuple
 
 from pyerge import server
+
+
+def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
+    """
+    Run any system command.
+
+    :param cmd: command string
+    :param use_system: os.system use insted of subprocess
+    :return: tuple of bytes with output and error
+    """
+    if use_system:
+        rc = system(cmd)
+        out, err = str(rc).encode(), b''
+    else:
+        out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
+    return out, err
 
 
 def mounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
@@ -51,17 +68,6 @@ def remounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
     if verbose:
         debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
-
-
-def run_cmd(cmd: str) -> Tuple[bytes, bytes]:
-    """
-    Run any system command.
-
-    :param cmd: command string
-    :return: tuple of bytes with output and error
-    """
-    out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
-    return out, err
 
 
 def is_internet_connected() -> bool:
