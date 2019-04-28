@@ -16,7 +16,7 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
         return_code = system(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return bytes(return_code)
     else:
-        output = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
+        output, _ = utils.run_cmd(f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}")
         return output
 
 
