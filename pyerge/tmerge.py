@@ -58,7 +58,6 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
     tmp.close()
     log.close()
 
-    # system('sudo /usr/local/sbin/tmerge.py 1G -pvNDu --with-bdeps=y --color n @world >> %s' % logfile)
     if verbose:
         info('Creating log file...')
         debug(f'cat {tmerge_logfile} >> {tmplogfile}')
