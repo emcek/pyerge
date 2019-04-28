@@ -139,12 +139,18 @@ def set_portage_tmpdir() -> None:
 
 if __name__ == '__main__':
     parser = ArgumentParser(description='Emerge in temporary RAM disk')
-    parser.add_argument('-s', '--size', action='store', dest='size', default='4G', help='Size or RAM disk, default 4G')
-    parser.add_argument('-l', '--check_local', action='store_true', dest='local', default=False, help='check locally')
-    parser.add_argument('-d', '--deep_clean', action='store_true', dest='deep', default=False, help='no deep clean')
-    parser.add_argument('-w', '--world', action='store_true', dest='world', default=False, help='run emerge -NDu @world')
-    parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world', default=False, help='run emerge -pvNDu @world')
-    parser.add_argument('-v', '--verbose', action='store_true', dest='verbose', default=False, help='Show more data')
+    parser.add_argument('-s', '--size', action='store', dest='size',
+                        default='4G', help='Size or RAM disk, default 4G')
+    parser.add_argument('-l', '--check_local', action='store_true', dest='local',
+                        default=False, help='check locally')
+    parser.add_argument('-d', '--deep_clean', action='store_true', dest='deep',
+                        default=False, help='no deep clean')
+    parser.add_argument('-w', '--world', action='store_true', dest='world',
+                        default=False, help='run emerge -NDu @world')
+    parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world',
+                        default=False, help='run emerge -pvNDu @world')
+    parser.add_argument('-v', '--verbose', action='store_true', dest='verbose',
+                        default=False, help='Show more data')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
@@ -169,10 +175,10 @@ if __name__ == '__main__':
                 info('tmpfs is already mounted with requested size!')
 
         if opts.action == 'emerge':
-            rc = emerge(emerge_opts, opts.verbose, build=True)
-            post_emerge(emerge_opts, opts.verbose, rc)
+            ret_code = emerge(emerge_opts, opts.verbose, build=True)
+            post_emerge(emerge_opts, opts.verbose, ret_code)
             if opts.deep:
-                deep_clean(emerge_opts, opts.verbose, rc)
+                deep_clean(emerge_opts, opts.verbose, ret_code)
         elif opts.action == 'check':
             if utils.is_internet_connected() or opts.local:
                 if opts.verbose:
