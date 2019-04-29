@@ -13,7 +13,7 @@ with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
     requires = f.read().splitlines()
 
 setup(
-    name='moler',  # Required
+    name='pyerge',  # Required
     version='0.3.0',  # Required
     description='Various tools to emerge and to show status for conky',  # Required
     long_description=long_description,  # Optional
@@ -21,6 +21,7 @@ setup(
     url='https://github.com/emcek/pyerge',  # Optional
     author='Michal Plichta',  # Optional
     license='GPLv2',
+    scripts=['script/pyerge'],
     classifiers=[  # Optional
         'Development Status :: 4 - Beta',
 
