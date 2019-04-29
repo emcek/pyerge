@@ -63,8 +63,6 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
     if verbose:
         debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
     utils.run_cmd(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}', use_system=True)
-    if verbose:
-        info('Wrote to logs file')
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
