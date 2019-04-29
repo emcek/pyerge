@@ -6,7 +6,11 @@ from pyerge import __version__
 
 
 def run():
-    """Function to collect command line arguments and construct main object with correct set of parameters."""
+    """
+    Function to collect command line arguments.
+
+    Construct main object with correct set of parameters.
+    """
     parser = ArgumentParser(description='Pyerge')
     parser.add_argument('-s', '--size', action='store', dest='size',
                         default='4G', help='Size or RAM disk, default 4G')
