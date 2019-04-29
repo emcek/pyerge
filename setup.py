@@ -22,7 +22,7 @@ setup(
     author='Michal Plichta',  # Optional
     license='GPLv2',
     scripts=['script/pyerge'],
-    # entry_points={'console_scripts': ['exec = pyerge.cmd:run']},
+    # entry_points={'console_scripts': ['exec = pyerge.cli:run_parser']},
     classifiers=[  # Optional
         'Development Status :: 4 - Beta',
 

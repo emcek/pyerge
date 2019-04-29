@@ -8,7 +8,7 @@ from pyerge import tmerge, utils, __version__, portage_tmpdir
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
-def run():
+def run_parser():
     """
     Function to collect command line arguments.
 

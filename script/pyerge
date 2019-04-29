@@ -1,8 +1,8 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 
-from pyerge.cmd import run
+from pyerge.cli import run_parser
 
 
 if __name__ == '__main__':
-    run()
+    run_parser()
