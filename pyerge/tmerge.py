@@ -49,11 +49,9 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
             info('Start syncing portage...')
             debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
         utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
-        if verbose:
-            info('Checking updates...')
-    output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
     if verbose:
-        info('Updates checked')
+        info('Checking updates...')
+    output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
     log.write(output.decode(encoding='utf-8'))
     tmp.close()
     log.close()
