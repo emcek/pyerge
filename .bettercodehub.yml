@@ -1,9 +1,9 @@
-component_depth: 3
+component_depth: 1
 languages:
   - python
-#production:
-#  include:
-#    - pyerge
-#test:
-#  include:
-#    - tests
+production:
+  include:
+    - pyerge
+test:
+  include:
+    - tests
