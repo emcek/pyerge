@@ -1,11 +1,10 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from logging import debug, basicConfig, DEBUG, info
-from os import environ
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, portage_tmpdir, tmplogfile, tmerge_logfile, dev_null
+from pyerge import utils, tmplogfile, tmerge_logfile, dev_null
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -125,10 +124,3 @@ def is_portage_running() -> bool:
     """
     out, _ = utils.run_cmd('pgrep -f /usr/bin/emerge')
     return bool(out)
-
-
-def set_portage_tmpdir() -> str:
-    """Set system variable."""
-    if not environ.get('PORTAGE_TMPDIR', ''):
-        environ['PORTAGE_TMPDIR'] = portage_tmpdir
-    return environ['PORTAGE_TMPDIR']

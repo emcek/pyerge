@@ -105,3 +105,15 @@ def test_run_cmd_as_sysyem(system_mock):
     system_mock.return_value = 0
     assert utils.run_cmd('df', use_system=True) == (b'0', b'')
     system_mock.assert_called_once_with('df')
+
+
+def test_set_portage_tmpdir(monkeypatch):
+    from os import environ
+    monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', '')
+    assert utils.set_portage_tmpdir() == '/var/tmp/portage'
+
+
+def test_portage_tmpdir_already_set(monkeypatch):
+    from os import environ
+    monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', 'some_value')
+    assert utils.set_portage_tmpdir() == 'some_value'

@@ -39,7 +39,7 @@ def run_parser():
         error(f'Wrong options: {opts} {emerge_opts}')
         exit()
 
-    tmerge.set_portage_tmpdir()
+    utils.set_portage_tmpdir()
 
     if not tmerge.is_portage_running():
         if not utils.is_tmpfs_mounted(portage_tmpdir):

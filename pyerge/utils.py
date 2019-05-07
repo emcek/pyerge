@@ -1,12 +1,12 @@
 """Various tools to emerge and to show status for conky."""
 from logging import info, debug
-from os import system
+from os import system, environ
 from re import search
 from shlex import split
 from subprocess import Popen, PIPE
 from typing import Union, Tuple
 
-from pyerge import server
+from pyerge import server, portage_tmpdir
 
 
 def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
@@ -144,3 +144,10 @@ def delete_content(fname: Union[str, bytes, int]) -> None:
     """
     with open(fname, 'w'):
         pass
+
+
+def set_portage_tmpdir() -> str:
+    """Set system variable."""
+    if not environ.get('PORTAGE_TMPDIR', ''):
+        environ['PORTAGE_TMPDIR'] = portage_tmpdir
+    return environ['PORTAGE_TMPDIR']

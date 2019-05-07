@@ -26,15 +26,3 @@ def test_is_portage_not_running(utils_mock):
                                        (['', 'conky'], (False, False))])
 def test_check_emerge_opts(list_str, result):
     assert tmerge.check_emerge_opts(list_str) == result
-
-
-def test_set_portage_tmpdir(monkeypatch):
-    from os import environ
-    monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', '')
-    assert tmerge.set_portage_tmpdir() == '/var/tmp/portage'
-
-
-def test_portage_tmpdir_already_set(monkeypatch):
-    from os import environ
-    monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', 'some_value')
-    assert tmerge.set_portage_tmpdir() == 'some_value'
