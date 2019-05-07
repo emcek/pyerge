@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, warning, DEBUG, info, error
+from logging import basicConfig, DEBUG, info, error
 from typing import List
 
 from pyerge import tmerge, utils, __version__, portage_tmpdir
@@ -74,7 +74,7 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
     :param emerge_opts: list of arguments for emege
     :param opts: cli arguments
     """
-    if opts.action == 'emerge':
+    if opts.action == 'emerge' and utils.is_internet_connected(opts.verbose):
         ret_code = tmerge.emerge(emerge_opts, opts.verbose, build=True)
         tmerge.post_emerge(emerge_opts, opts.verbose, ret_code)
         if opts.deep:
@@ -87,11 +87,5 @@ def run_check(opts: Namespace) -> None:
 
     :param opts: cli arguments
     """
-    if opts.action == 'check':
-        if utils.is_internet_connected() or opts.local:
-            if opts.verbose:
-                info('There is internet connecton')
-            tmerge.check_upd(opts.local, opts.verbose)
-        else:
-            if opts.verbose:
-                warning('No internet connection!\n')
+    if opts.action == 'check' and (utils.is_internet_connected(opts.verbose) or opts.local):
+        tmerge.check_upd(opts.local, opts.verbose)

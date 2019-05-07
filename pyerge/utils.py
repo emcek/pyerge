@@ -1,5 +1,5 @@
 """Various tools to emerge and to show status for conky."""
-from logging import info, debug
+from logging import warning, info, debug
 from os import system, environ
 from re import search
 from shlex import split
@@ -75,18 +75,22 @@ def remounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
 
 
-def is_internet_connected() -> bool:
+def is_internet_connected(verbose: bool) -> bool:
     """
     Check if there is connection to internet.
 
+    :param verbose: be verbose
     :return: True is connected, False otherwise
     """
-    ret = False
     cmd, _ = run_cmd(f'ping -W1 -c1 {server}')
     match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
-        ret = True
-    return ret
+        if verbose:
+            info('There is internet connecton or not needed')
+        return True
+    if verbose:
+        warning('No internet connection!')
+    return False
 
 
 def size_of_mounted_tmpfs(port_tmp_dir: str) -> int:
