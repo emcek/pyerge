@@ -30,49 +30,46 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
+def mounttmpfs(size: str, verbose: bool) -> None:
     """
     Mount directory with size as tmp file system in RAM.
 
     :param size: with unit K, M, G
     :param verbose: be verbose
-    :param port_tmp_dir: directory to mount
     """
     if verbose:
-        info(f'Mounting {size} of memory to {port_tmp_dir}')
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
+        info(f'Mounting {size} of memory to {portage_tmpdir}')
+        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
+    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
 
-def unmounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
+def unmounttmpfs(size: str, verbose: bool) -> None:
     """
     Unmount directory from RAM.
 
     :param size: with unit K, M, G
     :param verbose: be verbose
-    :param port_tmp_dir: directory to mount
     """
     if verbose:
-        info(f'Unmounting {size} of memory from {port_tmp_dir}')
-        debug(f'sudo umount -f {port_tmp_dir}')
-    run_cmd(f'sudo umount -f {port_tmp_dir}')
+        info(f'Unmounting {size} of memory from {portage_tmpdir}')
+        debug(f'sudo umount -f {portage_tmpdir}')
+    run_cmd(f'sudo umount -f {portage_tmpdir}')
 
 
-def remounttmpfs(size: str, verbose: bool, port_tmp_dir: str) -> None:
+def remounttmpfs(size: str, verbose: bool) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
     :param size: with unit K, M, G
     :param verbose: be verbose
-    :param port_tmp_dir: directory to mount
     """
     if verbose:
-        info(f'Remounting {size} of memory to {port_tmp_dir}')
-        debug(f'sudo umount -f {port_tmp_dir}')
-    run_cmd(f'sudo umount -f {port_tmp_dir}')
+        info(f'Remounting {size} of memory to {portage_tmpdir}')
+        debug(f'sudo umount -f {portage_tmpdir}')
+    run_cmd(f'sudo umount -f {portage_tmpdir}')
     if verbose:
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {port_tmp_dir}')
+        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
+    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
 
 def is_internet_connected(verbose: bool) -> bool:
@@ -93,30 +90,28 @@ def is_internet_connected(verbose: bool) -> bool:
     return False
 
 
-def size_of_mounted_tmpfs(port_tmp_dir: str) -> int:
+def size_of_mounted_tmpfs() -> int:
     """
     Return size of mounted directory.
 
-    :param port_tmp_dir: mounted directory
     :return: size in bytes as intiger
     """
     df_cmd, _ = run_cmd('df')
-    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % port_tmp_dir, df_cmd.decode())
+    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % portage_tmpdir, df_cmd.decode())
     if match is not None:
         return int(match.group(2))
     return 0
 
 
-def is_tmpfs_mounted(port_tmp_dir: str) -> bool:
+def is_tmpfs_mounted() -> bool:
     """
-    Check if directory is mounted.
+    Check if portage temp dir is mounted.
 
-    :param port_tmp_dir: mounted directory
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % port_tmp_dir, mount_cmd.decode())
-    return bool(match is not None and match.group(2) == port_tmp_dir)
+    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % portage_tmpdir, mount_cmd.decode())
+    return bool(match is not None and match.group(2) == portage_tmpdir)
 
 
 def convert2blocks(size: str) -> int:

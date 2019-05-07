@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 from logging import basicConfig, DEBUG, info, error
 from typing import List
 
-from pyerge import tmerge, utils, __version__, portage_tmpdir
+from pyerge import tmerge, utils, __version__
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -49,7 +49,7 @@ def run_parser():
     else:
         if opts.verbose:
             info('emerge already running!')
-    utils.unmounttmpfs(opts.size, opts.verbose, portage_tmpdir)
+    utils.unmounttmpfs(opts.size, opts.verbose)
 
 
 def handling_mounting(opts: Namespace) -> None:
@@ -58,10 +58,10 @@ def handling_mounting(opts: Namespace) -> None:
 
     :param opts: cli arguments
     """
-    if not utils.is_tmpfs_mounted(portage_tmpdir):
-        utils.mounttmpfs(opts.size, opts.verbose, portage_tmpdir)
-    elif utils.size_of_mounted_tmpfs(portage_tmpdir) != utils.convert2blocks(opts.size):
-        utils.remounttmpfs(opts.size, opts.verbose, portage_tmpdir)
+    if not utils.is_tmpfs_mounted():
+        utils.mounttmpfs(opts.size, opts.verbose)
+    elif utils.size_of_mounted_tmpfs() != utils.convert2blocks(opts.size):
+        utils.remounttmpfs(opts.size, opts.verbose)
     else:
         if opts.verbose:
             info('tmpfs is already mounted with requested size!')

@@ -18,7 +18,7 @@ def test_tmpfs_not_mounted(run_cmd_mock):
     run_cmd_mock.return_value = b'/dev/sda2 on /boot type ext2 (rw,noatime,errors=continue,user_xattr,acl)\n' \
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
                                 b'none on /run/user/1000 type tmpfs (rw,relatime,mode=700,uid=1000)\n', b''
-    assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is False
+    assert utils.is_tmpfs_mounted() is False
 
 
 @mock.patch('pyerge.utils.run_cmd')
@@ -27,24 +27,24 @@ def test_tmpfs_mounted(run_cmd_mock):
                                 b'rpc_pipefs on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw,relatime)\n' \
                                 b'none on /run/user/1000 type tmpfs (rw,relatime,mode=700,uid=1000)\n' \
                                 b'tmpfs on /var/tmp/portage type tmpfs (rw,relatime,size=1000k,nr_inodes=1048576)\n', b''
-    assert utils.is_tmpfs_mounted(PORT_TMP_DIR) is True
+    assert utils.is_tmpfs_mounted() is True
 
 
 @mock.patch('pyerge.utils.run_cmd')
 def test_unmounttmpfs(run_cmd_mock):
-    utils.unmounttmpfs('2G', True, PORT_TMP_DIR)
+    utils.unmounttmpfs('2G', True)
     run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
 @mock.patch('pyerge.utils.run_cmd')
 def test_mounttmpfs(run_cmd_mock):
-    utils.mounttmpfs('2G', True, PORT_TMP_DIR)
+    utils.mounttmpfs('2G', True)
     run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
 @mock.patch('pyerge.utils.run_cmd')
 def test_remounttmpfs(run_cmd_mock):
-    utils.remounttmpfs('2G', True, PORT_TMP_DIR)
+    utils.remounttmpfs('2G', True)
     run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                    mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
@@ -55,7 +55,7 @@ def test_size_of_not_mounted_tmpfs(run_cmd_mock):
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
                                 b'none              4043868        0    4043868   0% /run/user/1000\n' \
                                 b'tmpfs                1000        0       1000   0% /var/tmp/portage\n', b''
-    assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 1000
+    assert utils.size_of_mounted_tmpfs() == 1000
 
 
 @mock.patch('pyerge.utils.run_cmd')
@@ -63,7 +63,7 @@ def test_size_of_mounted_tmpfs(run_cmd_mock):
     run_cmd_mock.return_value = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
                                 b'/dev/sda2          126931    76647      43731  64% /boot\n' \
                                 b'none              4043868        0    4043868   0% /run/user/1000\n', b''
-    assert utils.size_of_mounted_tmpfs(PORT_TMP_DIR) == 0
+    assert utils.size_of_mounted_tmpfs() == 0
 
 
 @mock.patch('pyerge.utils.run_cmd')
