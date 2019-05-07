@@ -73,13 +73,13 @@ def test_is_internet_connected(run_cmd_mock):
                                 b'--- 89.16.167.134 ping statistics ---\n' \
                                 b'1 packets transmitted, 1 received, 0% packet loss, time 0ms\n' \
                                 b'rtt min/avg/max/mdev = 52.212/52.212/52.212/0.000 ms\n', b''
-    assert utils.is_internet_connected(verbose=False) is True
+    assert utils.is_internet_connected(verbose=True) is True
 
 
 @mock.patch('pyerge.utils.run_cmd')
 def test_is_internet_not_connected(run_cmd_mock):
     run_cmd_mock.return_value = b'', b''
-    assert utils.is_internet_connected(verbose=False) is False
+    assert utils.is_internet_connected(verbose=True) is False
 
 
 @mock.patch('pyerge.utils.open')
