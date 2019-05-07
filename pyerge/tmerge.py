@@ -3,7 +3,7 @@
 from logging import debug, basicConfig, DEBUG, info
 from os import environ
 from time import strftime
-from typing import List, Tuple, Optional
+from typing import List, Tuple
 
 from pyerge import utils, portage_tmpdir, tmplogfile, tmerge_logfile, dev_null
 
@@ -127,7 +127,7 @@ def is_portage_running() -> bool:
     return bool(out)
 
 
-def set_portage_tmpdir() -> Optional[str]:
+def set_portage_tmpdir() -> str:
     """Set system variable."""
     if not environ.get('PORTAGE_TMPDIR', ''):
         environ['PORTAGE_TMPDIR'] = portage_tmpdir
