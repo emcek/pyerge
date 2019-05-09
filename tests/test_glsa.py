@@ -4,6 +4,7 @@ from pytest import mark
 
 date1 = '201904-23'
 date2 = '201904-22'
+date3 = '201904-13'
 vulnerabilities = f'{date1}: GLib: Multiple vulnerabilities'
 escalation = f'{date2}: OpenDKIM: Root privilege escalation'
 
@@ -14,6 +15,26 @@ def test_glsa_list(rss_mock):
     from argparse import Namespace
     rss_mock.return_value = [vulnerabilities, escalation]
     assert glsa_list(Namespace(elements=2)) == f'{vulnerabilities}\n{escalation}'
+
+
+@mock.patch('pyerge.glsa.utils')
+@mock.patch('pyerge.glsa._rss')
+def test_glsa_test_system_not_affected(rss_mock, utils_mock):
+    from pyerge.glsa import glsa_test
+    from argparse import Namespace
+    rss_mock.return_value = [date1, date2]
+    utils_mock.run_cmd.return_value = b'', b'This system is not affected by any of the listed GLSAs\n'
+    assert glsa_test(Namespace(elements=2)) == 'System is not affected by any of listed GLSAs'
+
+
+@mock.patch('pyerge.glsa.utils')
+@mock.patch('pyerge.glsa._rss')
+def test_glsa_test_system_affected(rss_mock, utils_mock):
+    from pyerge.glsa import glsa_test
+    from argparse import Namespace
+    rss_mock.return_value = [date1, date2, date3]
+    utils_mock.run_cmd.return_value = b'201904-13\n', b'This system is affected by the following GLSAs:\n'
+    assert glsa_test(Namespace(elements=2)) == date3
 
 
 @mark.parametrize('regex, result', [(r'GLSA\s(\d{6}-\d{2}):\s.*', [date1, date2]),
