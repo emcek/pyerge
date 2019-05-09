@@ -7,6 +7,7 @@ from typing import List
 from urllib.request import urlopen
 
 from bs4 import BeautifulSoup
+
 from pyerge import utils, glsa_webpage
 
 
@@ -30,9 +31,8 @@ def glsa_test(opts: Namespace) -> str:
     glsalist = ' '.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}):\s.*', elements=opts.elements))
     out, err = utils.run_cmd(f'glsa-check -t {glsalist}')
     if err == b'This system is not affected by any of the listed GLSAs\n':
-        return "System is not affected by any of listed GLSAs"
-    else:
-        return out.decode('UTF-8').strip()
+        return 'System is not affected by any of listed GLSAs'
+    return out.decode('UTF-8').strip()
 
 
 def _rss(regex: str, elements: int) -> List[str]:
