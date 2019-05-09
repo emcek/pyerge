@@ -10,7 +10,7 @@ escalation = f'{date2}: OpenDKIM: Root privilege escalation'
 
 @mock.patch('glsa._rss')
 def test_glsa_list(rss_mock):
-    from glsa import glsa_list
+    from pyerge.glsa import glsa_list
     from argparse import Namespace
     rss_mock.return_value = [vulnerabilities, escalation]
     assert glsa_list(Namespace(elements=2)) == f'{vulnerabilities}\n{escalation}'
@@ -19,7 +19,7 @@ def test_glsa_list(rss_mock):
 @mark.parametrize('regex, result', [(r'GLSA\s(\d{6}-\d{2}):\s.*', [date1, date2]),
                                     (r'GLSA\s(\d{6}-\d{2}:\s.*)', [vulnerabilities, escalation])])
 def test_collect_all_maching_entries(regex, result):
-    from glsa import _collect_all_maching_entries
+    from pyerge.glsa import _collect_all_maching_entries
     html = """
 <?xml version="1.0" encoding="UTF-8"?>
 <rdf:RDF xmlns="http://purl.org/rss/1.0/"
