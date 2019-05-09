@@ -8,7 +8,7 @@ vulnerabilities = f'{date1}: GLib: Multiple vulnerabilities'
 escalation = f'{date2}: OpenDKIM: Root privilege escalation'
 
 
-@mock.patch('glsa._rss')
+@mock.patch('pyerge.glsa._rss')
 def test_glsa_list(rss_mock):
     from pyerge.glsa import glsa_list
     from argparse import Namespace
