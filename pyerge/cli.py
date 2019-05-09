@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 from logging import basicConfig, DEBUG, info, error
 from typing import List
 
-from pyerge import tmerge, utils, __version__
+from pyerge import tmerge, utils, glsa, __version__
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -28,28 +28,32 @@ def run_parser():
                         default=False, help='run emerge -pvNDu @world')
     parser.add_argument('-v', '--verbose', action='store_true', dest='verbose',
                         default=False, help='Show more data')
+    parser.add_argument('-e', '--elements', action='store', dest='elements', type=int,
+                        default='5', help='number of elements')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('action', help='check or emerge')
+    parser.add_argument('action', help='check, emerge, glsa_list or glsa_test')
     opts, emerge_opts = parser.parse_known_args()
+    if opts.action not in ['check', 'emerge', 'glsa_list', 'glsa_test']:
+        error(f'Wrong options: {opts} {emerge_opts}')
+        exit()
+
     if opts.world:
         emerge_opts = ['-NDu', '@world']
     if opts.pretend_world:
         emerge_opts = ['-pvNDu', '@world']
 
-    if opts.action != 'check' and opts.action != 'emerge':
-        error(f'Wrong options: {opts} {emerge_opts}')
-        exit()
-
-    utils.set_portage_tmpdir()
+    opts.online = utils.is_internet_connected(opts.verbose)
+    run_glsa(opts)
 
     if not tmerge.is_portage_running():
+        utils.set_portage_tmpdir()
         handling_mounting(opts)
         run_emerge(emerge_opts, opts)
         run_check(opts)
+        utils.unmounttmpfs(opts.size, opts.verbose)
     else:
         if opts.verbose:
             info('emerge already running!')
-    utils.unmounttmpfs(opts.size, opts.verbose)
 
 
 def handling_mounting(opts: Namespace) -> None:
@@ -74,7 +78,7 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
     :param emerge_opts: list of arguments for emege
     :param opts: cli arguments
     """
-    if opts.action == 'emerge' and utils.is_internet_connected(opts.verbose):
+    if opts.action == 'emerge' and opts.online:
         ret_code = tmerge.emerge(emerge_opts, opts.verbose, build=True)
         tmerge.post_emerge(emerge_opts, opts.verbose, ret_code)
         if opts.deep:
@@ -87,5 +91,15 @@ def run_check(opts: Namespace) -> None:
 
     :param opts: cli arguments
     """
-    if opts.action == 'check' and (utils.is_internet_connected(opts.verbose) or opts.local):
+    if opts.action == 'check' and (opts.online or opts.local):
         tmerge.check_upd(opts.local, opts.verbose)
+
+
+def run_glsa(opts: Namespace) -> None:
+    """
+    Run gGLSA module to test or to list.
+
+    :param opts: cli arguments
+    """
+    if opts.online:
+        print(getattr(glsa, opts.actions)(opts))
