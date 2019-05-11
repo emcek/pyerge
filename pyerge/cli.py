@@ -102,4 +102,9 @@ def run_glsa(opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if opts.online:
-        print(getattr(glsa, opts.actions)(opts))
+        try:
+            attr = getattr(glsa, opts.action)
+        except AttributeError:
+            pass
+        else:
+            print(attr(opts))
