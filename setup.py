@@ -21,7 +21,7 @@ setup(
     url='https://github.com/emcek/pyerge',  # Optional
     author='Michal Plichta',  # Optional
     license='GPLv2',
-    scripts=['script/pyerge'],
+    scripts=['script/pye'],
     # entry_points={'console_scripts': ['exec = pyerge.cli:run_parser']},
     classifiers=[  # Optional
         'Development Status :: 4 - Beta',
@@ -66,6 +66,10 @@ setup(
     # For an analysis of "install_requires" vs pip's requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=requires,  # Optional
+
+    extras_require={
+        'testing': ['pytest']
+    },
 
     project_urls={  # Optional
         'Bug Reports': 'https://github.com/emcek/pyerge/issues',
