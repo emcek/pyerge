@@ -1,7 +1,6 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import Namespace
-from contextlib import closing
 from re import match
 from typing import List
 from urllib.request import urlopen
@@ -43,7 +42,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     :param elements: number of elements to return
     :return: list of strings
     """
-    with closing(urlopen(glsa_webpage)) as rss_page:
+    with urlopen(glsa_webpage) as rss_page:
         rss_html = rss_page.read().decode('UTF-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)
     return all_versions[0:elements]
