@@ -42,7 +42,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     :param elements: number of elements to return
     :return: list of strings
     """
-    with urlopen(glsa_webpage) as rss_page:
+    with urlopen(glsa_webpage) as rss_page:  # nosec
         rss_html = rss_page.read().decode('UTF-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)
     return all_versions[0:elements]
