@@ -6,19 +6,28 @@ from re import search
 from pyerge import emerge_logfile, tmerge_logfile
 
 
-def e_sync():
+def e_sync() -> str:
+    """
+    Fetch date of last sync form logs.
+
+    :return: date as string
+    """
     with open(emerge_logfile) as fd:
         for line in reversed(list(fd)):
             match = search(r'(\d+)(:\s===\sSync completed)', line)
             if match is not None:
                 sync_time = match.group(1)
-                print(datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M'))
-                break
+                return datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
         else:
-            print('Unknown')
+            return 'Unknown'
 
 
-def e_dl():
+def e_dl() -> str:
+    """
+    Fetch size of archives to be download for next system update.
+
+    :return: date as string
+    """
     size = None
 
     with open(tmerge_logfile, 'r') as log:
@@ -31,4 +40,4 @@ def e_dl():
     elif not size:
         size = 'Calculating...'
 
-    print(size)
+    return size
