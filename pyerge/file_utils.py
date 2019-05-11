@@ -12,14 +12,15 @@ def e_sync() -> str:
 
     :return: date as string
     """
-    with open(emerge_logfile) as fd:
-        for line in reversed(list(fd)):
+    with open(emerge_logfile) as log_file:
+        for line in reversed(list(log_file)):
             match = search(r'(\d+)(:\s===\sSync completed)', line)
             if match is not None:
                 sync_time = match.group(1)
-                return datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
+                break
         else:
             return 'Unknown'
+    return datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
 
 
 def e_dl() -> str:
