@@ -22,7 +22,7 @@ def test_synced():
     with mock.patch('pyerge.file_utils.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list_sync))
-        assert e_sync() == 'Tuesday 23:01'
+        assert e_sync() == 'Tuesday 22:01' or 'Tuesday 23:01'
         # open_mock.assert_called_once_with('/var/log/emerge.log')
 
 
