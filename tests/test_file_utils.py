@@ -20,7 +20,6 @@ def test_synced():
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_sync.split('\n'))))
         assert e_sync() == 'Tuesday 22:01' or 'Tuesday 23:01'
-        # open_mock.assert_called_once_with('/var/log/emerge.log')
 
 
 def test_no_synced():
@@ -28,7 +27,6 @@ def test_no_synced():
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_no_sync.split('\n'))))
         assert e_sync() == 'Unknown'
-        # open_mock.assert_called_once_with('/var/log/emerge.log')
 
 
 @mark.skipif(condition=version_info < (3, 7), reason='Run only on Python 3.7+')
