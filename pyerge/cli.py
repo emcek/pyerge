@@ -43,7 +43,9 @@ def run_parser():
         emerge_opts = ['-pvNDu', '@world']
 
     opts.online = utils.is_internet_connected(opts.verbose)
-    run_glsa(opts)
+    if opts.action in ('glsa_list', 'glsa_test'):
+        run_glsa(opts)
+        exit()
 
     if not tmerge.is_portage_running():
         utils.set_portage_tmpdir()
