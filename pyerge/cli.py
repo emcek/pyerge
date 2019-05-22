@@ -64,13 +64,14 @@ def handling_mounting(opts: Namespace) -> None:
 
     :param opts: cli arguments
     """
-    if not utils.is_tmpfs_mounted():
-        utils.mounttmpfs(opts.size, opts.verbose)
-    elif utils.size_of_mounted_tmpfs() != utils.convert2blocks(opts.size):
-        utils.remounttmpfs(opts.size, opts.verbose)
-    else:
-        if opts.verbose:
-            info('tmpfs is already mounted with requested size!')
+    if not opts.local:
+        if not utils.is_tmpfs_mounted():
+            utils.mounttmpfs(opts.size, opts.verbose)
+        elif utils.size_of_mounted_tmpfs() != utils.convert2blocks(opts.size):
+            utils.remounttmpfs(opts.size, opts.verbose)
+        else:
+            if opts.verbose:
+                info('tmpfs is already mounted with requested size!')
 
 
 def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
