@@ -1,5 +1,5 @@
 """Various tools to emerge and to show status for conky."""
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 portage_tmpdir = '/var/tmp/portage'  # nosec
 tmplogfile = '/var/log/portage/tmerge/tmp.emerge.log'

@@ -14,7 +14,7 @@ with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
 
 setup(
     name='pyerge',  # Required
-    version='0.3.1',  # Required
+    version='0.3.2',  # Required
     description='Various tools to emerge and to show status for conky',  # Required
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
