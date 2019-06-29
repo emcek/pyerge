@@ -21,7 +21,7 @@ def run_parser():
     parser.add_argument('-l', '--check_local', action='store_true', dest='local',
                         default=False, help='check locally')
     parser.add_argument('-d', '--deep_clean', action='store_true', dest='deep',
-                        default=False, help='no deep clean')
+                        default=False, help='run deep clean after emerge')
     parser.add_argument('-w', '--world', action='store_true', dest='world',
                         default=False, help='run emerge -NDu @world')
     parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world',

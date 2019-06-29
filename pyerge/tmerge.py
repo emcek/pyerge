@@ -74,7 +74,7 @@ def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
     :param return_code:
     """
     pretend, world = check_emerge_opts(args)
-    if len(return_code) is 0 and not pretend and world:
+    if not int(return_code) and not pretend and world:
         if verbose:
             info('Clearing emerge log')
         tmp = open(tmplogfile, 'w')
@@ -93,7 +93,7 @@ def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
     :param return_code:
     """
     pretend, world = check_emerge_opts(args)
-    if len(return_code) is 0 and not pretend and world:
+    if not int(return_code) and not pretend and world:
         out = emerge(['-pc'], verbose, build=False)
         if verbose:
             info('Deep clean')
