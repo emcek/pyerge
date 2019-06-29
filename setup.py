@@ -4,6 +4,8 @@ from os.path import abspath, dirname, join
 
 from setuptools import setup, find_packages
 
+from pyerge import __version__
+
 here = abspath(dirname(__file__))
 
 with io.open(join(here, 'README.md'), encoding='utf-8') as f:
@@ -14,7 +16,7 @@ with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
 
 setup(
     name='pyerge',  # Required
-    version='0.3.2',  # Required
+    version=__version__,  # Required
     description='Various tools to emerge and to show status for conky',  # Required
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
