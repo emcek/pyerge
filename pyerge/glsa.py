@@ -31,7 +31,7 @@ def glsa_test(opts: Namespace) -> str:
     out, err = utils.run_cmd(f'glsa-check -t {glsalist}')
     if err == b'This system is not affected by any of the listed GLSAs\n':
         return 'System is not affected by any of listed GLSAs'
-    return out.decode('UTF-8').strip()
+    return out.decode('UTF-8').strip().replace('\n', ',')
 
 
 def _rss(regex: str, elements: int) -> List[str]:

@@ -5,6 +5,7 @@ from pytest import mark
 date1 = '201904-23'
 date2 = '201904-22'
 date3 = '201904-13'
+date4 = '201904-14'
 vulnerabilities = f'{date1}: GLib: Multiple vulnerabilities'
 escalation = f'{date2}: OpenDKIM: Root privilege escalation'
 
@@ -33,8 +34,8 @@ def test_glsa_test_system_affected():
     with mock.patch('pyerge.glsa.utils') as utils_mock:
         with mock.patch('pyerge.glsa._rss') as rss_mock:
             rss_mock.return_value = [date1, date2, date3]
-            utils_mock.run_cmd.return_value = b'201904-13\n', b'This system is affected by the following GLSAs:\n'
-            assert glsa_test(Namespace(elements=2)) == date3
+            utils_mock.run_cmd.return_value = b'201904-13\n201904-14\n', b'This system is affected by the following GLSAs:\n'
+            assert glsa_test(Namespace(elements=2)) == f'{date3},{date4}'
 
 
 def test_rss():
