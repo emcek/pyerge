@@ -39,6 +39,7 @@ def mounttmpfs(size: str, verbose: bool) -> None:
     """
     if verbose:
         info(f'Mounting {size} of memory to {portage_tmpdir}')
+    if verbose > 1:
         debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
@@ -52,6 +53,7 @@ def unmounttmpfs(size: str, verbose: bool) -> None:
     """
     if verbose:
         info(f'Unmounting {size} of memory from {portage_tmpdir}')
+    if verbose > 1:
         debug(f'sudo umount -f {portage_tmpdir}')
     run_cmd(f'sudo umount -f {portage_tmpdir}')
 
@@ -65,9 +67,10 @@ def remounttmpfs(size: str, verbose: bool) -> None:
     """
     if verbose:
         info(f'Remounting {size} of memory to {portage_tmpdir}')
+    if verbose > 1:
         debug(f'sudo umount -f {portage_tmpdir}')
     run_cmd(f'sudo umount -f {portage_tmpdir}')
-    if verbose:
+    if verbose > 1:
         debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
@@ -85,8 +88,7 @@ def is_internet_connected(verbose: bool) -> bool:
         if verbose:
             info('There is internet connecton or not needed')
         return True
-    if verbose:
-        warning('No internet connection!')
+    warning('No internet connection!')
     return False
 
 

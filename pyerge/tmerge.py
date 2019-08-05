@@ -46,6 +46,7 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
             # info('Start syncing overlays...')
             # utils.run_cmd(f'sudo layman -SN >> {tmplogfile} > {dev_null}', use_subproc=False)
             info('Start syncing portage...')
+        if verbose > 1:
             debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
         utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
     if verbose:
@@ -57,9 +58,10 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 
     if verbose:
         info('Creating log file...')
+    if verbose > 1:
         debug(f'cat {tmerge_logfile} >> {tmplogfile}')
     utils.run_cmd(f'cat {tmerge_logfile} >> {tmplogfile}', use_system=True)
-    if verbose:
+    if verbose > 1:
         debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
     utils.run_cmd(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}', use_system=True)
 
@@ -97,6 +99,7 @@ def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
         out = emerge(['-pc'], verbose, build=False)
         if verbose:
             info('Deep clean')
+        if verbose > 1:
             debug(f'Details:{out.decode(encoding="utf-8")}')
 
 
