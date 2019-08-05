@@ -42,6 +42,7 @@ def run_parser():
     if opts.pretend_world:
         emerge_opts = ['-pvNDu', '@world']
 
+    info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected(opts.verbose)
     if opts.action in ('glsa_list', 'glsa_test'):
         run_glsa(opts)
