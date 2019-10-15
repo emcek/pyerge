@@ -11,6 +11,7 @@ def e_sync() -> str:
     Fetch date of last sync form logs.
 
     :return: date as string
+    :rtype: str
     """
     with open(emerge_logfile) as log_file:
         for line in reversed(list(log_file)):
@@ -28,6 +29,7 @@ def e_dl() -> str:
     Fetch size of archives to be download for next system update.
 
     :return: date as string
+    :rtype: str
     """
     size = None
 
