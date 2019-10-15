@@ -54,9 +54,10 @@ def e_curr() -> str:
     :rtype: str
     """
     pack = ''
-    for line in reversed(list(open(emerge_logfile))):
-        match = search(r'Compiling.*\((.*)::', line)
-        if match is not None:
-            pack = match.group(1)
-            break
+    with open(emerge_logfile) as log_file:
+        for line in reversed(list(log_file)):
+            match = search(r'Compiling.*\((.*)::', line)
+            if match is not None:
+                pack = match.group(1)
+                break
     return pack
