@@ -1,9 +1,9 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from datetime import datetime
-from re import search
+from re import search, sub
 
-from pyerge import emerge_logfile, tmerge_logfile
+from pyerge import emerge_logfile, tmerge_logfile, tmplogfile
 
 
 def e_sync() -> str:
@@ -61,3 +61,20 @@ def e_curr() -> str:
                 pack = match.group(1)
                 break
     return pack
+
+
+def e_eut() -> str:
+    """
+    Get estimated update time.
+
+    :return: estimated update time
+    :rtype: str
+    """
+    eut = ''
+    with open(tmplogfile, 'r') as log:
+        match = search(r'Estimated update time:\s+(.*)\.', str(log.readlines()))
+        if match is not None:
+            eut = match.group(1)
+            eut = sub('minutes|minute', 'min', eut)
+            eut = sub('hours|hour', 'h', eut)
+    return eut
