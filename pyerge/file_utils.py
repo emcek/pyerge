@@ -44,3 +44,19 @@ def e_dl() -> str:
         size = 'Calculating...'
 
     return size
+
+
+def e_curr() -> str:
+    """
+    Read the name of the last package compiled.
+
+    :return: name of package with version
+    :rtype: str
+    """
+    pack = ''
+    for line in reversed(list(open(emerge_logfile))):
+        match = search(r'Compiling.*\((.*)::', line)
+        if match is not None:
+            pack = match.group(1)
+            break
+    return pack
