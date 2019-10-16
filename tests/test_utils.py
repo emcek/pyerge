@@ -129,7 +129,7 @@ def test_e_eta_no_working_merge():
 def test_e_eta_emerge_working():
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'\n Currently merging 1 out of 1\n\n' \
-                                    b' * app-text/sgml-common-0.6.3-r7\n\n' \
-                                    b'       current merge time: 5 seconds.\n' \
-                                    b'       ETA: less than a minute.\n', b''
-        assert utils.e_eta() == 'less than a minute'
+                                    b' * app-text/openjade-1.3.2-r9\n\n' \
+                                    b'       current merge time: 9 seconds.\n' \
+                                    b'       ETA: 1 minute and 21 seconds.\n', b''
+        assert utils.e_eta() == '1 minute and 21 seconds'
