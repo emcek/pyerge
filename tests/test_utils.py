@@ -117,3 +117,10 @@ def test_portage_tmpdir_already_set(monkeypatch):
     from os import environ
     monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', 'some_value')
     assert utils.set_portage_tmpdir() == 'some_value'
+
+
+def test_e_eta_no_working_merge():
+    with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
+        run_cmd_mock.return_value = b'!!! Error: no working merge found.\n' \
+                                    b'(the -c option only works if there is an ongoing compilation, see manpage)\n', b''
+        assert utils.e_eta() == 'Unknown'
