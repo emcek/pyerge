@@ -31,12 +31,14 @@ def e_dl() -> str:
     :return: date as string
     :rtype: str
     """
-    size = None
-
-    with open(tmerge_logfile, 'r') as log:
-        match = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', str(log.readlines()))
-        if match is not None:
-            size = match.group(2)
+    with open(tmerge_logfile, 'r') as log_file:
+        for line in reversed(list(log_file)):
+            match = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
+            if match is not None:
+                size = match.group(2)
+                break
+        else:
+            size = None
 
     if size == '0 KiB':
         size = 'None'
@@ -53,13 +55,14 @@ def e_curr() -> str:
     :return: name of package with version
     :rtype: str
     """
-    pack = ''
     with open(emerge_logfile) as log_file:
         for line in reversed(list(log_file)):
             match = search(r'Compiling.*\((.*)::', line)
             if match is not None:
                 pack = match.group(1)
                 break
+        else:
+            pack = ''
     return pack
 
 
@@ -71,10 +74,12 @@ def e_eut() -> str:
     :rtype: str
     """
     eut = ''
-    with open(tmplogfile, 'r') as log:
-        match = search(r'Estimated update time:\s+(.*)\.', str(log.readlines()))
-        if match is not None:
-            eut = match.group(1).replace(',', '')
-            eut = sub(' minutes| minute', 'min', eut)
-            eut = sub(' hours| hour', 'h', eut)
+    with open(tmplogfile) as log_file:
+        for line in reversed(list(log_file)):
+            match = search(r'Estimated update time:\s+(.*)\.', line)
+            if match is not None:
+                eut = match.group(1).replace(',', '')
+                eut = sub(' minutes| minute', 'min', eut)
+                eut = sub(' hours| hour', 'h', eut)
+                break
     return eut
