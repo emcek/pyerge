@@ -74,7 +74,7 @@ def e_eut() -> str:
     with open(tmplogfile, 'r') as log:
         match = search(r'Estimated update time:\s+(.*)\.', str(log.readlines()))
         if match is not None:
-            eut = match.group(1)
-            eut = sub('minutes|minute', 'min', eut)
-            eut = sub('hours|hour', 'h', eut)
+            eut = match.group(1).replace(',', '')
+            eut = sub(' minutes| minute', 'min', eut)
+            eut = sub(' hours| hour', 'h', eut)
     return eut
