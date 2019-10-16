@@ -152,3 +152,22 @@ def set_portage_tmpdir() -> str:
     if not environ.get('PORTAGE_TMPDIR', ''):
         environ['PORTAGE_TMPDIR'] = portage_tmpdir
     return environ['PORTAGE_TMPDIR']
+
+
+def e_eta() -> str:
+    """
+    Return estimated time of compilation of current package.
+
+    :return: time until compilation ends
+    :rtype: str
+    """
+    output, _ = run_cmd('genlop -cn')
+    out = output.decode()
+    eta = ''
+    if search(r'Error.*no working merge found', out):
+        eta = 'Unknown'
+
+    match = search(r'ETA:\s(.*)\.', out)
+    if match is not None:
+        eta = match.group(1)
+    return eta
