@@ -65,7 +65,7 @@ def handling_mounting(opts: Namespace) -> None:
 
     :param opts: cli arguments
     """
-    if not opts.local or not opts.pretend_world:
+    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if not utils.is_tmpfs_mounted():
             utils.mounttmpfs(opts.size, opts.verbose)
         elif utils.size_of_mounted_tmpfs() != utils.convert2blocks(opts.size):
