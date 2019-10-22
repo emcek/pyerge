@@ -73,7 +73,6 @@ def e_eut() -> str:
     :return: estimated update time
     :rtype: str
     """
-    eut = ''
     with open(tmplogfile) as log_file:
         for line in reversed(list(log_file)):
             match = search(r'Estimated update time:\s+(.*)\.', line)
@@ -82,4 +81,6 @@ def e_eut() -> str:
                 eut = sub(' minutes| minute', 'min', eut)
                 eut = sub(' hours| hour', 'h', eut)
                 break
+        else:
+            eut = 'Unknown'
     return eut

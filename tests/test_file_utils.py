@@ -70,3 +70,10 @@ def test_e_eut(str_eut):
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_eut.split('\n'))))
         assert e_eut() == '1h 9min'
+
+
+def test_e_eut_unknown(str_eut_unknown):
+    with mock.patch('pyerge.file_utils.open') as open_mock:
+        open_mock.return_value.__enter__ = open_mock
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_eut_unknown.split('\n'))))
+        assert e_eut() == 'Unknown'

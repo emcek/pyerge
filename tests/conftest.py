@@ -78,6 +78,17 @@ Estimated update time: 1 hour, 9 minutes.
 
 
 @fixture
+def str_eut_unknown():
+    return """[ebuild     U  ] xfce-base/xfdesktop-4.14.1::gentoo [4.12.4::gentoo] USE="libnotify thunar -debug" 1,498 KiB
+[ebuild     U  ] xfce-extra/thunar-archive-plugin-0.4.0::gentoo [0.3.1-r3::gentoo] 342 KiB
+[ebuild     U  ] xfce-extra/thunar-shares-plugin-0.3.0::gentoo [0.2.0_p20101105-r1::gentoo] 333 KiB
+[ebuild     U  ] xfce-base/xfce4-meta-4.14-r1::gentoo [4.12-r1::gentoo] USE="svg upower%* -minimal" 0 KiB
+
+!!! Error: couldn't get previous merge of libXpresent; skipping...
+"""
+
+
+@fixture
 def orginal_html_xml():
     html = b'<?xml version="1.0" encoding="UTF-8"?>\n<rdf:RDF xmlns="http://purl.org/rss/1.0/"\n  ' \
            b'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"\n  ' \
