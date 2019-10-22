@@ -30,7 +30,7 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mounttmpfs(size: str, verbose: bool) -> None:
+def mounttmpfs(size: str, verbose: int) -> None:
     """
     Mount directory with size as tmp file system in RAM.
 
@@ -44,7 +44,7 @@ def mounttmpfs(size: str, verbose: bool) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
 
-def unmounttmpfs(size: str, verbose: bool) -> None:
+def unmounttmpfs(size: str, verbose: int) -> None:
     """
     Unmount directory from RAM.
 
@@ -58,7 +58,7 @@ def unmounttmpfs(size: str, verbose: bool) -> None:
     run_cmd(f'sudo umount -f {portage_tmpdir}')
 
 
-def remounttmpfs(size: str, verbose: bool) -> None:
+def remounttmpfs(size: str, verbose: int) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
@@ -75,7 +75,7 @@ def remounttmpfs(size: str, verbose: bool) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
 
-def is_internet_connected(verbose: bool) -> bool:
+def is_internet_connected(verbose: int) -> bool:
     """
     Check if there is connection to internet.
 

@@ -32,19 +32,19 @@ def test_tmpfs_mounted():
 
 def test_unmounttmpfs():
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.unmounttmpfs('2G', True)
+        utils.unmounttmpfs(size='2G', verbose=2)
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
 def test_mounttmpfs():
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mounttmpfs('2G', True)
+        utils.mounttmpfs(size='2G', verbose=2)
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
 def test_remounttmpfs():
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs('2G', True)
+        utils.remounttmpfs(size='2G', verbose=2)
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                        mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
@@ -73,18 +73,18 @@ def test_is_internet_connected():
                                     b'--- 89.16.167.134 ping statistics ---\n' \
                                     b'1 packets transmitted, 1 received, 0% packet loss, time 0ms\n' \
                                     b'rtt min/avg/max/mdev = 52.212/52.212/52.212/0.000 ms\n', b''
-        assert utils.is_internet_connected(verbose=True) is True
+        assert utils.is_internet_connected(verbose=2) is True
 
 
 def test_is_internet_not_connected():
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'', b''
-        assert utils.is_internet_connected(verbose=True) is False
+        assert utils.is_internet_connected(verbose=2) is False
 
 
 def test_delete_content():
     with mock.patch('pyerge.utils.open') as open_mock:
-        utils.delete_content('/tmp/emerge.log')
+        utils.delete_content(fname='/tmp/emerge.log')
         open_mock.assert_called_once_with('/tmp/emerge.log', 'w')
 
 
@@ -95,15 +95,15 @@ def test_run_cmd_as_subprocess():
                                               b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')}
         process_mock.configure_mock(**attrs)
         popen_mock.return_value = process_mock
-        assert utils.run_cmd('df') == (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
-                                       b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')
+        assert utils.run_cmd(cmd='df') == (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
+                                           b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')
         popen_mock.assert_called_once_with(['df'], stderr=-1, stdout=-1)
 
 
 def test_run_cmd_as_sysyem():
     with mock.patch('pyerge.utils.system') as system_mock:
         system_mock.return_value = 0
-        assert utils.run_cmd('df', use_system=True) == (b'0', b'')
+        assert utils.run_cmd(cmd='df', use_system=True) == (b'0', b'')
         system_mock.assert_called_once_with('df')
 
 
