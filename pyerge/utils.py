@@ -129,7 +129,6 @@ def convert2blocks(size: str) -> int:
         pass
     match = search(r'(?i)(\d+)([KMG])', size)
     if match.group(2).upper() == 'K':
-        # todo: add handling of floting point
         return int(match.group(1))
     if match.group(2).upper() == 'M':
         return int(match.group(1)) * 1024
