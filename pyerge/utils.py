@@ -155,7 +155,7 @@ def set_portage_tmpdir() -> str:
 
 def e_eta() -> str:
     """
-    Return estimated time of compilation of current package.
+    Get estimated time of compilation of current package.
 
     :return: time until compilation ends
     :rtype: str

@@ -50,7 +50,7 @@ def e_dl() -> str:
 
 def e_curr() -> str:
     """
-    Read the name of the last package compiled.
+    Get name of the current or last compiled package.
 
     :return: name of package with version
     :rtype: str
