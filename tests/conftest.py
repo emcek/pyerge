@@ -45,23 +45,15 @@ def str_dl_gt_0():
 Total: 44 packages (42 upgrades, 2 new), Size of downloads: 283,699 KiB
 """
 
-# todo: add correct printout
+
 @fixture
 def str_dl_eq_0():
-    return """[ebuild     U  ] xfce-extra/thunar-archive-plugin-0.4.0::gentoo [0.3.1-r3::gentoo] 342 KiB
-[ebuild     U  ] xfce-extra/thunar-shares-plugin-0.3.0::gentoo [0.2.0_p20101105-r1::gentoo] 333 KiB
-[ebuild     U  ] xfce-base/xfce4-meta-4.14-r1::gentoo [4.12-r1::gentoo] USE="svg upower%* -minimal" 0 KiB
+    return "Total: 0 packages, Size of downloads: 0 KiB"
 
-Total: 44 packages (42 upgrades, 2 new), Size of downloads: 0 KiB
-"""
 
-# todo: add correct printout
 @fixture
 def str_dl_unknown():
-    return """[ebuild     U  ] xfce-extra/thunar-archive-plugin-0.4.0::gentoo [0.3.1-r3::gentoo] 342 KiB
-[ebuild     U  ] xfce-extra/thunar-shares-plugin-0.3.0::gentoo [0.2.0_p20101105-r1::gentoo] 333 KiB
-[ebuild     U  ] xfce-base/xfce4-meta-4.14-r1::gentoo [4.12-r1::gentoo] USE="svg upower%* -minimal" 0 KiB
-"""
+    return ""
 
 
 @fixture
