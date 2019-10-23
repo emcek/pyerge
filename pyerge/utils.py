@@ -125,8 +125,8 @@ def convert2blocks(size: str) -> int:
     """
     try:
         return int(float(size))
-    except ValueError:
-        pass
+    except ValueError as err:
+        debug(f'Size: {size} Exception: {err}')
     match = search(r'(?i)(\d+)([KMG])', size)
     if match.group(2).upper() == 'K':
         return int(match.group(1))

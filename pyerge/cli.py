@@ -1,7 +1,7 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, DEBUG, info, error
+from logging import basicConfig, DEBUG, info, error, debug
 from typing import List
 
 from pyerge import tmerge, utils, glsa, __version__
@@ -101,14 +101,14 @@ def run_check(opts: Namespace) -> None:
 
 def run_glsa(opts: Namespace) -> None:
     """
-    Run gGLSA module to test or to list.
+    Run GLSA module to test or to list.
 
     :param opts: cli arguments
     """
     if opts.online:
         try:
             attr = getattr(glsa, opts.action)
-        except AttributeError:
-            pass
+        except AttributeError as err:
+            debug(f'Options: {opts} Exception: {err}')
         else:
             print(attr(opts))
