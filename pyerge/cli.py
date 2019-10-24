@@ -2,7 +2,6 @@
 """Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser, Namespace
 from logging import basicConfig, DEBUG, info, error
-
 from typing import List
 
 from pyerge import tmerge, utils, __version__
