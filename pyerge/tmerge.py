@@ -10,7 +10,7 @@ from pyerge import utils, tmplogfile, tmerge_logfile, dev_null
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
-def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
+def emerge(arguments: List[str], verbose: int, build=True) -> bytes:
     """
     Run emerge command.
 
@@ -30,7 +30,7 @@ def emerge(arguments: List[str], verbose: bool, build=True) -> bytes:
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
-def check_upd(local_chk: bool, verbose: bool) -> None:
+def check_upd(local_chk: bool, verbose: int) -> None:
     """
     Check system updates.
 
@@ -68,7 +68,7 @@ def check_upd(local_chk: bool, verbose: bool) -> None:
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
-def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
+def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
     """
     Run actions after emerge.
 
@@ -87,7 +87,7 @@ def post_emerge(args: List[str], verbose: bool, return_code: bytes) -> None:
         log.close()
 
 
-def deep_clean(args: List[str], verbose: bool, return_code: bytes) -> None:
+def deep_clean(args: List[str], verbose: int, return_code: bytes) -> None:
     """
     Run deep clean after emerge.
 
