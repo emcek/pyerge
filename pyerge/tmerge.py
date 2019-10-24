@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
+from argparse import Namespace
 from logging import debug, basicConfig, DEBUG, info
 from time import strftime
 from typing import List, Tuple
@@ -127,3 +128,27 @@ def is_portage_running() -> bool:
     """
     out, _ = utils.run_cmd('pgrep -f /usr/bin/emerge')
     return bool(out)
+
+
+def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
+    """
+    Run update of system.
+
+    :param emerge_opts: list of arguments for emege
+    :param opts: cli arguments
+    """
+    if opts.action == 'emerge' and opts.online:
+        ret_code = emerge(emerge_opts, opts.verbose, build=True)
+        post_emerge(emerge_opts, opts.verbose, ret_code)
+        if opts.deep:
+            deep_clean(emerge_opts, opts.verbose, ret_code)
+
+
+def run_check(opts: Namespace) -> None:
+    """
+    Run checking system updates.
+
+    :param opts: cli arguments
+    """
+    if opts.action == 'check' and (opts.online or opts.local):
+        check_upd(opts.local, opts.verbose)

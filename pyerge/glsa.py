@@ -1,7 +1,9 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import Namespace
+from logging import debug
 from re import match
+from sys import modules
 from typing import List
 from urllib.request import urlopen
 
@@ -64,3 +66,18 @@ def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
         if found:
             tmp_list.append(found.group(1))
     return tmp_list
+
+
+def run_glsa(opts: Namespace) -> None:
+    """
+    Run GLSA module to test or to list.
+
+    :param opts: cli arguments
+    """
+    if opts.online:
+        try:
+            attr = getattr(modules['__main__'], opts.action)
+        except AttributeError as err:
+            debug(f'Options: {opts} Exception: {err}')
+        else:
+            print(attr(opts))

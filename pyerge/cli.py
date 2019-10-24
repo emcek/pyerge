@@ -1,15 +1,17 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, DEBUG, info, error, debug
+from logging import basicConfig, DEBUG, info, error
+
 from typing import List
 
-from pyerge import tmerge, utils, glsa, __version__
+from pyerge import tmerge, utils, __version__
+from pyerge.glsa import run_glsa
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
-def run_parser():
+def run_parser() -> None:
     """
     Function to collect command line arguments.
 
@@ -36,7 +38,16 @@ def run_parser():
     if opts.action not in ['check', 'emerge', 'glsa_list', 'glsa_test']:
         error(f'Wrong options: {opts} {emerge_opts}')
         exit()
+    main_exec(opts, emerge_opts)
 
+
+def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
+    """
+    Main execution function.
+
+    :param opts: cli arguments
+    :param emerge_opts: list of arguments for emege
+    """
     if opts.world:
         emerge_opts = ['-NDu', '@world']
     if opts.pretend_world:
@@ -50,65 +61,10 @@ def run_parser():
 
     if not tmerge.is_portage_running():
         utils.set_portage_tmpdir()
-        handling_mounting(opts)
-        run_emerge(emerge_opts, opts)
-        run_check(opts)
+        utils.handling_mounting(opts)
+        tmerge.run_emerge(emerge_opts, opts)
+        tmerge.run_check(opts)
         utils.unmounttmpfs(opts.size, opts.verbose)
     else:
         if opts.verbose:
             info('emerge already running!')
-
-
-def handling_mounting(opts: Namespace) -> None:
-    """
-    Handling mounting temporary file fistem with requestes size.
-
-    :param opts: cli arguments
-    """
-    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        if not utils.is_tmpfs_mounted():
-            utils.mounttmpfs(opts.size, opts.verbose)
-        elif utils.size_of_mounted_tmpfs() != utils.convert2blocks(opts.size):
-            utils.remounttmpfs(opts.size, opts.verbose)
-        else:
-            if opts.verbose:
-                info('tmpfs is already mounted with requested size!')
-
-
-def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
-    """
-    Run update of system.
-
-    :param emerge_opts: list of arguments for emege
-    :param opts: cli arguments
-    """
-    if opts.action == 'emerge' and opts.online:
-        ret_code = tmerge.emerge(emerge_opts, opts.verbose, build=True)
-        tmerge.post_emerge(emerge_opts, opts.verbose, ret_code)
-        if opts.deep:
-            tmerge.deep_clean(emerge_opts, opts.verbose, ret_code)
-
-
-def run_check(opts: Namespace) -> None:
-    """
-    Run checking system updates.
-
-    :param opts: cli arguments
-    """
-    if opts.action == 'check' and (opts.online or opts.local):
-        tmerge.check_upd(opts.local, opts.verbose)
-
-
-def run_glsa(opts: Namespace) -> None:
-    """
-    Run GLSA module to test or to list.
-
-    :param opts: cli arguments
-    """
-    if opts.online:
-        try:
-            attr = getattr(glsa, opts.action)
-        except AttributeError as err:
-            debug(f'Options: {opts} Exception: {err}')
-        else:
-            print(attr(opts))

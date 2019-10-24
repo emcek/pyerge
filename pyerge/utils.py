@@ -1,4 +1,5 @@
 """Various tools to emerge and to show status for conky."""
+from argparse import Namespace
 from logging import warning, info, debug
 from os import system, environ
 from re import search
@@ -170,3 +171,19 @@ def e_eta() -> str:
     if match is not None:
         eta = match.group(1)
     return eta
+
+
+def handling_mounting(opts: Namespace) -> None:
+    """
+    Handling mounting temporary file fistem with requestes size.
+
+    :param opts: cli arguments
+    """
+    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
+        if not is_tmpfs_mounted():
+            mounttmpfs(opts.size, opts.verbose)
+        elif size_of_mounted_tmpfs() != convert2blocks(opts.size):
+            remounttmpfs(opts.size, opts.verbose)
+        else:
+            if opts.verbose:
+                info('tmpfs is already mounted with requested size!')
