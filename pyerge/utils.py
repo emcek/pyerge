@@ -25,7 +25,7 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     """
     if use_system:
         ret_code = system(cmd)  # nosec
-        out, err = str(ret_code).encode(), b''
+        out, err = str(ret_code).encode('utf-8'), b''
     else:
         out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()  # nosec
     return out, err
@@ -100,7 +100,7 @@ def size_of_mounted_tmpfs() -> int:
     :return: size in bytes as intiger
     """
     df_cmd, _ = run_cmd('df')
-    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % portage_tmpdir, df_cmd.decode())
+    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % portage_tmpdir, df_cmd.decode('utf-8'))
     if match is not None:
         return int(match.group(2))
     return 0
@@ -113,7 +113,7 @@ def is_tmpfs_mounted() -> bool:
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % portage_tmpdir, mount_cmd.decode())
+    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % portage_tmpdir, mount_cmd.decode('utf-8'))
     return bool(match is not None and match.group(2) == portage_tmpdir)
 
 
@@ -162,7 +162,7 @@ def e_eta() -> str:
     :rtype: str
     """
     output, _ = run_cmd('genlop -cn')
-    out = output.decode()
+    out = output.decode('utf-8')
     eta = ''
     if search(r'Error.*no working merge found', out):
         eta = 'Unknown'

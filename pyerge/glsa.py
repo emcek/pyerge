@@ -33,7 +33,7 @@ def glsa_test(opts: Namespace) -> str:
     out, err = utils.run_cmd(f'glsa-check -t {glsalist}')
     if err == b'This system is not affected by any of the listed GLSAs\n':
         return 'System is not affected by any of listed GLSAs'
-    return out.decode('UTF-8').strip().replace('\n', ',')
+    return out.decode('utf-8').strip().replace('\n', ',')
 
 
 def _rss(regex: str, elements: int) -> List[str]:
@@ -45,7 +45,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     :return: list of strings
     """
     with urlopen(glsa_webpage) as rss_page:  # nosec
-        rss_html = rss_page.read().decode('UTF-8')
+        rss_html = rss_page.read().decode('utf-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)
     return all_versions[0:elements]
 
