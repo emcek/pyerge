@@ -10,7 +10,7 @@ from pyerge import utils, tmplogfile, tmerge_logfile, dev_null
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
-def emerge(arguments: List[str], verbose: int, build=True) -> bytes:
+def emerge(arguments: List[str], verbose: int, build=True) -> Tuple[bytes, bytes]:
     """
     Run emerge command.
 
@@ -23,10 +23,12 @@ def emerge(arguments: List[str], verbose: int, build=True) -> bytes:
         info(f"running emerge with: {' '.join(arguments)}")
     cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}"
     if build:
-        return_code, _ = utils.run_cmd(cmd, use_system=True)
-        return return_code
-    output, _ = utils.run_cmd(cmd)
-    return output
+        return_code, stderr = utils.run_cmd(cmd, use_system=True)
+        if verbose > 1:
+            debug(f'RC: {return_code.decode("utf-8")}, Errors: {stderr.decode("utf-8")}')
+        return return_code, stderr
+    output, stderr = utils.run_cmd(cmd)
+    return output, stderr
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> chk_upd <=><=><=><=><=><=><=><=><=><=><=><=>
@@ -52,8 +54,11 @@ def check_upd(local_chk: bool, verbose: int) -> None:
         utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
     if verbose:
         info('Checking updates...')
-    output = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
-    log.write(output.decode(encoding='utf-8'))
+    output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
+    if verbose > 1:
+        debug(f'Error: {error}')
+    log.write(output.decode('utf-8'))
+    log.write(error.decode('utf-8'))
     tmp.close()
     log.close()
 
@@ -97,11 +102,12 @@ def deep_clean(args: List[str], verbose: int, return_code: bytes) -> None:
     """
     pretend, world = check_emerge_opts(args)
     if not int(return_code) and not pretend and world:
-        out = emerge(['-pc'], verbose, build=False)
+        output, error = emerge(['-pc'], verbose, build=False)
         if verbose:
             info('Deep clean')
         if verbose > 1:
-            debug(f'Details:{out.decode(encoding="utf-8")}')
+            debug(f'Output details:{output.decode("utf-8")}')
+            debug(f'Errors details:{error.decode("utf-8")}')
 
 
 def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
@@ -138,7 +144,7 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if opts.action == 'emerge' and opts.online:
-        ret_code = emerge(emerge_opts, opts.verbose, build=True)
+        ret_code, _ = emerge(emerge_opts, opts.verbose, build=True)
         post_emerge(emerge_opts, opts.verbose, ret_code)
         if opts.deep:
             deep_clean(emerge_opts, opts.verbose, ret_code)
