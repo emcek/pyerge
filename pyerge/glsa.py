@@ -76,9 +76,7 @@ def run_glsa(opts: Namespace) -> str:
     """
     if opts.online:
         try:
-            attr = getattr(modules['__main__'], opts.action)
+            return getattr(modules['__main__'], opts.action)(opts)
         except AttributeError as err:
             debug(f'Options: {opts} Exception: {err}')
             return ''
-        else:
-            return attr(opts)
