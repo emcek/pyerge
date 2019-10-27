@@ -73,6 +73,7 @@ def run_glsa(opts: Namespace) -> str:
     Run GLSA module to test or to list.
 
     :param opts: cli arguments
+    :return: result of glsa action
     """
     if opts.online:
         try:
