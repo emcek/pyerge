@@ -1,13 +1,11 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
 from argparse import Namespace
-from logging import debug, basicConfig, DEBUG, info
+from logging import debug, info
 from time import strftime
 from typing import List, Tuple
 
 from pyerge import utils, tmplogfile, tmerge_logfile, dev_null
-
-basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
 def emerge(arguments: List[str], verbose: int, build=True) -> Tuple[bytes, bytes]:
