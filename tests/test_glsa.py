@@ -58,3 +58,12 @@ def test_run_glsa_wrong_action():
     from argparse import Namespace
     from pyerge.glsa import run_glsa
     assert run_glsa(Namespace(online=True, action='wrong')) == ''
+
+
+# fixme: not working test
+# def test_run_glsa_correct_action():
+#     from argparse import Namespace
+#     from pyerge import glsa
+#     with mock.patch('pyerge.glsa.glsa_list') as glsa_list_mock:
+#         glsa_list_mock.return_value = '201909-08: D-Bus: Authentication bypass'
+#         assert glsa.run_glsa(Namespace(online=True, action='glsa_list', elements=1)) == '201909-08: D-Bus: Authentication bypass'
