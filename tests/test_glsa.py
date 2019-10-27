@@ -52,3 +52,9 @@ def test_rss(orginal_html_xml):
 def test_collect_all_maching_entries(regex, result, html_xlm_as_str):
     from pyerge.glsa import _collect_all_maching_entries
     assert _collect_all_maching_entries(html_xlm_as_str, regex) == result
+
+
+def test_run_glsa_wrong_action():
+    from argparse import Namespace
+    from pyerge.glsa import run_glsa
+    assert run_glsa(Namespace(online=True, action='wrong')) == ''
