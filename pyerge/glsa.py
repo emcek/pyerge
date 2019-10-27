@@ -68,7 +68,7 @@ def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
     return tmp_list
 
 
-def run_glsa(opts: Namespace) -> None:
+def run_glsa(opts: Namespace) -> str:
     """
     Run GLSA module to test or to list.
 
@@ -79,5 +79,6 @@ def run_glsa(opts: Namespace) -> None:
             attr = getattr(modules['__main__'], opts.action)
         except AttributeError as err:
             debug(f'Options: {opts} Exception: {err}')
+            return ''
         else:
-            print(attr(opts))
+            return attr(opts)

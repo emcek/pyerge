@@ -55,7 +55,7 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected(opts.verbose)
     if opts.action in ('glsa_list', 'glsa_test'):
-        run_glsa(opts)
+        print(run_glsa(opts))
         exit()
 
     if not tmerge.is_portage_running():
