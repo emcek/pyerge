@@ -133,3 +133,31 @@ def test_e_eta_emerge_working():
                                     b'       current merge time: 9 seconds.\n' \
                                     b'       ETA: 1 minute and 21 seconds.\n', b''
         assert utils.e_eta() == '1 minute and 21 seconds'
+
+
+def test_handling_mounting_mount(opt_emerge_nonlocal_with_1g):
+    with mock.patch('pyerge.utils.mounttmpfs') as mounttmpfs_mock:
+        with mock.patch('pyerge.utils.is_tmpfs_mounted') as is_tmpfs_mounted_mock:
+            is_tmpfs_mounted_mock.return_value = False
+            mounttmpfs_mock.return_value = None
+            utils.handling_mounting(opt_emerge_nonlocal_with_1g)
+
+
+def test_handling_mounting_remounte(opt_emerge_nonlocal_with_1g):
+    with mock.patch('pyerge.utils.size_of_mounted_tmpfs') as size_of_mounted_tmpfs_mock:
+        with mock.patch('pyerge.utils.convert2blocks') as convert2blocks_mock:
+            with mock.patch('pyerge.utils.is_tmpfs_mounted') as is_tmpfs_mounted_mock:
+                is_tmpfs_mounted_mock.return_value = True
+                size_of_mounted_tmpfs_mock.return_value = 2
+                convert2blocks_mock.return_value = 1
+                utils.handling_mounting(opt_emerge_nonlocal_with_1g)
+
+
+def test_handling_mounting_else(opt_emerge_nonlocal_with_1g):
+    with mock.patch('pyerge.utils.size_of_mounted_tmpfs') as size_of_mounted_tmpfs_mock:
+        with mock.patch('pyerge.utils.convert2blocks') as convert2blocks_mock:
+            with mock.patch('pyerge.utils.is_tmpfs_mounted') as is_tmpfs_mounted_mock:
+                is_tmpfs_mounted_mock.return_value = True
+                size_of_mounted_tmpfs_mock.return_value = 1
+                convert2blocks_mock.return_value = 1
+                utils.handling_mounting(opt_emerge_nonlocal_with_1g)

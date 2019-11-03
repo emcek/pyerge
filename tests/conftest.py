@@ -154,3 +154,9 @@ def html_xlm_as_str():
   </item>
 </rdf:RDF>
 """
+
+
+@fixture()
+def opt_emerge_nonlocal_with_1g():
+    from argparse import Namespace
+    return Namespace(action='emerge', local=False, size='1G', verbose=2)
