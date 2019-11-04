@@ -63,7 +63,7 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         utils.handling_mounting(opts)
         tmerge.run_emerge(emerge_opts, opts)
         tmerge.run_check(opts)
-        utils.unmounttmpfs(opts.size, opts.verbose)
+        utils.unmounttmpfs(opts)
     else:
         if opts.verbose:
             info('emerge already running!')

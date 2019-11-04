@@ -45,18 +45,18 @@ def mounttmpfs(size: str, verbose: int) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
 
 
-def unmounttmpfs(size: str, verbose: int) -> None:
+def unmounttmpfs(opts: Namespace) -> None:
     """
     Unmount directory from RAM.
 
-    :param size: with unit K, M, G
-    :param verbose: be verbose
+    :param opts: cli arguments
     """
-    if verbose:
-        info(f'Unmounting {size} of memory from {portage_tmpdir}')
-    if verbose > 1:
-        debug(f'sudo umount -f {portage_tmpdir}')
-    run_cmd(f'sudo umount -f {portage_tmpdir}')
+    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
+        if opts.verbose:
+            info(f'Unmounting {opts.size} of memory from {portage_tmpdir}')
+        if opts.verbose > 1:
+            debug(f'sudo umount -f {portage_tmpdir}')
+        run_cmd(f'sudo umount -f {portage_tmpdir}')
 
 
 def remounttmpfs(size: str, verbose: int) -> None:

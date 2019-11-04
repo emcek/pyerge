@@ -30,9 +30,9 @@ def test_tmpfs_mounted():
         assert utils.is_tmpfs_mounted() is True
 
 
-def test_unmounttmpfs():
+def test_unmounttmpfs(opt_emerge_nonlocal_with_1g):
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.unmounttmpfs(size='2G', verbose=2)
+        utils.unmounttmpfs(opt_emerge_nonlocal_with_1g)
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
