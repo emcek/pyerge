@@ -1,20 +1,23 @@
-dist: xenial
+dist: bionic
 language: python
 python:
-  - "3.6"
-  - "3.7"
-  - "3.8-dev"
+  - '3.6'
+  - '3.7'
+  - '3.8'
 install:
-  - pip install -U pip setuptools
-  - pip install -U coveralls pycodestyle pydocstyle pytest-mccabe pytest-random pylint
+  - pip3 install -U pip setuptools wheel
+  - pip3 install -U lxml coveralls pycodestyle pydocstyle pytest-mccabe pytest-random pylint coverage codacy-coverage mypy
 before_script:
-  - pip install -Ur requirements.txt
-  - python3 -V
+  - pip3 install -Ur requirements.txt
+  - python -V
 script:
-  - python3 -m pytest --mccabe -v pyerge
-  - coverage run --source=pyerge -m pytest -v --random
+  - python -m pytest --mccabe -v pyerge
   - pycodestyle --statistics --count pyerge
   - pydocstyle --count pyerge
-#  - pylint pyerge
+  - mypy --ignore-missing-imports --html-report mypyhtml pyerge || echo $(($? - 1))
+  - coverage run --source=pyerge -m pytest -v --random
+  - coverage xml
+#  - pylint pyerge || echo $(($? % 4))
 after_success:
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.6 && $TRAVIS_OS_NAME == "linux" ]]; then coveralls; fi
+  - if [[ $TRAVIS_PYTHON_VERSION = 3.8 && $TRAVIS_OS_NAME = linux ]]; then coveralls; fi
+  - if [[ $TRAVIS_PYTHON_VERSION = 3.8 && $TRAVIS_OS_NAME = linux ]]; then python-codacy-coverage -r coverage.xml; fi
