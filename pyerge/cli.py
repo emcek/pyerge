@@ -1,5 +1,6 @@
 #!/usr/bin/python3.6
 """Various tools to emerge and to show status for conky."""
+import sys
 from argparse import ArgumentParser, Namespace
 from logging import basicConfig, DEBUG, info, error
 from typing import List
@@ -40,7 +41,7 @@ def run_parser() -> None:
     opts, emerge_opts = parser.parse_known_args()
     if opts.action not in ['check', 'emerge', 'glsa_list', 'glsa_test']:
         error(f'Wrong options: {opts} {emerge_opts}')
-        exit()
+        sys.exit(1)
     main_exec(opts, emerge_opts)
 
 
@@ -64,7 +65,7 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     opts.online = utils.is_internet_connected(opts.verbose)
     if opts.action in ('glsa_list', 'glsa_test'):
         print(run_glsa(opts))
-        exit()
+        sys.exit(0)
 
     if not tmerge.is_portage_running():
         utils.set_portage_tmpdir()
