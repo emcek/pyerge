@@ -17,7 +17,7 @@ script:
   - mypy --ignore-missing-imports --html-report mypyhtml pyerge || echo $(($? - 1))
   - coverage run --source=pyerge -m pytest -v --random
   - coverage xml
-#  - pylint pyerge || echo $(($? % 4))
+  - pylint pyerge || echo $(($? % 4))
 after_success:
   - if [[ $TRAVIS_PYTHON_VERSION = 3.8 && $TRAVIS_OS_NAME = linux ]]; then coveralls; fi
   - if [[ $TRAVIS_PYTHON_VERSION = 3.8 && $TRAVIS_OS_NAME = linux ]]; then python-codacy-coverage -r coverage.xml; fi
