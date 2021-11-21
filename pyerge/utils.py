@@ -142,7 +142,7 @@ def delete_content(fname: Union[str, bytes, int]) -> None:
 
     :param fname: path to file as string
     """
-    with open(fname, 'w'):
+    with open(file=fname, mode='w', encoding='utf-8'):
         pass
 
 

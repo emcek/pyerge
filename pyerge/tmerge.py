@@ -37,8 +37,8 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     """
     utils.delete_content(tmplogfile)
     utils.delete_content(tmerge_logfile)
-    tmp = open(tmplogfile, 'w')
-    log = open(tmerge_logfile, 'w')
+    tmp = open(file=tmplogfile, mode='w', encoding='utf-8')
+    log = open(file=tmerge_logfile, mode='w', encoding='utf-8')
     tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
     if not local_chk:
         if verbose:
@@ -79,8 +79,8 @@ def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
     if not int(return_code) and not pretend and world:
         if verbose:
             info('Clearing emerge log')
-        tmp = open(tmplogfile, 'w')
-        log = open(tmerge_logfile, 'w')
+        tmp = open(file=tmplogfile, mode='w', encoding='utf-8')
+        log = open(file=tmerge_logfile, mode='w', encoding='utf-8')
         log.write('Total: 0 packages, Size of downloads: 0 KiB')
         tmp.close()
         log.close()

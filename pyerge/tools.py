@@ -12,7 +12,7 @@ def e_sync() -> str:
     :return: date as string
     :rtype: str
     """
-    with open(emerge_logfile) as log_file:
+    with open(file=emerge_logfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             match = search(r'(\d+)(:\s===\sSync completed)', line)
             if match is not None:
@@ -30,7 +30,7 @@ def e_dl() -> str:
     :return: date as string
     :rtype: str
     """
-    with open(tmerge_logfile, 'r') as log_file:
+    with open(file=tmerge_logfile, mode='r', encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             match = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
             if match is not None:
@@ -54,7 +54,7 @@ def e_curr() -> str:
     :return: name of package with version
     :rtype: str
     """
-    with open(emerge_logfile) as log_file:
+    with open(firl=emerge_logfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             match = search(r'Compiling.*\((.*)::', line)
             if match is not None:
@@ -72,7 +72,7 @@ def e_eut() -> str:
     :return: estimated update time
     :rtype: str
     """
-    with open(tmplogfile) as log_file:
+    with open(file=tmplogfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             match = search(r'Estimated update time:\s+(.*)\.', line)
             if match is not None:
