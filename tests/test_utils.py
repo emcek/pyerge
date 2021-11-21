@@ -85,7 +85,7 @@ def test_is_internet_not_connected():
 def test_delete_content():
     with mock.patch('pyerge.utils.open') as open_mock:
         utils.delete_content(fname='/tmp/emerge.log')
-        open_mock.assert_called_once_with('/tmp/emerge.log', 'w')
+        open_mock.assert_called_once_with(file='/tmp/emerge.log', mode='w', encoding='utf-8')
 
 
 def test_run_cmd_as_subprocess():

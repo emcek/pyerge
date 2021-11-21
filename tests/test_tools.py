@@ -26,7 +26,7 @@ def test_synced_ver2(str_sync):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
         result = tools.e_sync()
 
-    m.assert_called_once_with('/var/log/emerge.log')
+    m.assert_called_once_with(file='/var/log/emerge.log', encoding='utf-8')
     assert result == 'Tuesday 22:01' or 'Tuesday 23:01'
 
 
