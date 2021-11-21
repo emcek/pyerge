@@ -37,24 +37,21 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     """
     utils.delete_content(tmplogfile)
     utils.delete_content(tmerge_logfile)
-    tmp = open(file=tmplogfile, mode='w', encoding='utf-8')
-    log = open(file=tmerge_logfile, mode='w', encoding='utf-8')
-    tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
-    if not local_chk:
+    with open(file=tmplogfile, mode='w', encoding='utf-8') as tmp, open(file=tmerge_logfile, mode='w', encoding='utf-8') as log:
+        tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
+        if not local_chk:
+            if verbose:
+                info('Start syncing portage...')
+            if verbose > 1:
+                debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
+            utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
         if verbose:
-            info('Start syncing portage...')
+            info('Checking updates...')
+        output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
         if verbose > 1:
-            debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
-        utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
-    if verbose:
-        info('Checking updates...')
-    output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
-    if verbose > 1:
-        debug(f'Error: {error}')
-    log.write(output.decode('utf-8'))
-    log.write(error.decode('utf-8'))
-    tmp.close()
-    log.close()
+            debug(f'Error: {error}')
+        log.write(output.decode('utf-8'))
+        log.write(error.decode('utf-8'))
 
     if verbose:
         info('Creating log file...')
@@ -79,11 +76,8 @@ def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
     if not int(return_code) and not pretend and world:
         if verbose:
             info('Clearing emerge log')
-        tmp = open(file=tmplogfile, mode='w', encoding='utf-8')
-        log = open(file=tmerge_logfile, mode='w', encoding='utf-8')
-        log.write('Total: 0 packages, Size of downloads: 0 KiB')
-        tmp.close()
-        log.close()
+        with open(file=tmplogfile, mode='w', encoding='utf-8'), open(file=tmerge_logfile, mode='w', encoding='utf-8') as log:
+            log.write('Total: 0 packages, Size of downloads: 0 KiB')
 
 
 def deep_clean(args: List[str], verbose: int, return_code: bytes) -> None:
