@@ -54,7 +54,7 @@ def e_curr() -> str:
     :return: name of package with version
     :rtype: str
     """
-    with open(firl=emerge_logfile, encoding='utf-8') as log_file:
+    with open(file=emerge_logfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             match = search(r'Compiling.*\((.*)::', line)
             if match is not None:
