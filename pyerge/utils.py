@@ -3,7 +3,7 @@ from logging import warning, info, debug
 from os import system, environ
 from re import search
 from shlex import split
-from subprocess import Popen, PIPE  # nosec
+from subprocess import Popen, PIPE
 from typing import Union, Tuple
 
 from pyerge import server, portage_tmpdir
@@ -26,7 +26,8 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
         ret_code = system(cmd)  # nosec
         out, err = str(ret_code).encode('utf-8'), b''
     else:
-        out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()  # nosec
+        with Popen(split(cmd), stdout=PIPE, stderr=PIPE) as proc:
+            out, err = proc.communicate()
     return out, err
 
 
