@@ -1,4 +1,3 @@
-"""Various tools to emerge and to show status for conky."""
 from argparse import Namespace
 from logging import warning, info, debug
 from os import system, environ
@@ -100,7 +99,7 @@ def size_of_mounted_tmpfs() -> int:
     :return: size in bytes as intiger
     """
     df_cmd, _ = run_cmd('df')
-    match = search(r'(tmpfs\s*)(\d+)(\s*.*%s)' % portage_tmpdir, df_cmd.decode('utf-8'))
+    match = search(rf'(tmpfs\s*)(\d+)(\s*.*{portage_tmpdir})', df_cmd.decode('utf-8'))
     if match is not None:
         return int(match.group(2))
     return 0
@@ -113,7 +112,7 @@ def is_tmpfs_mounted() -> bool:
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(r'(tmpfs on\s+)(%s)(\s+type tmpfs)' % portage_tmpdir, mount_cmd.decode('utf-8'))
+    match = search(rf'(tmpfs on\s+)({portage_tmpdir})(\s+type tmpfs)', mount_cmd.decode('utf-8'))
     return bool(match is not None and match.group(2) == portage_tmpdir)
 
 
