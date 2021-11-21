@@ -1,0 +1,11 @@
+flake8
+codacy-coverage
+coveralls
+lxml
+mypy
+pydocstyle
+pycodestyle
+pylint
+pytest-cov
+pytest-mccabe
+pytest-random
