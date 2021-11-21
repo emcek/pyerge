@@ -79,3 +79,4 @@ def run_glsa(opts: Namespace) -> str:
         except AttributeError as err:
             debug(f'Options: {opts} Exception: {err}')
             return ''
+    return ''
