@@ -44,8 +44,6 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
     if not local_chk:
         if verbose:
-            # info('Start syncing overlays...')
-            # utils.run_cmd(f'sudo layman -SN >> {tmplogfile} > {dev_null}', use_subproc=False)
             info('Start syncing portage...')
         if verbose > 1:
             debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
