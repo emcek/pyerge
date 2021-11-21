@@ -111,7 +111,7 @@ def e_raid(raid_id: str) -> str:
     :param raid_id: name i.e. md126 or md127
     :return: status of RAID
     """
-    raid = ''
+    raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
     out = out.decode('utf-8')
     match = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)

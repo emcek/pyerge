@@ -95,7 +95,7 @@ def test_e_eta_emerge_working():
         assert tools.e_eta() == '1 minute and 21 seconds'
 
 
-def test_e_raid_working():
+def test_e_raid_match():
     with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'Personalities : [linear] [raid0] [raid1] [raid10] [raid6] [raid5] [raid4] \n' \
                                     b'md16 : active raid5 sdc1[4] sdb1[1] sdd1[3]\n' \
@@ -106,3 +106,9 @@ def test_e_raid_working():
                                     b'      \nunused devices: <none>\n', b''
         assert tools.e_raid('md16') == '[_UU]'
         assert tools.e_raid('md17') == '[UU_]'
+
+
+def test_e_raid_not_match():
+    with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
+        run_cmd_mock.return_value = b'', b''
+        assert tools.e_raid('md16') == 'Unknown'
