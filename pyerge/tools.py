@@ -1,4 +1,3 @@
-"""Various tools to emerge and to show status for conky."""
 from datetime import datetime
 from re import search, sub
 

@@ -1,5 +1,3 @@
-#!/usr/bin/python3.6
-"""Various tools to emerge and to show status for conky."""
 from argparse import Namespace
 from logging import debug
 from re import match

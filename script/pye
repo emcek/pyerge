@@ -1,6 +1,4 @@
-#!/usr/bin/python3.6
-"""Various tools to emerge and to show status for conky."""
-
+#!/usr/bin/env python3
 from pyerge.cli import run_parser
 
 

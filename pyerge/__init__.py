@@ -1,4 +1,3 @@
-"""Various tools to emerge and to show status for conky."""
 __version__ = '0.3.7'
 
 portage_tmpdir = '/var/tmp/portage'  # nosec
