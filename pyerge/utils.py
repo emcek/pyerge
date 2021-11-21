@@ -154,41 +154,6 @@ def set_portage_tmpdir() -> str:
     return environ['PORTAGE_TMPDIR']
 
 
-def e_eta() -> str:
-    """
-    Get estimated time of compilation of current package.
-
-    :return: time until compilation ends
-    :rtype: str
-    """
-    output, _ = run_cmd('genlop -cn')
-    out = output.decode('utf-8')
-    eta = ''
-    if search(r'Error.*no working merge found', out):
-        eta = 'Unknown'
-
-    match = search(r'ETA:\s(.*)\.', out)
-    if match is not None:
-        eta = match.group(1)
-    return eta
-
-
-def e_raid(md: str) -> str:
-    """
-    Check of Raid array.
-
-    :param md: name i.e. md126 or md127
-    :return: status of RAID
-    """
-    raid = ''
-    out, _ = run_cmd('cat /proc/mdstat')
-    out = out.decode('utf-8')
-    match = search(rf'{md}.*\n.*(\[[U_]*\])', out)
-    if match is not None:
-        raid = match.group(1)
-    return raid
-
-
 def handling_mounting(opts: Namespace) -> None:
     """
     Handling mounting temporary file fistem with requestes size.
