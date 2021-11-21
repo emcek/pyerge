@@ -58,3 +58,9 @@ def test_run_glsa_wrong_action():
     from argparse import Namespace
     from pyerge.glsa import run_glsa
     assert run_glsa(Namespace(online=True, action='wrong')) == ''
+
+
+def test_run_glsa_offline():
+    from argparse import Namespace
+    from pyerge.glsa import run_glsa
+    assert run_glsa(Namespace(online=False, action='glsa_test')) == ''
