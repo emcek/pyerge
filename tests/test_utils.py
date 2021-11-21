@@ -135,6 +135,19 @@ def test_e_eta_emerge_working():
         assert utils.e_eta() == '1 minute and 21 seconds'
 
 
+def test_e_raid_working():
+    with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
+        run_cmd_mock.return_value = b'Personalities : [linear] [raid0] [raid1] [raid10] [raid6] [raid5] [raid4] \n' \
+                                    b'md16 : active raid5 sdc1[4] sdb1[1] sdd1[3]\n' \
+                                    b'      1935409152 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [_UU]\n' \
+                                    b'      bitmap: 1/8 pages [4KB], 65536KB chunk\n\n' \
+                                    b'md17 : active raid5 sdc2[4] sdb2[1] sdd2[3]\n' \
+                                    b'      17835008 blocks super 1.2 level 5, 512k chunk, algorithm 2 [3/3] [UU_]\n' \
+                                    b'      \nunused devices: <none>\n', b''
+        assert utils.e_raid('md16') == '[_UU]'
+        assert utils.e_raid('md17') == '[UU_]'
+
+
 def test_handling_mounting_mount(opt_emerge_nonlocal_with_1g):
     with mock.patch('pyerge.utils.mounttmpfs') as mounttmpfs_mock:
         with mock.patch('pyerge.utils.is_tmpfs_mounted') as is_tmpfs_mounted_mock:
