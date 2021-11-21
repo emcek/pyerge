@@ -23,11 +23,10 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     :return: tuple of bytes with output and error
     """
     if use_system:
-        ret_code = system(cmd)  # nosec
+        ret_code = system(cmd)
         out, err = str(ret_code).encode('utf-8'), b''
     else:
-        with Popen(split(cmd), stdout=PIPE, stderr=PIPE) as proc:
-            out, err = proc.communicate()
+        out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
     return out, err
 
 
