@@ -4,7 +4,6 @@ from logging import basicConfig, DEBUG, info, error
 from typing import List
 
 from pyerge import tmerge, utils, __version__
-from pyerge.glsa import run_glsa
 
 basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
@@ -35,9 +34,9 @@ def run_parser() -> None:
     parser.add_argument('-e', '--elements', action='store', dest='elements', type=int,
                         default='5', help='number of elements')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('action', help='check, emerge, glsa_list or glsa_test')
+    parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
-    if opts.action not in ['check', 'emerge', 'glsa_list', 'glsa_test']:
+    if opts.action not in ['check', 'emerge']:
         error(f'Wrong options: {opts} {emerge_opts}')
         sys.exit(1)
     main_exec(opts, emerge_opts)
@@ -61,9 +60,6 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     if opts.verbose:
         info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected(opts.verbose)
-    if opts.action in ('glsa_list', 'glsa_test'):
-        print(run_glsa(opts))
-        sys.exit(0)
 
     if not tmerge.is_portage_running():
         utils.set_portage_tmpdir()
