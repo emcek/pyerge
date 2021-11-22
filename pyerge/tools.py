@@ -21,7 +21,9 @@ def e_sync() -> str:
                 break
         else:
             return 'Unknown'
-    return datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
+    sync_date = datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
+    print(sync_date)
+    return sync_date
 
 
 def e_dl() -> str:
@@ -44,7 +46,7 @@ def e_dl() -> str:
         size = 'None'
     elif not size:
         size = 'Calculating...'
-
+    print(size)
     return size
 
 
@@ -63,6 +65,7 @@ def e_curr() -> str:
                 break
         else:
             pack = ''
+    print(pack)
     return pack
 
 
@@ -83,6 +86,7 @@ def e_eut() -> str:
                 break
         else:
             eut = 'Unknown'
+    print(eut)
     return eut
 
 
@@ -102,6 +106,7 @@ def e_eta() -> str:
     match = search(r'ETA:\s(.*)\.', out)
     if match is not None:
         eta = match.group(1)
+    print(eta)
     return eta
 
 
