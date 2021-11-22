@@ -95,6 +95,12 @@ def test_e_eta_emerge_working():
         assert tools.e_eta() == '1 minute and 21 seconds'
 
 
+def test_e_log(str_dl_gt_0):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_dl_gt_0)):
+        result = tools.e_log()
+    assert result == str_dl_gt_0
+
+
 def test_e_raid_match():
     with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'Personalities : [linear] [raid0] [raid1] [raid10] [raid6] [raid5] [raid4] \n' \

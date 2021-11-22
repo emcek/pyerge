@@ -110,6 +110,14 @@ def e_eta() -> str:
     return eta
 
 
+def e_log() -> str:
+    """Print next update content."""
+    with open(file=tmerge_logfile, encoding='utf-8') as log_file:
+        content = log_file.read()
+    print(content)
+    return content
+
+
 def e_raid(raid_id: str) -> str:
     """
     Check of Raid array.
