@@ -12,35 +12,32 @@ escalation = f'{date2}: OpenDKIM: Root privilege escalation'
 
 def test_glsa_list():
     from pyerge.glsa import glsa_list
-    from argparse import Namespace
     with mock.patch('pyerge.glsa._rss') as rss_mock:
         rss_mock.return_value = [vulnerabilities, escalation]
-        assert glsa_list(Namespace(elements=2)) == f'{vulnerabilities}\n{escalation}'
+        assert glsa_list(elements=2) == f'{vulnerabilities}\n{escalation}'
 
 
 def test_glsa_test_system_not_affected():
     from pyerge.glsa import glsa_test
-    from argparse import Namespace
     with mock.patch('pyerge.glsa.utils') as utils_mock:
         with mock.patch('pyerge.glsa._rss') as rss_mock:
             rss_mock.return_value = [date1, date2]
             utils_mock.run_cmd.return_value = b'', b'This system is not affected by any of the listed GLSAs\n'
-            assert glsa_test(Namespace(elements=2)) == 'System is not affected by any of listed GLSAs'
+            assert glsa_test(elements=2) == 'System is not affected by any of listed GLSAs'
 
 
 def test_glsa_test_system_affected():
     from pyerge.glsa import glsa_test
-    from argparse import Namespace
     with mock.patch('pyerge.glsa.utils') as utils_mock:
         with mock.patch('pyerge.glsa._rss') as rss_mock:
             rss_mock.return_value = [date1, date2, date3]
             utils_mock.run_cmd.return_value = b'201904-13\n201904-14\n', b'This system is affected by the following GLSAs:\n'
-            assert glsa_test(Namespace(elements=2)) == f'{date3},{date4}'
+            assert glsa_test(elements=2) == f'{date3},{date4}'
 
 
 def test_rss(orginal_html_xml):
     from pyerge.glsa import _rss
-    with mock.patch('pyerge.glsa.urlopen') as urlopen_mock:
+    with mock.patch('pyerge.glsa.request') as urlopen_mock:
         with mock.patch('pyerge.glsa._collect_all_maching_entries') as collect_all_mock:
             urlopen_mock.return_value.read.return_value = orginal_html_xml
             collect_all_mock.return_value = ['201904-25', '201904-24', '201904-23']
@@ -52,15 +49,3 @@ def test_rss(orginal_html_xml):
 def test_collect_all_maching_entries(regex, result, html_xlm_as_str):
     from pyerge.glsa import _collect_all_maching_entries
     assert _collect_all_maching_entries(html_xlm_as_str, regex) == result
-
-
-def test_run_glsa_wrong_action():
-    from argparse import Namespace
-    from pyerge.glsa import run_glsa
-    assert run_glsa(Namespace(online=True, action='wrong')) == ''
-
-
-def test_run_glsa_offline():
-    from argparse import Namespace
-    from pyerge.glsa import run_glsa
-    assert run_glsa(Namespace(online=False, action='glsa_test')) == ''
