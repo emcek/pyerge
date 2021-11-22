@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from datetime import datetime
 from re import search, sub
 
@@ -118,3 +119,10 @@ def e_raid(raid_id: str) -> str:
     if match is not None:
         raid = match.group(1)
     return raid
+
+
+def run_e_raid():
+    parser = ArgumentParser()
+    parser.add_argument('-n', '--name', action='store', help='Provides name of MD RAID Array')
+    args = parser.parse_args()
+    print(e_raid(args.name))
