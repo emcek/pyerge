@@ -122,7 +122,7 @@ def e_raid(raid_id: str) -> str:
 
 
 def run_e_raid():
-    """Run e_raid from cli"""
+    """Run e_raid from cli."""
     parser = ArgumentParser()
     parser.add_argument('-n', '--name', action='store', help='Provides name of MD RAID Array')
     args = parser.parse_args()
