@@ -1,33 +1,32 @@
-from argparse import Namespace
-from logging import debug
+from argparse import ArgumentParser
 from re import match
 from sys import modules
 from typing import List
-from urllib.request import urlopen
+from urllib import request, error
 
 from bs4 import BeautifulSoup
 
 from pyerge import utils, glsa_webpage
 
 
-def glsa_list(opts: Namespace) -> str:
+def glsa_list(elements: int) -> str:
     """
     List GLSAs with number and name as string with new lines.
 
-    :param opts: cli arguments
+    :param elements: number of elements
     :return: string with new lines
     """
-    return '\n'.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}:\s.*)', elements=opts.elements))
+    return '\n'.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}:\s.*)', elements=elements))
 
 
-def glsa_test(opts: Namespace) -> str:
+def glsa_test(elements: int) -> str:
     """
     Test system against GLSAs.
 
-    :param opts: cli arguments
+    :param elements: number of elements
     :return: string with result
     """
-    glsalist = ' '.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}):\s.*', elements=opts.elements))
+    glsalist = ' '.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}):\s.*', elements=elements))
     out, err = utils.run_cmd(f'glsa-check -t {glsalist}')
     if err == b'This system is not affected by any of the listed GLSAs\n':
         return 'System is not affected by any of listed GLSAs'
@@ -42,7 +41,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     :param elements: number of elements to return
     :return: list of strings
     """
-    with urlopen(glsa_webpage) as rss_page:  # nosec
+    with request.urlopen(glsa_webpage) as rss_page:  # nosec
         rss_html = rss_page.read().decode('utf-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)
     return all_versions[0:elements]
@@ -66,17 +65,13 @@ def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
     return tmp_list
 
 
-def run_glsa(opts: Namespace) -> str:
-    """
-    Run GLSA module to test or to list.
-
-    :param opts: cli arguments
-    :return: result of glsa action
-    """
-    if opts.online:
-        try:
-            return getattr(modules['__main__'], opts.action)(opts)
-        except AttributeError as err:
-            debug(f'Options: {opts} Exception: {err}')
-            return ''
-    return ''
+def run_glsa():
+    """Run GLSA module to test or to list."""
+    parser = ArgumentParser(description='Check and list GLSA easly')
+    parser.add_argument('action', help='list or test')
+    parser.add_argument('-e', '--elements', action='store', dest='elements', type=int, default='5', help='number of elements')
+    args = parser.parse_args()
+    try:
+        print(getattr(modules['pyerge.glsa'], f'glsa_{args.action}')(args.elements))
+    except (AttributeError, KeyError, error.HTTPError) as err:
+        print(f'{err}')
