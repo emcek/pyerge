@@ -6,7 +6,7 @@ from shlex import split
 from subprocess import Popen, PIPE
 from typing import Union, Tuple
 
-from pyerge import server, portage_tmpdir
+from pyerge import portage_tmpdir
 
 
 def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
@@ -82,7 +82,7 @@ def is_internet_connected(verbose: int) -> bool:
     :param verbose: be verbose
     :return: True is connected, False otherwise
     """
-    cmd, _ = run_cmd(f'ping -W1 -c1 {server}')
+    cmd, _ = run_cmd('ping -W1 -c1 89.16.167.134')
     match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
         if verbose:

@@ -3,7 +3,7 @@ from logging import debug, info
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, tmplogfile, tmerge_logfile, dev_null
+from pyerge import utils, tmplogfile, tmerge_logfile, DEVNULL
 
 
 def emerge(arguments: List[str], verbose: int, build=True) -> Tuple[bytes, bytes]:
@@ -43,8 +43,8 @@ def check_upd(local_chk: bool, verbose: int) -> None:
             if verbose:
                 info('Start syncing portage...')
             if verbose > 1:
-                debug(f'sudo eix-sync >> {tmplogfile} > {dev_null}')
-            utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {dev_null}', use_system=True)
+                debug(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
+            utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}', use_system=True)
         if verbose:
             info('Checking updates...')
         output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)

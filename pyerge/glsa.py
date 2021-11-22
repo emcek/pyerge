@@ -6,7 +6,7 @@ from urllib import request, error
 
 from bs4 import BeautifulSoup
 
-from pyerge import utils, glsa_webpage
+from pyerge import utils
 
 
 def glsa_list(elements: int) -> str:
@@ -41,7 +41,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     :param elements: number of elements to return
     :return: list of strings
     """
-    with request.urlopen(glsa_webpage) as rss_page:  # nosec
+    with request.urlopen('https://security.gentoo.org/glsa/feed.rss1') as rss_page:
         rss_html = rss_page.read().decode('utf-8')
     all_versions = _collect_all_maching_entries(rss_html, regex)
     return all_versions[0:elements]
