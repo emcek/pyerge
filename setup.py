@@ -50,7 +50,7 @@ setup(
                  'Topic :: Software Development :: Libraries :: Python Modules',
                  'Topic :: System :: Monitoring',
                  'Topic :: Utilities'],
-    keywords='gentoo portage emerge conky',
+    keywords='gentoo portage emerge conky linux',
     packages=find_packages(exclude=['tests']),
     install_requires=requires,
     python_requires='>=3.6',
