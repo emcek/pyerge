@@ -3,7 +3,7 @@ from logging import debug, info
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, tmplogfile, tmerge_logfile, DEVNULL
+from pyerge import utils, TMPLOGFILE, TMERGE_LOGFILE, DEVNULL
 
 
 def emerge(arguments: List[str], verbose: int, build=True) -> Tuple[bytes, bytes]:
@@ -35,16 +35,16 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     :param local_chk:
     :param verbose:
     """
-    utils.delete_content(tmplogfile)
-    utils.delete_content(tmerge_logfile)
-    with open(file=tmplogfile, mode='w', encoding='utf-8') as tmp, open(file=tmerge_logfile, mode='w', encoding='utf-8') as log:
+    utils.delete_content(TMPLOGFILE)
+    utils.delete_content(TMERGE_LOGFILE)
+    with open(file=TMPLOGFILE, mode='w', encoding='utf-8') as tmp, open(file=TMERGE_LOGFILE, mode='w', encoding='utf-8') as log:
         tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
         if not local_chk:
             if verbose:
                 info('Start syncing portage...')
             if verbose > 1:
-                debug(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}')
-            utils.run_cmd(f'sudo eix-sync >> {tmplogfile} > {DEVNULL}', use_system=True)
+                debug(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}')
+            utils.run_cmd(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}', use_system=True)
         if verbose:
             info('Checking updates...')
         output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
@@ -56,11 +56,11 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     if verbose:
         info('Creating log file...')
     if verbose > 1:
-        debug(f'cat {tmerge_logfile} >> {tmplogfile}')
-    utils.run_cmd(f'cat {tmerge_logfile} >> {tmplogfile}', use_system=True)
+        debug(f'cat {TMERGE_LOGFILE} >> {TMPLOGFILE}')
+    utils.run_cmd(f'cat {TMERGE_LOGFILE} >> {TMPLOGFILE}', use_system=True)
     if verbose > 1:
-        debug(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}')
-    utils.run_cmd(f'cat {tmerge_logfile} | genlop -pn >> {tmplogfile}', use_system=True)
+        debug(f'cat {TMERGE_LOGFILE} | genlop -pn >> {TMPLOGFILE}')
+    utils.run_cmd(f'cat {TMERGE_LOGFILE} | genlop -pn >> {TMPLOGFILE}', use_system=True)
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
@@ -76,7 +76,7 @@ def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
     if not int(return_code) and not pretend and world:
         if verbose:
             info('Clearing emerge log')
-        with open(file=tmplogfile, mode='w', encoding='utf-8'), open(file=tmerge_logfile, mode='w', encoding='utf-8') as log:
+        with open(file=TMPLOGFILE, mode='w', encoding='utf-8'), open(file=TMERGE_LOGFILE, mode='w', encoding='utf-8') as log:
             log.write('Total: 0 packages, Size of downloads: 0 KiB')
 
 

@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 from datetime import datetime
 from re import search, sub, match
 
-from pyerge import emerge_logfile, tmerge_logfile, tmplogfile
+from pyerge import EMERGE_LOGFILE, TMERGE_LOGFILE, TMPLOGFILE
 from pyerge.utils import run_cmd
 
 
@@ -13,7 +13,7 @@ def e_sync() -> str:
     :return: date as string
     :rtype: str
     """
-    with open(file=emerge_logfile, encoding='utf-8') as log_file:
+    with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'(\d+)(:\s===\sSync completed)', line)
             if reqex is not None:
@@ -33,7 +33,7 @@ def e_dl() -> str:
     :return: date as string
     :rtype: str
     """
-    with open(file=tmerge_logfile, mode='r', encoding='utf-8') as log_file:
+    with open(file=TMERGE_LOGFILE, mode='r', encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
             if reqex is not None:
@@ -57,7 +57,7 @@ def e_curr() -> str:
     :return: name of package with version
     :rtype: str
     """
-    with open(file=emerge_logfile, encoding='utf-8') as log_file:
+    with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'Compiling.*\((.*)::', line)
             if reqex is not None:
@@ -76,7 +76,7 @@ def e_eut() -> str:
     :return: estimated update time
     :rtype: str
     """
-    with open(file=tmplogfile, encoding='utf-8') as log_file:
+    with open(file=TMPLOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'Estimated update time:\s+(.*)\.', line)
             if reqex is not None:
@@ -112,7 +112,7 @@ def e_eta() -> str:
 
 def e_log() -> str:
     """Check next update content."""
-    with open(file=tmerge_logfile, encoding='utf-8') as log_file:
+    with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         content = log_file.read()
     print(content)
     return content
@@ -123,7 +123,7 @@ def e_upd() -> str:
     result = 'Calculating...'
     map_dict = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'reinstalls': 'R', 'reinstall': 'R',
                 'uninstalls': 'Un', 'uninstall': 'Un', 'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
-    with open(file=tmerge_logfile, encoding='utf-8') as log_file:
+    with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         content = log_file.read()
 
     if search(r'Total: 0 packages, Size of downloads: 0 KiB', content):

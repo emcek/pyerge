@@ -6,7 +6,7 @@ from shlex import split
 from subprocess import Popen, PIPE  # nosec
 from typing import Union, Tuple
 
-from pyerge import portage_tmpdir
+from pyerge import PORTAGE_TMPDIR
 
 
 def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
@@ -38,10 +38,10 @@ def mounttmpfs(size: str, verbose: int) -> None:
     :param verbose: be verbose
     """
     if verbose:
-        info(f'Mounting {size} of memory to {portage_tmpdir}')
+        info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
     if verbose > 1:
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
+        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
 
 
 def unmounttmpfs(opts: Namespace) -> None:
@@ -52,10 +52,10 @@ def unmounttmpfs(opts: Namespace) -> None:
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if opts.verbose:
-            info(f'Unmounting {opts.size} of memory from {portage_tmpdir}')
+            info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
         if opts.verbose > 1:
-            debug(f'sudo umount -f {portage_tmpdir}')
-        run_cmd(f'sudo umount -f {portage_tmpdir}')
+            debug(f'sudo umount -f {PORTAGE_TMPDIR}')
+        run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
 def remounttmpfs(size: str, verbose: int) -> None:
@@ -66,13 +66,13 @@ def remounttmpfs(size: str, verbose: int) -> None:
     :param verbose: be verbose
     """
     if verbose:
-        info(f'Remounting {size} of memory to {portage_tmpdir}')
+        info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
     if verbose > 1:
-        debug(f'sudo umount -f {portage_tmpdir}')
-    run_cmd(f'sudo umount -f {portage_tmpdir}')
+        debug(f'sudo umount -f {PORTAGE_TMPDIR}')
+    run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
     if verbose > 1:
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {portage_tmpdir}')
+        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
 
 
 def is_internet_connected(verbose: int) -> bool:
@@ -99,7 +99,7 @@ def size_of_mounted_tmpfs() -> int:
     :return: size in bytes as intiger
     """
     df_cmd, _ = run_cmd('df')
-    match = search(rf'(tmpfs\s*)(\d+)(\s*.*{portage_tmpdir})', df_cmd.decode('utf-8'))
+    match = search(rf'(tmpfs\s*)(\d+)(\s*.*{PORTAGE_TMPDIR})', df_cmd.decode('utf-8'))
     if match is not None:
         return int(match.group(2))
     return 0
@@ -112,8 +112,8 @@ def is_tmpfs_mounted() -> bool:
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(rf'(tmpfs on\s+)({portage_tmpdir})(\s+type tmpfs)', mount_cmd.decode('utf-8'))
-    return bool(match is not None and match.group(2) == portage_tmpdir)
+    match = search(rf'(tmpfs on\s+)({PORTAGE_TMPDIR})(\s+type tmpfs)', mount_cmd.decode('utf-8'))
+    return bool(match is not None and match.group(2) == PORTAGE_TMPDIR)
 
 
 def convert2blocks(size: str) -> int:
@@ -151,7 +151,7 @@ def delete_content(fname: Union[str, bytes, int]) -> None:
 def set_portage_tmpdir() -> str:
     """Set system variable."""
     if not environ.get('PORTAGE_TMPDIR', ''):
-        environ['PORTAGE_TMPDIR'] = portage_tmpdir
+        environ['PORTAGE_TMPDIR'] = PORTAGE_TMPDIR
     return environ['PORTAGE_TMPDIR']
 
 
