@@ -49,7 +49,7 @@ def check_upd(local_chk: bool, verbose: int) -> None:
             info('Checking updates...')
         output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
         if verbose > 1:
-            debug(f'Error: {error}')
+            debug(f'Error: {error}')  # type: ignore
         log.write(output.decode('utf-8'))
         log.write(error.decode('utf-8'))
 

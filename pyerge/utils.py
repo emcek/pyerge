@@ -129,12 +129,12 @@ def convert2blocks(size: str) -> int:
         debug(f'Size: {size} Exception: {err}')
     match = search(r'(?i)(\d+)([KMG])', size)
     result = 0
-    if match.group(2).upper() == 'K':
-        result = int(match.group(1))
-    if match.group(2).upper() == 'M':
-        result = int(match.group(1)) * 1024
-    if match.group(2).upper() == 'G':
-        result = int(match.group(1)) * 1024 * 1024
+    if match.group(2).upper() == 'K':  # type: ignore
+        result = int(match.group(1))  # type: ignore
+    if match.group(2).upper() == 'M':  # type: ignore
+        result = int(match.group(1)) * 1024  # type: ignore
+    if match.group(2).upper() == 'G':  # type: ignore
+        result = int(match.group(1)) * 1024 * 1024  # type: ignore
     return result
 
 

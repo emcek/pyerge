@@ -40,7 +40,7 @@ def e_dl() -> str:
                 size = reqex.group(2)
                 break
         else:
-            size = None
+            size = None  # type: ignore
 
     if size == '0 KiB':
         size = 'None'
@@ -134,7 +134,7 @@ def e_upd() -> str:
     conflict_list = regex_conflict.group(1).split(',') if regex_conflict else []
     if total_list:
         list_str = [element.strip() for element in [*total_list, *conflict_list]]
-        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}
+        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}  # type: ignore
         result = ', '.join([f'{v} {map_dict[k]}' for k, v in upd_dict.items() if k in map_dict])
     print(result)
     return result
@@ -149,10 +149,10 @@ def e_raid(raid_id: str) -> str:
     """
     raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
-    out = out.decode('utf-8')
-    reqex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)
+    out = out.decode('utf-8')  # type: ignore
+    reqex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)  # type: ignore
     if reqex is not None:
-        raid = reqex.group(1)
+        raid = reqex.group(1)  # type: ignore
     return raid
 
 
