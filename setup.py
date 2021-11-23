@@ -18,7 +18,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/emcek/pyerge',
     author='Michal Plichta',
-    license='GPLv2',
+    license='MIT',
     entry_points={'console_scripts': ['pye = pyerge.cli:run_parser',
                                       'e_sync = pyerge.tools:e_sync',
                                       'e_dl = pyerge.tools:e_dl',
