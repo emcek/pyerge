@@ -85,6 +85,16 @@ def e_eta() -> str:
     return eta
 
 
+def e_sta():
+    """Get current stage of emerging package."""
+    pass
+
+
+def e_prog():
+    """Get current progres of emerging packages."""
+    pass
+
+
 def e_log() -> str:
     """Check next update content."""
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
