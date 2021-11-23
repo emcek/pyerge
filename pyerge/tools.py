@@ -7,12 +7,7 @@ from pyerge.utils import run_cmd
 
 
 def e_sync() -> str:
-    """
-    Fetch date of last sync form logs.
-
-    :return: date as string
-    :rtype: str
-    """
+    """Fetch date of last sync form logs."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'(\d+)(:\s===\sSync completed)', line)
@@ -27,12 +22,7 @@ def e_sync() -> str:
 
 
 def e_dl() -> str:
-    """
-    Fetch size of archives to be download for next system update.
-
-    :return: date as string
-    :rtype: str
-    """
+    """Fetch size of archives to be download for next system update."""
     with open(file=TMERGE_LOGFILE, mode='r', encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
@@ -51,12 +41,7 @@ def e_dl() -> str:
 
 
 def e_curr() -> str:
-    """
-    Get name of the current or last compiled package.
-
-    :return: name of package with version
-    :rtype: str
-    """
+    """Get name of the current or last compiled package."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'Compiling.*\((.*)::', line)
@@ -70,12 +55,7 @@ def e_curr() -> str:
 
 
 def e_eut() -> str:
-    """
-    Get estimated update time.
-
-    :return: estimated update time
-    :rtype: str
-    """
+    """Get estimated update time."""
     with open(file=TMPLOGFILE, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
             reqex = search(r'Estimated update time:\s+(.*)\.', line)
@@ -91,12 +71,7 @@ def e_eut() -> str:
 
 
 def e_eta() -> str:
-    """
-    Get estimated time of compilation of current package.
-
-    :return: time until compilation ends
-    :rtype: str
-    """
+    """Get estimated time of compilation of current package."""
     output, _ = run_cmd('genlop -cn')
     out = output.decode('utf-8')
     eta = ''
