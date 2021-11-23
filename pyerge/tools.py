@@ -121,7 +121,6 @@ def e_log() -> str:
 def e_upd() -> str:
     """Check types and number of packages to update."""
     result = 'Calculating...'
-    # tmerge_logfile = f
     map_dict = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'reinstalls': 'R', 'reinstall': 'R', 'uninstalls': 'Un', 'uninstall': 'Un', 'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
     with open(file=tmerge_logfile, encoding='utf-8') as log_file:
         content = log_file.read()
