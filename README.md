@@ -8,9 +8,9 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/emcek/pyerge?branch=master)](https://bettercodehub.com/)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 
-# pyerge
-* Can mount RAM disk of defined size and emerge inside it
-* Various tools to check and show status for conky
+## pyerge
+*  Can mount RAM disk of defined size and emerge inside it
+*  Various tools to check and show status for conky
 
-# Name
+## name
 It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name and I keep it like that.
