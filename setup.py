@@ -1,4 +1,3 @@
-"""Various tools to emerge and to show status for conky."""
 import io
 from os.path import abspath, dirname, join
 
@@ -10,9 +9,6 @@ here = abspath(dirname(__file__))
 
 with io.open(join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
-
-with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
-    requires = f.read().splitlines()
 
 setup(
     name='pyerge',
@@ -54,7 +50,7 @@ setup(
                  'Topic :: Utilities'],
     keywords='gentoo portage emerge conky linux',
     packages=find_packages(exclude=['tests']),
-    install_requires=requires,
+    install_requires=['bs4'],
     python_requires='>=3.6',
     extras_require={'testing': ['pytest']},
     project_urls={'Bug Reports': 'https://github.com/emcek/pyerge/issues',
