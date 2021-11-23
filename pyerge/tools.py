@@ -15,9 +15,9 @@ def e_sync() -> str:
     """
     with open(file=emerge_logfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
-            match = search(r'(\d+)(:\s===\sSync completed)', line)
-            if match is not None:
-                sync_time = match.group(1)
+            reqex = search(r'(\d+)(:\s===\sSync completed)', line)
+            if reqex is not None:
+                sync_time = reqex.group(1)
                 break
         else:
             return 'Unknown'
@@ -35,9 +35,9 @@ def e_dl() -> str:
     """
     with open(file=tmerge_logfile, mode='r', encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
-            match = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
-            if match is not None:
-                size = match.group(2)
+            reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
+            if reqex is not None:
+                size = reqex.group(2)
                 break
         else:
             size = None
@@ -59,9 +59,9 @@ def e_curr() -> str:
     """
     with open(file=emerge_logfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
-            match = search(r'Compiling.*\((.*)::', line)
-            if match is not None:
-                pack = match.group(1)
+            reqex = search(r'Compiling.*\((.*)::', line)
+            if reqex is not None:
+                pack = reqex.group(1)
                 break
         else:
             pack = ''
@@ -78,9 +78,9 @@ def e_eut() -> str:
     """
     with open(file=tmplogfile, encoding='utf-8') as log_file:
         for line in reversed(list(log_file)):
-            match = search(r'Estimated update time:\s+(.*)\.', line)
-            if match is not None:
-                eut = match.group(1).replace(',', '')
+            reqex = search(r'Estimated update time:\s+(.*)\.', line)
+            if reqex is not None:
+                eut = reqex.group(1).replace(',', '')
                 eut = sub(' minutes| minute', 'min', eut)
                 eut = sub(' hours| hour', 'h', eut)
                 break
@@ -103,9 +103,9 @@ def e_eta() -> str:
     if search(r'Error.*no working merge found', out):
         eta = 'Unknown'
 
-    match = search(r'ETA:\s(.*)\.', out)
-    if match is not None:
-        eta = match.group(1)
+    reqex = search(r'ETA:\s(.*)\.', out)
+    if reqex is not None:
+        eta = reqex.group(1)
     print(eta)
     return eta
 
@@ -127,10 +127,10 @@ def e_upd() -> str:
 
     if search(r'Total: 0 packages, Size of downloads: 0 KiB', content):
         result = "None"
-    search_total = search(r'Total:\s\d*\spackages?\s\((.*)\),.*', content)
-    search_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
-    total_list = search_total.group(1).split(',') if search_total else []
-    conflict_list = search_conflict.group(1).split(',') if search_conflict else []
+    regex_total = search(r'Total:\s\d*\spackages?\s\((.*)\),.*', content)
+    regex_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
+    total_list = regex_total.group(1).split(',') if regex_total else []
+    conflict_list = regex_conflict.group(1).split(',') if regex_conflict else []
     if total_list:
         list_str = [element.strip() for element in [*total_list, *conflict_list]]
         upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}
@@ -149,9 +149,9 @@ def e_raid(raid_id: str) -> str:
     raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
     out = out.decode('utf-8')
-    match = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)
-    if match is not None:
-        raid = match.group(1)
+    reqex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)
+    if reqex is not None:
+        raid = reqex.group(1)
     return raid
 
 
