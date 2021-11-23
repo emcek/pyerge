@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from datetime import datetime
-from re import search, sub
+from re import search, sub, match
 
 from pyerge import emerge_logfile, tmerge_logfile, tmplogfile
 from pyerge.utils import run_cmd
@@ -111,11 +111,33 @@ def e_eta() -> str:
 
 
 def e_log() -> str:
-    """Print next update content."""
+    """Check next update content."""
     with open(file=tmerge_logfile, encoding='utf-8') as log_file:
         content = log_file.read()
     print(content)
     return content
+
+
+def e_upd() -> str:
+    """Check types and number of packages to update."""
+    result = 'Calculating...'
+    # tmerge_logfile = f
+    map_dict = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'reinstalls': 'R', 'reinstall': 'R', 'uninstalls': 'Un', 'uninstall': 'Un', 'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
+    with open(file=tmerge_logfile, encoding='utf-8') as log_file:
+        content = log_file.read()
+
+    if search(r'Total: 0 packages, Size of downloads: 0 KiB', content):
+        result = "None"
+    search_total = search(r'Total:\s\d*\spackages?\s\((.*)\),.*', content)
+    search_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
+    total_list = search_total.group(1).split(',') if search_total else []
+    conflict_list = search_conflict.group(1).split(',') if search_conflict else []
+    if total_list:
+        list_str = [element.strip() for element in [*total_list, *conflict_list]]
+        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}
+        result = ', '.join([f'{v} {map_dict[k]}' for k, v in upd_dict.items() if k in map_dict])
+    print(result)
+    return result
 
 
 def e_raid(raid_id: str) -> str:
