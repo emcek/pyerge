@@ -30,6 +30,7 @@ setup(
                                       'e_eut = pyerge.tools:e_eut',
                                       'e_eta = pyerge.tools:e_eta',
                                       'e_log = pyerge.tools:e_log',
+                                      'e_upd = pyerge.tools:e_upd',
                                       'e_raid = pyerge.tools:run_e_raid',
                                       'glsa = pyerge.glsa:run_glsa']},
     classifiers=['Development Status :: 4 - Beta',
