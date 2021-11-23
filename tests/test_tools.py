@@ -122,7 +122,7 @@ def test_e_upd_total(str_e_upd_total):
 def test_e_upd_conflict(str_e_upd_conflict):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_conflict)):
         result = tools.e_upd()
-    assert result == '327 U, 10 N, 1 NS, 9 R, 2 Un, 2 B'
+    assert result == '327 U, 10 N, 2 NS, 9 R, 2 Un, 2 B'
 
 
 def test_e_raid_match():

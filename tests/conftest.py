@@ -188,7 +188,7 @@ def str_e_upd_conflict():
 [ebuild     U  ] kde-apps/libkgapi-19.08.3:5::gentoo [19.04.3:5::gentoo] USE="nls -debug -test" 229 KiB
 [ebuild     U  ] kde-misc/kio-gdrive-1.2.7:5::gentoo [1.2.6:5::gentoo] USE="handbook kaccounts -debug -test" 46 KiB
 
-Total: 347 packages (327 upgrades, 10 new, 1 in new slot, 9 reinstalls, 2 uninstalls), Size of downloads: 642,505 KiB
+Total: 347 packages (327 upgrades, 10 new, 2 in new slots, 9 reinstalls, 2 uninstalls), Size of downloads: 642,505 KiB
 Conflict: 2 blocks
 """
 
