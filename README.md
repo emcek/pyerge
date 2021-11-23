@@ -9,8 +9,8 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 
 ## pyerge
-  * Can mount RAM disk of defined size and emerge Gentoo packages inside it
-  * Various tools to check and show status for conky
+*   Can mount RAM disk of defined size and emerge Gentoo packages inside it
+*   Various tools to check and show status for conky
 
 ## name
 It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name and I keep it like that.
