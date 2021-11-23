@@ -99,7 +99,6 @@ def e_log() -> str:
     """Check next update content."""
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         content = log_file.read()
-    print(content)
     return content
 
 
