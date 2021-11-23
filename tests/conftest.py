@@ -160,3 +160,35 @@ def html_xlm_as_str():
 def opt_emerge_nonlocal_with_1g():
     from argparse import Namespace
     return Namespace(action='emerge', local=False, size='1G', verbose=2)
+
+
+@fixture
+def str_e_upd_calc():
+    return """"""
+
+
+@fixture
+def str_e_upd_none():
+    return "'Total: 0 packages, Size of downloads: 0 KiB'"
+
+
+@fixture
+def str_e_upd_total():
+    return """[blocks b      ] kde-apps/kcalcore:5 ("kde-apps/kcalcore:5" is blocking kde-frameworks/kcalendarcore-5.64.0)
+[ebuild     U  ] kde-apps/libkgapi-19.08.3:5::gentoo [19.04.3:5::gentoo] USE="nls -debug -test" 229 KiB
+[ebuild     U  ] kde-misc/kio-gdrive-1.2.7:5::gentoo [1.2.6:5::gentoo] USE="handbook kaccounts -debug -test" 46 KiB
+
+Total: 347 packages (327 upgrades, 10 new, 1 in new slot, 9 reinstalls, 2 uninstalls), Size of downloads: 642,505 KiB
+"""
+
+
+@fixture
+def str_e_upd_conflict():
+    return """[blocks b      ] kde-apps/kcalcore:5 ("kde-apps/kcalcore:5" is blocking kde-frameworks/kcalendarcore-5.64.0)
+[ebuild     U  ] kde-apps/libkgapi-19.08.3:5::gentoo [19.04.3:5::gentoo] USE="nls -debug -test" 229 KiB
+[ebuild     U  ] kde-misc/kio-gdrive-1.2.7:5::gentoo [1.2.6:5::gentoo] USE="handbook kaccounts -debug -test" 46 KiB
+
+Total: 347 packages (327 upgrades, 10 new, 1 in new slot, 9 reinstalls, 2 uninstalls), Size of downloads: 642,505 KiB
+Conflict: 2 blocks
+"""
+

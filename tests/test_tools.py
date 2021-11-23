@@ -101,6 +101,30 @@ def test_e_log(str_dl_gt_0):
     assert result == str_dl_gt_0
 
 
+def test_e_upd_calculating(str_e_upd_calc):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_calc)):
+        result = tools.e_upd()
+    assert result == 'Calculating...'
+
+
+def test_e_upd_none(str_e_upd_none):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_none)):
+        result = tools.e_upd()
+    assert result == 'None'
+
+
+def test_e_upd_total(str_e_upd_total):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_total)):
+        result = tools.e_upd()
+    assert result == '327 U, 10 N, 1 NS, 9 R, 2 Un'
+
+
+def test_e_upd_conflict(str_e_upd_conflict):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_conflict)):
+        result = tools.e_upd()
+    assert result == '327 U, 10 N, 1 NS, 9 R, 2 Un, 2 B'
+
+
 def test_e_raid_match():
     with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'Personalities : [linear] [raid0] [raid1] [raid10] [raid6] [raid5] [raid4] \n' \
