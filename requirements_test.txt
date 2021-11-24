@@ -1,4 +1,5 @@
 flake8
+check-manifest
 codacy-coverage
 coveralls
 lxml
