@@ -2,7 +2,7 @@
 [![Python CI](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml/badge.svg?branch=master)](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/emcek/pyerge/badge.svg?branch=master)](https://coveralls.io/github/emcek/pyerge?branch=master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a695786f861e4001b3fc3974f628e09f)](https://www.codacy.com/gh/emcek/pyerge/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=emcek/pyerge&amp;utm_campaign=Badge_Grade)
-[![License](https://img.shields.io/badge/Licence-MIT-blue.svg)](./LICENSE.md)
+[![License](https://img.shields.io/badge/Licence-GPL--2-blue.svg)](./LICENSE.md)
 [![Downloads](https://img.shields.io/github/downloads/emcek/pyerge/total?label=Downloads)](https://github.com/emcek/pyerge/releases)  
 [![image](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue.svg)](https://github.com/emcek/pyerge)
 [![BCH compliance](https://bettercodehub.com/edge/badge/emcek/pyerge?branch=master)](https://bettercodehub.com/)
