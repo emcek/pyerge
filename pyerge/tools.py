@@ -87,11 +87,34 @@ def e_eta() -> str:
 
 def e_sta():
     """Get current stage of emerging package."""
+    # STATUS=`tail -n 15 /var/log/emerge.log |\
+    # grep -iE "Compiling|Cleaning|AUTOCLEAN|completed|search|terminating|rsync" |\
+    # cut -d ' ' -f "2-" |\
+    # grep -Ev 'Finished\.|Cleaning up\.\.\.' |\
+    # tail -n 1`
+    #
+    # #echo "$STATUS"
+    #
+    # if [ "`echo "$STATUS" | grep -i compiling`" != "" ]; then echo Compiling
+    # elif [ "`echo "$STATUS" | grep -i cleaning`" != "" ]; then echo Cleaning
+    # elif [ "`echo "$STATUS" | grep -i autoclean`" != "" ]; then echo Autoclean
+    # elif [ "`echo "$STATUS" | grep -i sync`" != "" ]; then echo Syncing
+    # elif [ "`echo "$STATUS" | grep -i search`" != "" ]; then echo Searching
+    # elif [ "`echo "$STATUS" | grep -i completed`" != "" ]; then echo Completed
+    # elif [ "`echo "$STATUS" | grep -i terminating`" != "" ]; then echo Completed
+    # else echo Script Error!
+    # fi
     pass
 
 
 def e_prog():
     """Get current progres of emerging packages."""
+    # tail -n 50 /var/log/emerge.log |\
+    # tac |\
+    # grep -v "Starting retry" |\
+    # grep -iE '([0-9]* of [0-9]*)' -o -m 1 |\
+    # sed -e 's/\(.*\) of \(.*\)/\1 \2/' |\
+    # awk '{print 100.0*$1/$2}'
     pass
 
 
