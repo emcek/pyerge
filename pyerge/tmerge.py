@@ -93,8 +93,8 @@ def deep_clean(args: List[str], verbose: int, return_code: bytes) -> None:
         output, error = emerge(['-pc'], verbose, build=False)
         if verbose:
             info('Deep clean')
+            info(f'Output details:{output.decode("utf-8")}')
         if verbose > 1:
-            debug(f'Output details:{output.decode("utf-8")}')
             debug(f'Errors details:{error.decode("utf-8")}')
 
 
