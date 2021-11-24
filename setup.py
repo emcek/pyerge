@@ -10,6 +10,9 @@ here = abspath(dirname(__file__))
 with io.open(join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
+with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
+    requires = f.read().splitlines()
+
 setup(
     name='pyerge',
     version=__version__,
@@ -26,8 +29,8 @@ setup(
                                       'e_eut = pyerge.tools:e_eut',
                                       'e_eta = pyerge.tools:e_eta',
                                       'e_log = pyerge.tools:e_log',
-                                      'e_sta = pyerge.tools:e_sta',
-                                      'e_prog = pyerge.tools:e_prog',
+                                      # 'e_sta = pyerge.tools:e_sta',
+                                      # 'e_prog = pyerge.tools:e_prog',
                                       'e_upd = pyerge.tools:e_upd',
                                       'e_raid = pyerge.tools:run_e_raid',
                                       'glsa = pyerge.glsa:run_glsa']},
@@ -50,7 +53,8 @@ setup(
                  'Topic :: Utilities'],
     keywords='gentoo portage emerge conky linux',
     packages=find_packages(exclude=['tests']),
-    install_requires=['bs4'],
+    install_requires=requires,
+    include_package_data=True,
     python_requires='>=3.6',
     extras_require={'testing': ['pytest']},
     project_urls={'Bug Reports': 'https://github.com/emcek/pyerge/issues',
