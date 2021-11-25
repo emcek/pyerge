@@ -107,15 +107,16 @@ def e_sta():
     pass
 
 
-def e_prog():
+def e_prog() -> float:
     """Get current progres of emerging packages."""
-    # tail -n 50 /var/log/emerge.log |\
-    # tac |\
-    # grep -v "Starting retry" |\
-    # grep -iE '([0-9]* of [0-9]*)' -o -m 1 |\
-    # sed -e 's/\(.*\) of \(.*\)/\1 \2/' |\
-    # awk '{print 100.0*$1/$2}'
-    pass
+    result = 100.0
+    with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
+        emerge_log = ''.join(list(log_file)[::-1][:51])
+    regex = search(r'\(([0-9]*)\sof\s([0-9]*)\)', emerge_log)
+    if regex is not None:
+        result = round(100.0 * int(regex.group(1)) / int(regex.group(2)), 4)
+        print(result)
+    return result
 
 
 def e_log() -> str:
