@@ -214,3 +214,74 @@ def str_e_prog_1_1():
 1637631930:  === (1 of 1) Compiling/Merging (dev-python/pyerge-0.4.0::/usr/local/portage/dev-python/pyerge/pyerge-0.4.0.ebuild)
 1637631937:  === (1 of 1) Merging (dev-python/pyerge-0.4.0::/usr/local/portage/dev-python/pyerge/pyerge-0.4.0.ebuild)
 1637631941:  >>> AUTOCLEAN: dev-python/pyerge:0"""
+
+
+@fixture
+def str_e_sta_compiling():
+    return """sr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618600:  === (4 of 6) Compiling/Merging (dev-perl/Mozilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618606:  === (4 of """
+
+
+@fixture
+def str_e_sta_cleaning():
+    return """Compat-0.130.0-r1 to /
+1637618599:  === (4 of 6) Cleaning (dev-perl/Mozilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618600:  === (4 of 6)"""
+
+
+@fixture
+def str_e_sta_autoclean():
+    return """hesis-6.25.0::/usr/portage/dev-python/hypothesis/hypothesis-6.25.0.ebuild)
+1637618672:  >>> AUTOCLEAN: dev-python/hypothesis:0
+1637618672:  === """
+
+
+@fixture
+def str_e_sta_completed():
+    return """v-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618618:  ::: completed emerge (4 of 6) dev-perl/Mozilla-CA-20999999-r1 to /
+1637618618:  === (5 of 6"""
+
+
+@fixture
+def str_e_sta_search():
+    return """ing.
+1637631776:  *** emerge --regex-search-auto=y --unmerge dev-python/pyerge
+1637631782: === """
+
+
+@fixture
+def str_e_sta_finished():
+    return """othesis-6.25.0 to /
+1637618682:  *** Finished. Cleaning up...
+1637618686:  *** terminating.
+1637631776:  *** em"""
+    
+
+@fixture
+def str_e_sta_rsync():
+    return """pository 'gentoo' into '/usr/portage'...
+1548195587: >>> Starting rsync with rsync://[2a00:1828:a00d:ffff::6]/gentoo-portage
+1548195642: === Sync complete"""
+
+
+@fixture
+def str_e_sta_unmerging():
+    return """perl/Mozilla-CA:0
+1637618610:  === Unmerging... (dev-perl/Mozilla-CA-20999999)
+1637618618:  === (4 of 6"""
+
+
+@fixture
+def str_e_sta_merging():
+    return """zilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618606:  === (4 of 6) Merging (dev-perl/Mozilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
+1637618610:  >>>"""
+
+
+@fixture
+def str_e_sta_unknown():
+    return """portage/eix:0
+1548195548:  === (3 of 3) Updating world file (app-portage/eix-0.33.5)
+1548195548:  === (3 of 3) Post-Build Cle"""
