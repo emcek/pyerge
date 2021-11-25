@@ -257,7 +257,7 @@ def str_e_sta_finished():
 1637618682:  *** Finished. Cleaning up...
 1637618686:  *** terminating.
 1637631776:  *** em"""
-    
+
 
 @fixture
 def str_e_sta_rsync():
