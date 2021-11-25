@@ -31,8 +31,6 @@ def run_parser() -> None:
                         default=False, help='add --quiet/-q to emerge')
     parser.add_argument('-v', '--verbose', action='count', dest='verbose',
                         default=0, help='Increase output verbosity')
-    parser.add_argument('-e', '--elements', action='store', dest='elements', type=int,
-                        default='5', help='number of elements')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
