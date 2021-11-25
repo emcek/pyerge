@@ -1,8 +1,5 @@
-from sys import version_info
 from unittest import mock
 from unittest.mock import mock_open, Mock
-
-from pytest import mark
 
 from pyerge import tools
 
@@ -21,13 +18,20 @@ def test_no_synced(str_no_sync):
         assert tools.e_sync() == 'Unknown'
 
 
-# @mark.skipif(condition=version_info < (3, 7), reason='Run only on Python 3.7+')
+def test_synced_ver1(str_sync):
+    with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
+        result = tools.e_sync()
+
+    m.assert_called_once_with(file='/var/log/emerge.log', encoding='utf-8')
+    assert result == 'Tuesday 22:01'
+
+
 def test_synced_ver2(str_sync):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
         result = tools.e_sync()
 
     m.assert_called_once_with(file='/var/log/emerge.log', encoding='utf-8')
-    assert result == 'Tuesday 22:01' or 'Tuesday 23:01'
+    assert result == 'Tuesday 23:01'
 
 
 def test_e_dl_gt_zero(str_dl_gt_0):
