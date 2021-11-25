@@ -132,18 +132,11 @@ def test_e_sta_autoclean(str_e_sta_autoclean):
         assert tools.e_sta() == 'Autoclean'
 
 
-def test_e_sta_completed(str_e_sta_completed):
+def test_e_sta_completed_emerge(str_e_sta_completed_emerge):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
-        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_completed.split('\n'))))
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_completed_emerge.split('\n'))))
         assert tools.e_sta() == 'Completed'
-
-
-def test_e_sta_search(str_e_sta_search):
-    with mock.patch('pyerge.tools.open') as open_mock:
-        open_mock.return_value.__enter__ = open_mock
-        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_search.split('\n'))))
-        assert tools.e_sta() == 'Searching'
 
 
 def test_e_sta_finished(str_e_sta_finished):
@@ -153,11 +146,18 @@ def test_e_sta_finished(str_e_sta_finished):
         assert tools.e_sta() == 'Finished'
 
 
-def test_e_sta_rysnc(str_e_sta_rsync):
+def test_e_sta_starting_rysnc(str_e_sta_starting_rsync):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
-        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_rsync.split('\n'))))
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_starting_rsync.split('\n'))))
         assert tools.e_sta() == "Syncing"
+
+
+def test_e_sta_rysnc_completed(str_e_sta_sync_completed):
+    with mock.patch('pyerge.tools.open') as open_mock:
+        open_mock.return_value.__enter__ = open_mock
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_sync_completed.split('\n'))))
+        assert tools.e_sta() == "Synced"
 
 
 def test_e_sta_unmerging(str_e_sta_unmerging):
@@ -172,6 +172,13 @@ def test_e_sta_merging(str_e_sta_merging):
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_merging.split('\n'))))
         assert tools.e_sta() == 'Merging'
+
+
+def test_e_sta_unmerge(str_e_sta_unmerge):
+    with mock.patch('pyerge.tools.open') as open_mock:
+        open_mock.return_value.__enter__ = open_mock
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_unmerge.split('\n'))))
+        assert tools.e_sta() == 'Unmerge'
 
 
 def test_e_sta_unknown(str_e_sta_unknown):

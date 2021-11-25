@@ -88,11 +88,11 @@ def e_eta() -> str:
 def e_sta() -> str:
     """Get current stage of emerging package."""
     result = 'Unknown'
-    map_dict = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean', 'completed': 'Completed',
-                'search': 'Searching', 'Finished': 'Finished', 'terminating': 'Completed', 'rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging'}
+    map_dict = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean', 'completed emerge': 'Completed', 'Finished': 'Finished',
+                'Sync completed': 'Synced', 'Starting rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging', 'unmerge': 'Unmerge'}
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         emerge_log = ''.join(list(log_file)[::-1][:16])
-    regex = search(r'(Compiling|Cleaning|AUTOCLEAN|completed|search|Finished|rsync|Unmerging|Merging)', emerge_log)
+    regex = search(r'(Compiling|Cleaning|AUTOCLEAN|completed\semerge|Finished|Starting\srsync|Sync\scompleted|Unmerging|Merging|unmerge)', emerge_log)
     if regex is not None:
         result = map_dict[regex.group(1)]
     print(result)

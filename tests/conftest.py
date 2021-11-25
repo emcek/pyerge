@@ -238,17 +238,10 @@ def str_e_sta_autoclean():
 
 
 @fixture
-def str_e_sta_completed():
+def str_e_sta_completed_emerge():
     return """v-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
 1637618618:  ::: completed emerge (4 of 6) dev-perl/Mozilla-CA-20999999-r1 to /
 1637618618:  === (5 of 6"""
-
-
-@fixture
-def str_e_sta_search():
-    return """ing.
-1637631776:  *** emerge --regex-search-auto=y --unmerge dev-python/pyerge
-1637631782: === """
 
 
 @fixture
@@ -260,10 +253,18 @@ def str_e_sta_finished():
 
 
 @fixture
-def str_e_sta_rsync():
+def str_e_sta_starting_rsync():
     return """pository 'gentoo' into '/usr/portage'...
 1548195587: >>> Starting rsync with rsync://[2a00:1828:a00d:ffff::6]/gentoo-portage
-1548195642: === Sync complete"""
+1548195642: === Sync com"""
+
+
+@fixture
+def str_e_sta_sync_completed():
+    return """1604197444: >>> Syncing repository 'gentoo' into '/usr/portage'...
+1604197446: >>> Starting rsync with rsync://[2001:470:1f14:104f::2]/gentoo-portage
+1604197788: === Sync completed for gentoo
+1604197788: >>> Syncing repository 'tor"""
 
 
 @fixture
@@ -278,6 +279,14 @@ def str_e_sta_merging():
     return """zilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
 1637618606:  === (4 of 6) Merging (dev-perl/Mozilla-CA-20999999-r1::/usr/portage/dev-perl/Mozilla-CA/Mozilla-CA-20999999-r1.ebuild)
 1637618610:  >>>"""
+
+
+@fixture
+def str_e_sta_unmerge():
+    return """erging... (dev-perl/Tie-IxHash-1.230.0)
+1604167130:  >>> unmerge success: dev-perl/Tie-IxHash-1.230.0
+1604167130:  *** exiting successfully.
+1604167131:  *** terminating."""
 
 
 @fixture
