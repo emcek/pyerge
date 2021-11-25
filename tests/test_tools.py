@@ -101,6 +101,20 @@ def test_e_log(str_dl_gt_0):
     assert result == str_dl_gt_0
 
 
+def test_e_prog_5_of_6(str_e_prog_5_6):
+    with mock.patch('pyerge.tools.open') as open_mock:
+        open_mock.return_value.__enter__ = open_mock
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_prog_5_6.split('\n'))))
+        assert tools.e_prog() == 83.3333
+
+
+def test_e_prog_1_of_1(str_e_prog_1_1):
+    with mock.patch('pyerge.tools.open') as open_mock:
+        open_mock.return_value.__enter__ = open_mock
+        open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_prog_1_1.split('\n'))))
+        assert tools.e_prog() == 100.0
+
+
 def test_e_upd_calculating(str_e_upd_calc):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_e_upd_calc)):
         result = tools.e_upd()
