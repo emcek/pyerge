@@ -192,3 +192,25 @@ Total: 347 packages (327 upgrades, 10 new, 2 in new slots, 9 reinstalls, 2 unins
 Conflict: 2 blocks
 """
 
+
+@fixture
+def str_e_prog_5_6():
+    return """1637618618:  >>> emerge (5 of 6) www-client/vivaldi-4.3.2439.71-r1 to /
+1637618618:  === (5 of 6) Cleaning (www-client/vivaldi-4.3.2439.71-r1::/usr/portage/www-client/vivaldi/vivaldi-4.3.2439.71-r1.ebuild)
+1637618619:  === (5 of 6) Compiling/Merging (www-client/vivaldi-4.3.2439.71-r1::/usr/portage/www-client/vivaldi/vivaldi-4.3.2439.71-r1.ebuild)
+1637618637:  === (5 of 6) Merging (www-client/vivaldi-4.3.2439.71-r1::/usr/portage/www-client/vivaldi/vivaldi-4.3.2439.71-r1.ebuild)
+1637618646:  >>> AUTOCLEAN: www-client/vivaldi:0
+1637618646:  === Unmerging... (www-client/vivaldi-4.3.2439.63)
+1637618651:  >>> unmerge success: www-client/vivaldi-4.3.2439.63
+1637618659:  === (5 of 6) Post-Build Cleaning (www-client/vivaldi-4.3.2439.71-r1::/usr/portage/www-client/vivaldi/vivaldi-4.3.2439.71-r1.ebuild)
+1637618659:  ::: completed emerge (5 of 6) www-client/vivaldi-4.3.2439.71-r1 to /"""
+
+
+@fixture
+def str_e_prog_1_1():
+    return """1637631921:  *** emerge --regex-search-auto=y dev-python/pyerge
+1637631930:  >>> emerge (1 of 1) dev-python/pyerge-0.4.0 to /
+1637631930:  === (1 of 1) Cleaning (dev-python/pyerge-0.4.0::/usr/local/portage/dev-python/pyerge/pyerge-0.4.0.ebuild)
+1637631930:  === (1 of 1) Compiling/Merging (dev-python/pyerge-0.4.0::/usr/local/portage/dev-python/pyerge/pyerge-0.4.0.ebuild)
+1637631937:  === (1 of 1) Merging (dev-python/pyerge-0.4.0::/usr/local/portage/dev-python/pyerge/pyerge-0.4.0.ebuild)
+1637631941:  >>> AUTOCLEAN: dev-python/pyerge:0"""
