@@ -26,14 +26,6 @@ def test_synced_ver1(str_sync):
     assert result == 'Tuesday 22:01'
 
 
-def test_synced_ver2(str_sync):
-    with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
-        result = tools.e_sync()
-
-    m.assert_called_once_with(file='/var/log/emerge.log', encoding='utf-8')
-    assert result == 'Tuesday 23:01'
-
-
 def test_e_dl_gt_zero(str_dl_gt_0):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
