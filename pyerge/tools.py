@@ -85,26 +85,18 @@ def e_eta() -> str:
     return eta
 
 
-def e_sta():
+def e_sta() -> str:
     """Get current stage of emerging package."""
-    # STATUS=`tail -n 15 /var/log/emerge.log |\
-    # grep -iE "Compiling|Cleaning|AUTOCLEAN|completed|search|terminating|rsync" |\
-    # cut -d ' ' -f "2-" |\
-    # grep -Ev 'Finished\.|Cleaning up\.\.\.' |\
-    # tail -n 1`
-    #
-    # #echo "$STATUS"
-    #
-    # if [ "`echo "$STATUS" | grep -i compiling`" != "" ]; then echo Compiling
-    # elif [ "`echo "$STATUS" | grep -i cleaning`" != "" ]; then echo Cleaning
-    # elif [ "`echo "$STATUS" | grep -i autoclean`" != "" ]; then echo Autoclean
-    # elif [ "`echo "$STATUS" | grep -i sync`" != "" ]; then echo Syncing
-    # elif [ "`echo "$STATUS" | grep -i search`" != "" ]; then echo Searching
-    # elif [ "`echo "$STATUS" | grep -i completed`" != "" ]; then echo Completed
-    # elif [ "`echo "$STATUS" | grep -i terminating`" != "" ]; then echo Completed
-    # else echo Script Error!
-    # fi
-    pass
+    result = 'Unknown'
+    map_dict = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean', 'completed': 'Completed',
+                'search': 'Searching', 'Finished': 'Finished', 'terminating': 'Completed', 'rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging'}
+    with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
+        emerge_log = ''.join(list(log_file)[::-1][:16])
+    regex = search(r'(Compiling|Cleaning|AUTOCLEAN|completed|search|Finished|rsync|Unmerging|Merging)', emerge_log)
+    if regex is not None:
+        result = map_dict[regex.group(1)]
+    print(result)
+    return result
 
 
 def e_prog() -> float:
