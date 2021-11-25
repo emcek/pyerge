@@ -54,6 +54,9 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install -Ur requirements_test.txt
           pip install -Ur requirements.txt
+      - name: Test with pytest
+        run: |
+          python -m pytest
   coverage:
     runs-on: ${{ matrix.os }}
     needs: test
