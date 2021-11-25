@@ -100,7 +100,7 @@ def e_sta() -> str:
 
 
 def e_prog() -> float:
-    """Get current progres of emerging packages."""
+    """Get current progress of emerging packages."""
     result = 100.0
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         emerge_log = ''.join(list(log_file)[::-1][:51])
