@@ -21,7 +21,7 @@ def test_no_synced(str_no_sync):
         assert tools.e_sync() == 'Unknown'
 
 
-@mark.skipif(condition=version_info < (3, 7), reason='Run only on Python 3.7+')
+# @mark.skipif(condition=version_info < (3, 7), reason='Run only on Python 3.7+')
 def test_synced_ver2(str_sync):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
         result = tools.e_sync()
