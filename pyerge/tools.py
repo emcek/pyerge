@@ -9,7 +9,7 @@ from pyerge.utils import run_cmd
 def e_sync() -> str:
     """Fetch date of last sync form logs."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
-        for line in reversed(list(log_file)):
+        for line in list(log_file)[::-1]:
             reqex = search(r'(\d+)(:\s===\sSync completed)', line)
             if reqex is not None:
                 sync_time = reqex.group(1)
@@ -24,7 +24,7 @@ def e_sync() -> str:
 def e_dl() -> str:
     """Fetch size of archives to be download for next system update."""
     with open(file=TMERGE_LOGFILE, mode='r', encoding='utf-8') as log_file:
-        for line in reversed(list(log_file)):
+        for line in list(log_file)[::-1]:
             reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
             if reqex is not None:
                 size = reqex.group(2)
@@ -43,7 +43,7 @@ def e_dl() -> str:
 def e_curr() -> str:
     """Get name of the current or last compiled package."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
-        for line in reversed(list(log_file)):
+        for line in list(log_file)[::-1]:
             reqex = search(r'Compiling.*\((.*)::', line)
             if reqex is not None:
                 pack = reqex.group(1)
@@ -57,7 +57,7 @@ def e_curr() -> str:
 def e_eut() -> str:
     """Get estimated update time."""
     with open(file=TMPLOGFILE, encoding='utf-8') as log_file:
-        for line in reversed(list(log_file)):
+        for line in list(log_file)[::-1]:
             reqex = search(r'Estimated update time:\s+(.*)\.', line)
             if reqex is not None:
                 eut = reqex.group(1).replace(',', '')
