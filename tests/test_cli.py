@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from pytest import raises
+from pytest import raises, mark
 
 
 def test_cli_system_exit():
@@ -24,7 +24,15 @@ def test_main_exec_portage_is_running():
         is_portage_running_mock.assert_called_once()
 
 
-def test_main_exec_portage_is_not_running():
+@mark.parametrize('ns_args, emerge_opts, result',
+                  [({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': True}, ['-pvNDu', '@world'], ['-pvNDu', '@world'])])
+def test_emerge_opts_world(ns_args, emerge_opts, result):
     from pyerge import utils, tmerge
     from argparse import Namespace
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, \
@@ -34,16 +42,15 @@ def test_main_exec_portage_is_not_running():
             patch.object(tmerge, 'is_portage_running') as is_portage_running_mock, \
             patch.object(tmerge, 'run_emerge') as run_emerge_mock, \
             patch.object(tmerge, 'run_check') as run_check_mock:
-        is_internet_connected_mock.return_value = True
+        is_internet_connected_mock.return_value = False
         is_portage_running_mock.return_value = False
         from pyerge import cli
-        opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=True)
-        emerge_opts = ['']
+        opts = Namespace(**ns_args)
         cli.main_exec(opts, emerge_opts)
         is_internet_connected_mock.assert_called_once_with(opts.verbose)
         set_portage_tmpdir_mock.assert_called_once()
         handling_mounting_mock.assert_called_once_with(opts)
         unmounttmpfs_mock.assert_called_once_with(opts)
         is_portage_running_mock.assert_called_once()
-        run_emerge_mock.assert_called_once_with(emerge_opts, opts)
+        run_emerge_mock.assert_called_once_with(result, opts)
         run_check_mock.assert_called_once_with(opts)
