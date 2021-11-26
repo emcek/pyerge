@@ -13,7 +13,7 @@ def test_cli_system_exit():
 def test_run_parser_with_correct_action():
     from argparse import Namespace, ArgumentParser
     with patch.object(ArgumentParser, 'parse_known_args') as argument_parser_mock, patch('pyerge.cli.main_exec') as main_exec_mock:
-        opts = Namespace(action='emerge', world=True, verbose=0, quiet=True)
+        opts = Namespace(action='emerge', world=True, verbose=1, quiet=True)
         emerge_opts = ['-NDu', '@world']
         argument_parser_mock.return_value = (opts, emerge_opts)
         from pyerge import cli
@@ -28,10 +28,10 @@ def test_main_exec_portage_is_running():
         is_internet_connected_mock.return_value = True
         is_portage_running_mock.return_value = True
         from pyerge import cli
-        opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=True)
+        opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=0)
         emerge_opts = ['']
         cli.main_exec(opts, emerge_opts)
-        is_internet_connected_mock.assert_called_once_with(opts.verbose)
+        is_internet_connected_mock.assert_called_once_with()
         is_portage_running_mock.assert_called_once()
 
 
@@ -57,7 +57,7 @@ def test_emerge_opts_world(ns_args, emerge_opts, result):
         from pyerge import cli
         opts = Namespace(**ns_args)
         cli.main_exec(opts, emerge_opts)
-        is_internet_connected_mock.assert_called_once_with(opts.verbose)
+        is_internet_connected_mock.assert_called_once_with()
         set_portage_tmpdir_mock.assert_called_once()
         handling_mounting_mock.assert_called_once_with(opts)
         unmounttmpfs_mock.assert_called_once_with(opts)

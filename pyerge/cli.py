@@ -53,7 +53,7 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     if opts.quiet:
         emerge_opts[0] += 'q' if emerge_opts[0][0] == '-' else '-q'
     info(f'Pyerge version: {__version__}')
-    opts.online = utils.is_internet_connected(opts.verbose)
+    opts.online = utils.is_internet_connected()
 
     if not tmerge.is_portage_running():
         utils.set_portage_tmpdir()

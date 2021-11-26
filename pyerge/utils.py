@@ -30,12 +30,11 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mounttmpfs(size: str, verbose: int) -> None:
+def mounttmpfs(size: str) -> None:
     """
     Mount directory with size as tmp file system in RAM.
 
     :param size: with unit K, M, G
-    :param verbose: be verbose
     """
     info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
@@ -54,12 +53,11 @@ def unmounttmpfs(opts: Namespace) -> None:
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
-def remounttmpfs(size: str, verbose: int) -> None:
+def remounttmpfs(size: str) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
     :param size: with unit K, M, G
-    :param verbose: be verbose
     """
     info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
@@ -68,11 +66,10 @@ def remounttmpfs(size: str, verbose: int) -> None:
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
 
 
-def is_internet_connected(verbose: int) -> bool:
+def is_internet_connected() -> bool:
     """
     Check if there is connection to internet.
 
-    :param verbose: be verbose
     :return: True is connected, False otherwise
     """
     cmd, _ = run_cmd('ping -W1 -c1 89.16.167.134')
@@ -149,8 +146,8 @@ def handling_mounting(opts: Namespace) -> None:
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if not is_tmpfs_mounted():
-            mounttmpfs(opts.size, opts.verbose)
+            mounttmpfs(opts.size)
         elif size_of_mounted_tmpfs() != convert2blocks(opts.size):
-            remounttmpfs(opts.size, opts.verbose)
+            remounttmpfs(opts.size)
         else:
             info('tmpfs is already mounted with requested size!')

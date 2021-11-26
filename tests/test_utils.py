@@ -42,14 +42,14 @@ def test_unmounttmpfs(opt_emerge_nonlocal_with_1g):
 def test_mounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mounttmpfs(size='2G', verbose=2)
+        utils.mounttmpfs(size='2G')
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
 def test_remounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs(size='2G', verbose=2)
+        utils.remounttmpfs(size='2G')
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                        mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
@@ -81,14 +81,14 @@ def test_is_internet_connected():
                                     b'--- 89.16.167.134 ping statistics ---\n' \
                                     b'1 packets transmitted, 1 received, 0% packet loss, time 0ms\n' \
                                     b'rtt min/avg/max/mdev = 52.212/52.212/52.212/0.000 ms\n', b''
-        assert utils.is_internet_connected(verbose=2) is True
+        assert utils.is_internet_connected() is True
 
 
 def test_is_internet_not_connected():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'', b''
-        assert utils.is_internet_connected(verbose=2) is False
+        assert utils.is_internet_connected() is False
 
 
 def test_delete_content():

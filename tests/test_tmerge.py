@@ -25,12 +25,12 @@ def test_deep_clean_run():
             patch('pyerge.tmerge.emerge') as emerge_mock, \
             patch('pyerge.tmerge.deep_run') as deep_run_mock:
         from pyerge import tmerge
-        opts = Namespace(verbose=2)
+        opts = Namespace()
         output_and_rc = b'0'
         check_emerge_opts_mock.return_value = (False, True)
         emerge_mock.return_value = (output_and_rc, output_and_rc)
         tmerge.deep_clean([''], opts, output_and_rc)
-        emerge_mock.assert_called_once_with(['-pc'], opts.verbose, build=False)
+        emerge_mock.assert_called_once_with(['-pc'], build=False)
         deep_run_mock.assert_called_once_with(opts, output_and_rc)
 
 
@@ -55,9 +55,9 @@ def test_deep_run_output_with_two_packages():
     with patch('pyerge.tmerge.emerge') as emerge_mock:
         from pyerge import tmerge
         output = b'\n\nAll selected packages: =sys-kernel/gentoo-sources-5.10.76-r1 =dev-python/hypothesis-6.27.1\n\n'
-        opts = Namespace(deep_run=True, verbose=2)
+        opts = Namespace(deep_run=True)
         tmerge.deep_run(opts=opts, output=output)
-        emerge_mock.assert_called_once_with(['-c', '=dev-python/hypothesis-6.27.1'], opts.verbose, build=True)
+        emerge_mock.assert_called_once_with(['-c', '=dev-python/hypothesis-6.27.1'], build=True)
 
 
 def test_deep_run_output_with_only_gentoo():
@@ -105,9 +105,9 @@ def test_run_emerge():
         emerge_mock.return_value = (ret_code, b'')
         from pyerge import tmerge
         emerge_opts = ['-NDu', '@world']
-        opts = Namespace(action='emerge', online=True, verbose=2, deep_print=True)
+        opts = Namespace(action='emerge', online=True, deep_print=True)
         tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
-        post_emerge_mock.assert_called_once_with(emerge_opts, opts.verbose, ret_code)
+        post_emerge_mock.assert_called_once_with(emerge_opts, ret_code)
         deep_clean.assert_called_once_with(emerge_opts, opts, ret_code)
 
 
@@ -115,6 +115,6 @@ def test_run_check():
     from argparse import Namespace
     with patch('pyerge.tmerge.check_upd') as check_upd_mock:
         from pyerge import tmerge
-        opts = Namespace(action='check', local=True, verbose=2, online=True)
+        opts = Namespace(action='check', local=True, online=True)
         tmerge.run_check(opts)
-        check_upd_mock.assert_called_once_with(opts.local, opts.verbose)
+        check_upd_mock.assert_called_once_with(opts.local)
