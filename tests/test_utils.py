@@ -88,7 +88,7 @@ def test_delete_content():
         open_mock.assert_called_once_with(file='/tmp/emerge.log', mode='w', encoding='utf-8')
 
 
-def test_run_cmd_as_subprocess():
+def test_run_cmd_as_subprocess_ver1():
     with mock.patch('pyerge.utils.Popen') as popen_mock:
         process_mock = mock.Mock()
         attrs = {'communicate.return_value': (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
@@ -98,6 +98,17 @@ def test_run_cmd_as_subprocess():
         assert utils.run_cmd(cmd='df') == (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
                                            b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')
         popen_mock.assert_called_once_with(['df'], stderr=-1, stdout=-1)
+
+
+def test_run_cmd_as_subprocess_ver2():
+    from subprocess import Popen
+    with mock.patch.object(Popen, 'communicate') as communicate_mock:
+        out = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
+              b'/dev/sda2          126931    76647      43731  64% /boot\n'
+        err = b''
+        communicate_mock.return_value = (out, err)
+        assert utils.run_cmd(cmd='df') == (out, err)
+        communicate_mock.assert_called_once_with()
 
 
 def test_run_cmd_as_sysyem():
