@@ -38,6 +38,7 @@ def test_main_exec_portage_is_running():
 
 
 def test_main_exec_portage_is_not_running():
+    from pyerge import utils, tmerge
     from argparse import Namespace
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, \
             patch.object(utils, 'set_portage_tmpdir') as set_portage_tmpdir_mock, \
