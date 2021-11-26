@@ -127,15 +127,9 @@ def convert2blocks(size: str) -> int:
         return int(float(size))
     except ValueError as err:
         debug(f'Size: {size} Exception: {err}')
-    match = search(r'(?i)(\d+)([KMG])', size)
-    result = 0
-    if match.group(2).upper() == 'K':  # type: ignore
-        result = int(match.group(1))  # type: ignore
-    if match.group(2).upper() == 'M':  # type: ignore
-        result = int(match.group(1)) * 1024  # type: ignore
-    if match.group(2).upper() == 'G':  # type: ignore
-        result = int(match.group(1)) * 1024 * 1024  # type: ignore
-    return result
+    regex = search(r'(?i)(\d+)([KMG])', size)
+    map_dict = {'K': 1, 'M': 1024, 'G': 1024 * 1024}
+    return int(regex.group(1)) * map_dict[regex.group(2).upper()]
 
 
 def delete_content(fname: Union[str, bytes, int]) -> None:
