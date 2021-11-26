@@ -8,12 +8,10 @@ def test_cli_system_exit():
     with raises(SystemExit) as sys_mock:
         from pyerge import cli
         cli.run_parser()
-    # assert sys_mock.type == SystemExit
-    assert isinstance(sys_mock.value, SystemExit)
-    assert sys_mock.value.code == 1 or 2
+    assert sys_mock.value.code > 0
 
 
-def test_main_exec():
+def test_main_exec_portage_is_running():
     from argparse import Namespace
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, patch.object(tmerge, 'is_portage_running') as is_portage_running_mock:
         is_internet_connected_mock.return_value = True
