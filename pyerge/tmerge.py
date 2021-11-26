@@ -1,5 +1,6 @@
 from argparse import Namespace
 from logging import debug, info
+from re import search
 from time import strftime
 from typing import List, Tuple
 
@@ -80,22 +81,42 @@ def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
             log.write('Total: 0 packages, Size of downloads: 0 KiB')
 
 
-def deep_clean(args: List[str], verbose: int, return_code: bytes) -> None:
+def deep_clean(args: List[str], opts: Namespace, return_code: bytes) -> None:
     """
     Run deep clean after emerge.
 
     :param args:
-    :param verbose:
+    :param opts:
     :param return_code:
     """
     pretend, world = check_emerge_opts(args)
     if not int(return_code) and not pretend and world:
-        output, error = emerge(['-pc'], verbose, build=False)
-        if verbose:
+        output, error = emerge(['-pc'], opts.verbose, build=False)
+        if opts.verbose:
             info('Deep clean')
             info(f'Output details:{output.decode("utf-8")}')
-        if verbose > 1:
+        if opts.verbose > 1:
             debug(f'Errors details:{error.decode("utf-8")}')
+        deep_run(opts, output)
+
+
+def deep_run(opts: Namespace, output: bytes):
+    """
+    Run deep clean emegre without gent0o sources.
+
+    :param opts:
+    :param output:
+    """
+    if opts.deep_run:
+        regexp = search(r'All selected packages:\s(.*)\n', output.decode('utf-8'))
+        if regexp is not None:
+            package_list = [package for package in regexp.group(1).split(' ') if 'gentoo-sources' not in package]
+            if package_list:
+                debug(f'Cleaning {len(package_list)} packages')
+                emerge(['-c'] + package_list, opts.verbose, build=True)
+            else:
+                info('Nothing to clean')
+                debug(f'All packages: {regexp.group(1)}')
 
 
 def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
@@ -134,8 +155,8 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
     if opts.action == 'emerge' and opts.online:
         ret_code, _ = emerge(emerge_opts, opts.verbose, build=True)
         post_emerge(emerge_opts, opts.verbose, ret_code)
-        if opts.deep:
-            deep_clean(emerge_opts, opts.verbose, ret_code)
+        if opts.deep_print or opts.deep_run:
+            deep_clean(emerge_opts, opts, ret_code)
 
 
 def run_check(opts: Namespace) -> None:
