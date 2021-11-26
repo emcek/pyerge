@@ -25,10 +25,8 @@ def run_parser() -> None:
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
-    level = INFO
-    if opts.verbose:
-        level = DEBUG
-    elif opts.quiet:
+    level = DEBUG if opts.verbose else INFO
+    if opts.quiet:
         level = ERROR
     basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=level)
     if opts.action not in ['check', 'emerge']:
