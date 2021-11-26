@@ -33,8 +33,8 @@ def test_main_exec_2():
         opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=True)
         emerge_opts = ['']
         cli.main_exec(opts, emerge_opts)
-        utils_is_internet_connected_mock.assert_called_once_with(opts.verbose)
-        tmerge_is_portage_running_mock.assert_called_once()
+        utils_is_internet_connected_mock.is_internet_connected.assert_called_once_with(opts.verbose)
+        tmerge_is_portage_running_mock.is_portage_running.assert_called_once()
 
 
 def test_main_exec_portage_is_not_running():
