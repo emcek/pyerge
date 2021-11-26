@@ -1,7 +1,6 @@
 from unittest.mock import patch
 
 from pytest import raises
-from pyerge import utils, tmerge
 
 
 def test_cli_system_exit():
@@ -12,6 +11,7 @@ def test_cli_system_exit():
 
 
 def test_main_exec_portage_is_running():
+    from pyerge import utils, tmerge
     from argparse import Namespace
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, patch.object(tmerge, 'is_portage_running') as is_portage_running_mock:
         is_internet_connected_mock.return_value = True
