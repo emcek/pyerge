@@ -3,6 +3,41 @@ from unittest.mock import patch
 from pytest import mark
 
 
+@mark.parametrize('return_code, pretend, world',
+                  [(b'0', False, False),
+                   (b'0', True, False),
+                   (b'0', True, True),
+                   (b'1', False, False),
+                   (b'1', False, True),
+                   (b'1', True, False),
+                   (b'1', True, True)])
+def test_deep_clean_not_run(return_code, pretend, world):
+    from argparse import Namespace
+    with patch('pyerge.tmerge.check_emerge_opts') as check_emerge_opts_mock, \
+            patch('pyerge.tmerge.emerge') as emerge_mock, \
+            patch('pyerge.tmerge.deep_run') as deep_run_mock:
+        from pyerge import tmerge
+        check_emerge_opts_mock.return_value = (pretend, world)
+        tmerge.deep_clean([''], Namespace(), return_code)
+        emerge_mock.assert_not_called()
+        deep_run_mock.assert_not_called()
+
+
+def test_deep_clean_run():
+    from argparse import Namespace
+    with patch('pyerge.tmerge.check_emerge_opts') as check_emerge_opts_mock, \
+            patch('pyerge.tmerge.emerge') as emerge_mock, \
+            patch('pyerge.tmerge.deep_run') as deep_run_mock:
+        from pyerge import tmerge
+        opts = Namespace(verbose=2)
+        output_and_rc = b'0'
+        check_emerge_opts_mock.return_value = (False, True)
+        emerge_mock.return_value = (output_and_rc, output_and_rc)
+        tmerge.deep_clean([''], opts, output_and_rc)
+        emerge_mock.assert_called_once_with(['-pc'], opts.verbose, build=False)
+        deep_run_mock.assert_called_once_with(opts, output_and_rc)
+
+
 def test_deep_run_not_selected():
     from argparse import Namespace
     with patch('pyerge.tmerge.emerge') as emerge_mock:
@@ -67,15 +102,17 @@ def test_is_portage_not_running():
 
 def test_run_emerge():
     from argparse import Namespace
-    with patch('pyerge.tmerge.emerge') as emerge_mock, patch('pyerge.tmerge.post_emerge') as postemerge_mock, patch('pyerge.tmerge.deep_clean') as clean_mock:
+    with patch('pyerge.tmerge.emerge') as emerge_mock, \
+            patch('pyerge.tmerge.post_emerge') as post_emerge_mock, \
+            patch('pyerge.tmerge.deep_clean') as deep_clean:
         ret_code = b'0'
         emerge_mock.return_value = (ret_code, b'')
         from pyerge import tmerge
         emerge_opts = ['-NDu', '@world']
         opts = Namespace(action='emerge', online=True, verbose=2, deep_print=True)
         tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
-        postemerge_mock.assert_called_once_with(emerge_opts, opts.verbose, ret_code)
-        clean_mock.assert_called_once_with(emerge_opts, opts, ret_code)
+        post_emerge_mock.assert_called_once_with(emerge_opts, opts.verbose, ret_code)
+        deep_clean.assert_called_once_with(emerge_opts, opts, ret_code)
 
 
 def test_run_check():
