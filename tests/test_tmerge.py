@@ -3,6 +3,42 @@ from unittest import mock
 from pytest import mark
 
 
+def test_deep_run_not_selected():
+    from argparse import Namespace
+    with mock.patch('pyerge.tmerge.emerge') as emerge_mock:
+        from pyerge import tmerge
+        tmerge.deep_run(opts=Namespace(deep_run=False), output=b'')
+        emerge_mock.assert_not_called()
+
+
+def test_deep_run_wrong_output():
+    from argparse import Namespace
+    with mock.patch('pyerge.tmerge.emerge') as emerge_mock:
+        from pyerge import tmerge
+        tmerge.deep_run(opts=Namespace(deep_run=True), output=b'All selected packages: ')
+        emerge_mock.assert_not_called()
+
+
+def test_deep_run_output_with_two_packages():
+    from argparse import Namespace
+    with mock.patch('pyerge.tmerge.emerge') as emerge_mock:
+        from pyerge import tmerge
+        output = b'\n\nAll selected packages: =sys-kernel/gentoo-sources-5.10.76-r1 =dev-python/hypothesis-6.27.1\n\n'
+        opts = Namespace(deep_run=True, verbose=2)
+        tmerge.deep_run(opts=opts, output=output)
+        emerge_mock.assert_called_once_with(['-c', '=dev-python/hypothesis-6.27.1'], opts.verbose, build=True)
+
+
+def test_deep_run_output_with_only_gentoo():
+    from argparse import Namespace
+    with mock.patch('pyerge.tmerge.emerge') as emerge_mock:
+        from pyerge import tmerge
+        output = b'\n\nAll selected packages: =sys-kernel/gentoo-sources-5.10.76-r1\n\n'
+        opts = Namespace(deep_run=True)
+        tmerge.deep_run(opts=opts, output=output)
+        emerge_mock.assert_not_called()
+
+
 @mark.parametrize('list_str, result', [(['-pvNDu', '@world'], (True, True)),
                                        (['-pv', 'conky'], (True, False)),
                                        (['-f', 'conky'], (False, False)),
