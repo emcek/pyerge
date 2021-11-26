@@ -10,6 +10,17 @@ def test_cli_system_exit():
     assert sys_mock.value.code > 0
 
 
+def test_run_parser_with_correct_action():
+    from argparse import Namespace, ArgumentParser
+    with patch.object(ArgumentParser, 'parse_known_args') as argument_parser_mock, patch('pyerge.cli.main_exec') as main_exec_mock:
+        opts = Namespace(action='emerge', world=True)
+        emerge_opts = ['-NDu', '@world']
+        argument_parser_mock.return_value = (opts, emerge_opts)
+        from pyerge import cli
+        cli.run_parser()
+        main_exec_mock.assert_called_once_with(opts, emerge_opts)
+
+
 def test_main_exec_portage_is_running():
     from pyerge import utils, tmerge
     from argparse import Namespace
