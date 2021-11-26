@@ -1,6 +1,6 @@
 import sys
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, DEBUG, INFO, CRITICAL, info, error
+from logging import basicConfig, DEBUG, INFO, ERROR, info, error
 from typing import List
 
 from pyerge import tmerge, utils, __version__
@@ -29,7 +29,7 @@ def run_parser() -> None:
     if opts.verbose:
         level = DEBUG
     elif opts.quiet:
-        level = CRITICAL
+        level = ERROR
     basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=level)
     if opts.action not in ['check', 'emerge']:
         error(f'Wrong options: {opts} {emerge_opts}')
