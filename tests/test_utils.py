@@ -102,12 +102,13 @@ def test_run_cmd_as_subprocess_ver1():
     from pyerge import utils
     with mock.patch('pyerge.utils.Popen') as popen_mock:
         process_mock = mock.Mock()
-        attrs = {'communicate.return_value': (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
-                                              b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')}
+        out = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
+              b'/dev/sda2          126931    76647      43731  64% /boot\n'
+        err = b''
+        attrs = {'communicate.return_value': (out, err)}
         process_mock.configure_mock(**attrs)
         popen_mock.return_value = process_mock
-        assert utils.run_cmd(cmd='df') == (b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n'
-                                           b'/dev/sda2          126931    76647      43731  64% /boot\n', b'')
+        assert utils.run_cmd(cmd='df') == (out, err)
         popen_mock.assert_called_once_with(['df'], stderr=-1, stdout=-1)
 
 
