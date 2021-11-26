@@ -15,22 +15,14 @@ def run_parser() -> None:
     Construct main object with correct set of parameters.
     """
     parser = ArgumentParser(description='Emerge in temporary RAM disk')
-    parser.add_argument('-s', '--size', action='store', dest='size',
-                        default='4G', help='Size or RAM disk, default 4G')
-    parser.add_argument('-l', '--check_local', action='store_true', dest='local',
-                        default=False, help='check locally')
-    parser.add_argument('-d', '--deep_clean', action='store_true', dest='deep',
-                        default=False, help='run deep clean after emerge')
-    parser.add_argument('-w', '--world', action='store_true', dest='world',
-                        default=False, help='run emerge -NDu @world')
-    parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world',
-                        default=False, help='run emerge -pvNDu @world')
-    parser.add_argument('-p', '--pretend', action='store_true', dest='pretend',
-                        default=False, help='add --pretend/-p to emerge')
-    parser.add_argument('-q', '--quiet', action='store_true', dest='quiet',
-                        default=False, help='add --quiet/-q to emerge')
-    parser.add_argument('-v', '--verbose', action='count', dest='verbose',
-                        default=0, help='Increase output verbosity')
+    parser.add_argument('-s', '--size', action='store', dest='size', default='4G', help='Size or RAM disk, default 4G')
+    parser.add_argument('-l', '--check_local', action='store_true', dest='local', default=False, help='check locally')
+    parser.add_argument('-d', '--deep_clean', action='store_true', dest='deep', default=False, help='run deep clean after emerge')
+    parser.add_argument('-w', '--world', action='store_true', dest='world', default=False, help='run emerge -NDu @world')
+    parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world', default=False, help='run emerge -pvNDu @world')
+    parser.add_argument('-p', '--pretend', action='store_true', dest='pretend', default=False, help='add --pretend/-p to emerge')
+    parser.add_argument('-q', '--quiet', action='store_true', dest='quiet', default=False, help='add --quiet/-q to emerge')
+    parser.add_argument('-v', '--verbose', action='count', dest='verbose', default=0, help='Increase output verbosity')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
