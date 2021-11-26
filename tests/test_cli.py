@@ -24,17 +24,17 @@ def test_main_exec_portage_is_running():
         is_portage_running_mock.assert_called_once()
 
 
-# def test_main_exec_2():
-#     from argparse import Namespace
-#     with patch('pyerge.cli.utils') as utils_is_internet_connected_mock, patch('pyerge.cli.tmerge') as tmerge_is_portage_running_mock:
-#         utils_is_internet_connected_mock.return_value.is_internet_connected.return_value = True
-#         tmerge_is_portage_running_mock.return_value.is_portage_running.return_value = True
-#         from pyerge import cli
-#         opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=True)
-#         emerge_opts = ['']
-#         cli.main_exec(opts, emerge_opts)
-#         utils_is_internet_connected_mock.assert_called_once_with(opts.verbose)
-#         tmerge_is_portage_running_mock.assert_called_once()
+def test_main_exec_2():
+    from argparse import Namespace
+    with patch('pyerge.cli.utils') as utils_is_internet_connected_mock, patch('pyerge.cli.tmerge') as tmerge_is_portage_running_mock:
+        utils_is_internet_connected_mock.return_value.is_internet_connected.return_value = True
+        tmerge_is_portage_running_mock.return_value.is_portage_running.return_value = True
+        from pyerge import cli
+        opts = Namespace(world=False, pretend_world=False, pretend=False, quiet=False, verbose=True)
+        emerge_opts = ['']
+        cli.main_exec(opts, emerge_opts)
+        utils_is_internet_connected_mock.assert_called_once_with(opts.verbose)
+        tmerge_is_portage_running_mock.assert_called_once()
 
 
 def test_main_exec_portage_is_not_running():
