@@ -8,7 +8,8 @@ def test_cli_system_exit():
     with raises(SystemExit) as sys_mock:
         from pyerge import cli
         cli.run_parser()
-    assert sys_mock.type == SystemExit
+    # assert sys_mock.type == SystemExit
+    assert isinstance(sys_mock.value, SystemExit)
     assert sys_mock.value.code == 1 or 2
 
 
