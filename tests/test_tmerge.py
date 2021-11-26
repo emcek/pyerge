@@ -3,14 +3,10 @@ from unittest.mock import patch
 from pytest import mark
 
 
-@mark.parametrize('return_code, pretend, world',
-                  [(b'0', False, False),
-                   (b'0', True, False),
-                   (b'0', True, True),
-                   (b'1', False, False),
-                   (b'1', False, True),
-                   (b'1', True, False),
-                   (b'1', True, True)])
+@mark.parametrize('return_code, pretend, world', [(b'0', False, False), (b'0', True, False),
+                                                  (b'0', True, True), (b'1', False, False),
+                                                  (b'1', False, True), (b'1', True, False),
+                                                  (b'1', True, True)])
 def test_deep_clean_not_run(return_code, pretend, world):
     from argparse import Namespace
     with patch('pyerge.tmerge.check_emerge_opts') as check_emerge_opts_mock, \
