@@ -37,10 +37,8 @@ def mounttmpfs(size: str, verbose: int) -> None:
     :param size: with unit K, M, G
     :param verbose: be verbose
     """
-    if verbose:
-        info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
-    if verbose > 1:
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
+    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
 
 
@@ -51,10 +49,8 @@ def unmounttmpfs(opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        if opts.verbose:
-            info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
-        if opts.verbose > 1:
-            debug(f'sudo umount -f {PORTAGE_TMPDIR}')
+        info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
+        debug(f'sudo umount -f {PORTAGE_TMPDIR}')
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
@@ -65,13 +61,10 @@ def remounttmpfs(size: str, verbose: int) -> None:
     :param size: with unit K, M, G
     :param verbose: be verbose
     """
-    if verbose:
-        info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
-    if verbose > 1:
-        debug(f'sudo umount -f {PORTAGE_TMPDIR}')
+    info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
+    debug(f'sudo umount -f {PORTAGE_TMPDIR}')
     run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
-    if verbose > 1:
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
     run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
 
 
@@ -85,8 +78,7 @@ def is_internet_connected(verbose: int) -> bool:
     cmd, _ = run_cmd('ping -W1 -c1 89.16.167.134')
     match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
-        if verbose:
-            info('There is internet connecton or not needed')
+        info('There is internet connecton or not needed')
         return True
     warning('No internet connection!')
     return False
@@ -161,5 +153,4 @@ def handling_mounting(opts: Namespace) -> None:
         elif size_of_mounted_tmpfs() != convert2blocks(opts.size):
             remounttmpfs(opts.size, opts.verbose)
         else:
-            if opts.verbose:
-                info('tmpfs is already mounted with requested size!')
+            info('tmpfs is already mounted with requested size!')

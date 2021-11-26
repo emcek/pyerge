@@ -16,13 +16,11 @@ def emerge(arguments: List[str], verbose: int, build=True) -> Tuple[bytes, bytes
     :param build:
     :return:
     """
-    if verbose:
-        info(f"running emerge with: {' '.join(arguments)}")
+    info(f"running emerge with: {' '.join(arguments)}")
     cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}"
     if build:
         return_code, stderr = utils.run_cmd(cmd, use_system=True)
-        if verbose > 1:
-            debug(f'RC: {return_code.decode("utf-8")}, Errors: {stderr.decode("utf-8")}')
+        debug(f'RC: {return_code.decode("utf-8")}, Errors: {stderr.decode("utf-8")}')
         return return_code, stderr
     output, stderr = utils.run_cmd(cmd)
     return output, stderr
@@ -41,26 +39,19 @@ def check_upd(local_chk: bool, verbose: int) -> None:
     with open(file=TMPLOGFILE, mode='w', encoding='utf-8') as tmp, open(file=TMERGE_LOGFILE, mode='w', encoding='utf-8') as log:
         tmp.write(strftime('%a %b %d %H:%M:%S %Z %Y') + '\n')
         if not local_chk:
-            if verbose:
-                info('Start syncing portage...')
-            if verbose > 1:
-                debug(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}')
+            info('Start syncing portage...')
+            debug(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}')
             utils.run_cmd(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}', use_system=True)
-        if verbose:
-            info('Checking updates...')
+        info('Checking updates...')
         output, error = emerge('-pvNDu --color n @world'.split(), verbose, build=False)
-        if verbose > 1:
-            debug(f'Error: {error}')  # type: ignore
+        debug(f'Error: {error}')  # type: ignore
         log.write(output.decode('utf-8'))
         log.write(error.decode('utf-8'))
 
-    if verbose:
-        info('Creating log file...')
-    if verbose > 1:
-        debug(f'cat {TMERGE_LOGFILE} >> {TMPLOGFILE}')
+    info('Creating log file...')
+    debug(f'cat {TMERGE_LOGFILE} >> {TMPLOGFILE}')
     utils.run_cmd(f'cat {TMERGE_LOGFILE} >> {TMPLOGFILE}', use_system=True)
-    if verbose > 1:
-        debug(f'cat {TMERGE_LOGFILE} | genlop -pn >> {TMPLOGFILE}')
+    debug(f'cat {TMERGE_LOGFILE} | genlop -pn >> {TMPLOGFILE}')
     utils.run_cmd(f'cat {TMERGE_LOGFILE} | genlop -pn >> {TMPLOGFILE}', use_system=True)
 
 
@@ -75,8 +66,7 @@ def post_emerge(args: List[str], verbose: int, return_code: bytes) -> None:
     """
     pretend, world = check_emerge_opts(args)
     if not int(return_code) and not pretend and world:
-        if verbose:
-            info('Clearing emerge log')
+        info('Clearing emerge log')
         with open(file=TMPLOGFILE, mode='w', encoding='utf-8'), open(file=TMERGE_LOGFILE, mode='w', encoding='utf-8') as log:
             log.write('Total: 0 packages, Size of downloads: 0 KiB')
 
@@ -92,11 +82,9 @@ def deep_clean(args: List[str], opts: Namespace, return_code: bytes) -> None:
     pretend, world = check_emerge_opts(args)
     if not int(return_code) and not pretend and world:
         output, error = emerge(['-pc'], opts.verbose, build=False)
-        if opts.verbose:
-            info('Deep clean')
-            info(f'Output details:{output.decode("utf-8")}')
-        if opts.verbose > 1:
-            debug(f'Errors details:{error.decode("utf-8")}')
+        info('Deep clean')
+        info(f'Output details:{output.decode("utf-8")}')
+        debug(f'Errors details:{error.decode("utf-8")}')
         deep_run(opts, output)
 
 

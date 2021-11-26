@@ -1,11 +1,9 @@
 import sys
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, DEBUG, info, error
+from logging import basicConfig, DEBUG, INFO, CRITICAL, info, error
 from typing import List
 
 from pyerge import tmerge, utils, __version__
-
-basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=DEBUG)
 
 
 def run_parser() -> None:
@@ -27,6 +25,12 @@ def run_parser() -> None:
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
     opts, emerge_opts = parser.parse_known_args()
+    level = INFO
+    if opts.verbose:
+        level = DEBUG
+    elif opts.quiet:
+        level = CRITICAL
+    basicConfig(format='%(asctime)s | %(levelname)-6s | %(message)s', level=level)
     if opts.action not in ['check', 'emerge']:
         error(f'Wrong options: {opts} {emerge_opts}')
         sys.exit(1)
@@ -48,8 +52,7 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         emerge_opts[0] += 'p' if emerge_opts[0][0] == '-' else '-p'
     if opts.quiet:
         emerge_opts[0] += 'q' if emerge_opts[0][0] == '-' else '-q'
-    if opts.verbose:
-        info(f'Pyerge version: {__version__}')
+    info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected(opts.verbose)
 
     if not tmerge.is_portage_running():
@@ -59,5 +62,4 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         tmerge.run_check(opts)
         utils.unmounttmpfs(opts)
     else:
-        if opts.verbose:
-            info('emerge already running!')
+        info('emerge already running!')
