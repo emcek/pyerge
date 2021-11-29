@@ -1,7 +1,7 @@
 flake8
 check-manifest
 codacy-coverage
-coveralls
+coveralls==3.3.1
 lxml
 mypy
 pydocstyle
