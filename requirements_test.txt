@@ -9,4 +9,4 @@ pycodestyle
 pylint
 pytest-cov
 pytest-mccabe
-pytest-random
+pytest-random==0.02
