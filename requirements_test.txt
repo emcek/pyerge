@@ -8,5 +8,5 @@ pydocstyle
 pycodestyle
 pylint
 pytest-cov
-pytest-mccabe
+pytest-mccabe==2.0
 pytest-random
