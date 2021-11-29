@@ -6,7 +6,7 @@ lxml
 mypy
 pydocstyle
 pycodestyle
-pylint
+pylint==2.12.1
 pytest-cov
 pytest-mccabe
 pytest-random
