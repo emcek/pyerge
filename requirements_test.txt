@@ -5,7 +5,7 @@ coveralls
 lxml
 mypy
 pydocstyle
-pycodestyle
+pycodestyle==2.8.0
 pylint
 pytest-cov
 pytest-mccabe
