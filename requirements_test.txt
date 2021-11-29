@@ -1,4 +1,4 @@
-flake8
+flake8==4.0.1
 check-manifest
 codacy-coverage
 coveralls
