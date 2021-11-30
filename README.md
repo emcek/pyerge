@@ -7,6 +7,7 @@
 [![image](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue.svg)](https://github.com/emcek/pyerge)
 [![BCH compliance](https://bettercodehub.com/edge/badge/emcek/pyerge?branch=master)](https://bettercodehub.com/)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
+[![pyerge](https://snyk.io/advisor/python/pyerge/badge.svg)](https://snyk.io/advisor/python/pyerge)
 
 ## pyerge
 It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it. 
