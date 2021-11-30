@@ -13,13 +13,13 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     """
     Run any system command.
 
-    If use_system is set cmd is run via os.system and function
+    When use_system is set cmd is run via "os.system" and function
     return RC from comand as bytes and b''.
-    If use_system is not set (default) cmd is run via subprocess.Popen and
+    When use_system is not set (default) cmd is run via subprocess.Popen and
     function return cmd stdout and stderr as bytes.
 
     :param cmd: command string
-    :param use_system: os.system use insted of subprocess
+    :param use_system: "os.system" use insted of subprocess
     :return: tuple of bytes with output and error
     """
     if use_system:

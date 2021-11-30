@@ -21,7 +21,7 @@ Pyerge provide various tools to check and show emerge/portage status for conky.
 * [Tools for Conky](#tools-for-conky)
 
 ## Name
-It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name and I keep it like that.
+It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name, and I keep it like that.
 
 ## Requirements
 * Python-3.6+
@@ -116,7 +116,7 @@ Print date of last emerge syc `eix-sync`
 e_dl
 ```
 Run after `pye check` print size of downloads of @world
-i.e output - 3,239,589 KiB
+i.e. output - 3,239,589 KiB
 
 ### e_curr
 ```shell

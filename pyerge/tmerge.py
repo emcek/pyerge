@@ -124,7 +124,7 @@ def is_portage_running() -> bool:
     """
     Check if potrage command in currently running.
 
-    :return: True if is running, False otherwise
+    :return: True if it is running, False otherwise
     """
     out, _ = utils.run_cmd('pgrep -f /usr/bin/emerge')
     return bool(out)
