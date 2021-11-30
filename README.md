@@ -9,7 +9,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 
 ## pyerge
-It is small python wrapper tool for emerge (Gentoo package manager - Porage). It can mount RAM disk of defined size and compile packages inside it. 
+It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it. 
 Pyerge provide various tools to check and show emerge/portage status for conky.
 
 ## Table of Contents
