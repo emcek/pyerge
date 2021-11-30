@@ -174,19 +174,25 @@ i.e. output for e_raid md126 - [UUU]
 ```shell
 glsa -e 5 list 
 ```
-List laste 5 GLSA enrties
+List last 5 of GLSA enrties
 output:
+```shell
 202107-55: SDL 2: Multiple vulnerabilities
 202107-54: libyang: Multiple vulnerabilities
 202107-53: Leptonica: Multiple vulnerabilities
 202107-52: Apache Velocity: Multiple vulnerabilities
 202107-51: IcedTeaWeb: Multiple vulnerabilities
+```
 
 ```shell
 glsa -e 40 test 
 ```
-Check system against lats 40 GLSA.
+Check system against last 40 of GLSA.
 output:
+```shell
 System is not affected by any of listed GLSAs
+```
 or list of IDs:
+```shell
 202107-53,202107-52
+```
