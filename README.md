@@ -27,10 +27,11 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 * app-portage/eix
 
 ## Installation
-Copy ebuild form GitHub Reliease into your local repository (i.e. /usr/local/portage) and run:
+Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage) and run:
 ```shell
 sudo emerge dev-python/portage
 ```
+Ebuild is good quality as RepoMan sez: "If everyone were like you, I'd be out of business!"
 
 ## Main usage
 Pyerge API/CLI parameter are not stable yes and are subject to change.
