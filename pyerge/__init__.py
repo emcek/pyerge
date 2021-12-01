@@ -1,4 +1,4 @@
-__version__ = '0.5.1'
+__version__ = '0.5.2'
 
 PORTAGE_TMPDIR = '/var/tmp/portage'  # nosec
 TMPLOGFILE = '/var/log/portage/tmerge/tmp.emerge.log'

@@ -16,7 +16,7 @@ with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
 setup(
     name='pyerge',
     version=__version__,
-    description='It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it.',
+    description='It is Python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/emcek/pyerge',
