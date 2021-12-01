@@ -76,7 +76,7 @@ It will mount only 1G RAM disk and ask while comipling app-admin/conky package.
 
 ## Tools for Conky
 Those tools are crated especialy for Conky monitoring. i.e. part of my .conkyrc:
-```
+```shell
 color0 5b6dad
 color1 7f8ed3
 TEXT
@@ -169,7 +169,7 @@ i.e. output - 19 U, 2 R, 1 Un, 2 D - it means 19 upgrades, 2 reinstals, 1 uninst
 e_raid <raid dev>
 ```
 Print RAID status form /proc/mdstat
-i.e. output for e_raid md126 - [UUU]
+i.e. output for e_raid md126 - \[UUU\]
 
 ### glsa
 ```shell

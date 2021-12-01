@@ -2,6 +2,7 @@
 
 ## Supported Versions
 
+Versions of pyerge are currently being supported with security updates.
 
 | Version | Supported          |
 |---------|--------------------|
