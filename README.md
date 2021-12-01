@@ -28,9 +28,13 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 * app-portage/eix
 
 ## Installation
-Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage) and run:
+Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage/dev-python/portage) and run as root:
 ```shell
-sudo emerge dev-python/portage
+cd /usr/local/portage/dev-python/portage
+ebuild pyerge-0.5.2.ebuild manifest
+eix-update
+echo "dev-python/pyerge ~amd64" >> /etc/portage/package.accept_keywords
+emerge dev-python/portage
 ```
 Ebuild is good quality as RepoMan sez: "If everyone were like you, I'd be out of business!"
 
