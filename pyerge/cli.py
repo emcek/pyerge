@@ -19,8 +19,7 @@ def run_parser() -> None:
     parser.add_argument('-c', '--clean-run', action='store_true', dest='deep_run', default=False, help='run deep clean after emerge')
     parser.add_argument('-w', '--world', action='store_true', dest='world', default=False, help='run emerge -NDu @world')
     parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world', default=False, help='run emerge -pvNDu @world')
-    parser.add_argument('-p', '--pretend', action='store_true', dest='pretend', default=False, help='add --pretend/-p to emerge')
-    parser.add_argument('-q', '--quiet', action='store_true', dest='quiet', default=False, help='add --quiet/-q to emerge')
+    parser.add_argument('-q', '--quiet', action='store_true', dest='quiet', default=False, help='no output from pyerge itself only form other tools')
     parser.add_argument('-v', '--verbose', action='count', dest='verbose', default=0, help='Increase output verbosity')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
     parser.add_argument('action', help='check or emerge')
@@ -43,13 +42,9 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     :param emerge_opts: list of arguments for emege
     """
     if opts.world:
-        emerge_opts = ['-NDu', '@world']
+        emerge_opts = ['--with-bdeps=y', '--keep-going=y', '-NDu', '@world']
     if opts.pretend_world:
-        emerge_opts = ['-pvNDu', '@world']
-    if opts.pretend:
-        emerge_opts[0] += 'p' if emerge_opts[0][0] == '-' else '-p'
-    if opts.quiet:
-        emerge_opts[0] += 'q' if emerge_opts[0][0] == '-' else '-q'
+        emerge_opts = ['--with-bdeps=y', '-pvNDu', '@world']
     info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected()
 

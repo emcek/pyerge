@@ -36,12 +36,12 @@ def test_main_exec_portage_is_running():
 
 
 @mark.parametrize('ns_args, emerge_opts, result',
-                  [({'world': True, 'pretend_world': False, 'pretend': False, 'quiet': False, 'verbose': 2}, [''], ['-NDu', '@world']),
-                   ({'world': True, 'pretend_world': False, 'pretend': False, 'quiet': True, 'verbose': 2}, [''], ['-NDuq', '@world']),
-                   ({'world': False, 'pretend_world': True, 'pretend': False, 'quiet': False, 'verbose': 2}, [''], ['-pvNDu', '@world']),
-                   ({'world': False, 'pretend_world': True, 'pretend': False, 'quiet': True, 'verbose': 2}, [''], ['-pvNDuq', '@world']),
-                   ({'world': False, 'pretend_world': False, 'pretend': True, 'quiet': False, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-avp', 'app-misc/mc']),
-                   ({'world': False, 'pretend_world': False, 'pretend': False, 'quiet': True, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-avq', 'app-misc/mc'])])
+                  [({'world': True, 'pretend_world': False, 'quiet': False, 'verbose': 2}, [''], ['--with-bdeps=y', '--keep-going=y', '-NDu', '@world']),
+                   ({'world': True, 'pretend_world': False, 'quiet': True, 'verbose': 2}, [''], ['--with-bdeps=y', '--keep-going=y', '-NDu', '@world']),
+                   ({'world': False, 'pretend_world': True, 'quiet': False, 'verbose': 2}, [''], ['--with-bdeps=y', '-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': True, 'quiet': True, 'verbose': 2}, [''], ['--with-bdeps=y', '-pvNDu', '@world']),
+                   ({'world': False, 'pretend_world': False,'quiet': False, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-av', 'app-misc/mc']),
+                   ({'world': False, 'pretend_world': False, 'quiet': True, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-av', 'app-misc/mc'])])
 def test_emerge_opts_world(ns_args, emerge_opts, result):
     from pyerge import utils, tmerge
     from argparse import Namespace

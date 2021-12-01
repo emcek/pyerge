@@ -41,7 +41,7 @@ def check_upd(local_chk: bool) -> None:
             debug(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}')
             utils.run_cmd(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}', use_system=True)
         info('Checking updates...')
-        output, error = emerge('-pvNDu --color n @world'.split(), build=False)
+        output, error = emerge('-pvNDu --color n --with-bdeps=y @world'.split(), build=False)
         debug(f'Error: {error}')  # type: ignore
         log.write(output.decode('utf-8'))
         log.write(error.decode('utf-8'))
