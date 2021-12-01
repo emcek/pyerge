@@ -44,7 +44,7 @@ sudo pye check
 ```
 It basicly run:
 * sync portage `eix-sync`
-* `sudo emerge -pvNDu --color n @world` (and save output to log_file_1)
+* `sudo emerge -pvNDu --nospinner --with-bdeps=y --color n @world` (and save output to log_file_1)
 * Estypete time for runing ememrge @world `genlop -pn` (and save to log_file_2)
 
 Some useful switches:
@@ -60,7 +60,7 @@ It basicly run:
 * check if emerge isn't runnig
 * set envirinment variable PORTAGE_TMPDIR to /var/tmp/portage
 * mount 4G RAM disk to /var/tmp/portage
-* run `emerge -pvNDu @world`
+* run `emerge -NDu --nospinner  --with-bdeps=y --keep-going=y @world`
 * unmount RAM disk
 
 Some useful switches:
