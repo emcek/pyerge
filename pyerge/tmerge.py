@@ -113,7 +113,7 @@ def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
     """
     pretend = True
     world = False
-    if 'p' not in args[0] or 'f' in args[0]:
+    if 'p' not in args[2] or 'f' in args[0]:
         pretend = False
     if 'world' in ' '.join(args):
         world = True
