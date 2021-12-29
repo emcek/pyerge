@@ -42,9 +42,9 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     :param emerge_opts: list of arguments for emege
     """
     if opts.world:
-        emerge_opts = ['--with-bdeps=y', '--keep-going=y', '-NDu', '@world']
+        emerge_opts = ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']
     if opts.pretend_world:
-        emerge_opts = ['--with-bdeps=y', '-pvNDu', '@world']
+        emerge_opts = ['--with-bdeps=y', '--pretend', '--verbose', '--newuse', '--deep', '--update', '@world']
     info(f'Pyerge version: {__version__}')
     opts.online = utils.is_internet_connected()
 
