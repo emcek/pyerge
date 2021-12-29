@@ -111,12 +111,8 @@ def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
     :param args:
     :return:
     """
-    pretend = True
-    world = False
-    if 'p' not in args[2] or 'f' in args[0]:
-        pretend = False
-    if 'world' in ' '.join(args):
-        world = True
+    pretend = True if 'pretend' in ' '.join(args) else False
+    world = True if 'world' in ' '.join(args) else False
     return pretend, world
 
 
