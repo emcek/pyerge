@@ -36,12 +36,24 @@ def test_main_exec_portage_is_running():
 
 
 @mark.parametrize('ns_args, emerge_opts, result',
-                  [({'world': True, 'pretend_world': False, 'quiet': False, 'verbose': 2}, [''], ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']),
-                   ({'world': True, 'pretend_world': False, 'quiet': True, 'verbose': 2}, [''], ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']),
-                   ({'world': False, 'pretend_world': True, 'quiet': False, 'verbose': 2}, [''], ['--with-bdeps=y', '--pretend', '--verbose', '--newuse', '--deep', '--update', '@world']),
-                   ({'world': False, 'pretend_world': True, 'quiet': True, 'verbose': 2}, [''], ['--with-bdeps=y', '--pretend', '--verbose', '--newuse', '--deep', '--update', '@world']),
-                   ({'world': False, 'pretend_world': False,'quiet': False, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-av', 'app-misc/mc']),
-                   ({'world': False, 'pretend_world': False, 'quiet': True, 'verbose': 2}, ['-av', 'app-misc/mc'], ['-av', 'app-misc/mc'])])
+                  [({'world': True, 'pretend_world': False, 'quiet': False, 'verbose': 2},
+                    [''],
+                    ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']),
+                   ({'world': True, 'pretend_world': False, 'quiet': True, 'verbose': 2},
+                    [''],
+                    ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']),
+                   ({'world': False, 'pretend_world': True, 'quiet': False, 'verbose': 2},
+                    [''],
+                    ['--with-bdeps=y', '--pretend', '--verbose', '--newuse', '--deep', '--update', '@world']),
+                   ({'world': False, 'pretend_world': True, 'quiet': True, 'verbose': 2},
+                    [''],
+                    ['--with-bdeps=y', '--pretend', '--verbose', '--newuse', '--deep', '--update', '@world']),
+                   ({'world': False, 'pretend_world': False, 'quiet': False, 'verbose': 2},
+                    ['-av', 'app-misc/mc'],
+                    ['-av', 'app-misc/mc']),
+                   ({'world': False, 'pretend_world': False, 'quiet': True, 'verbose': 2},
+                    ['-av', 'app-misc/mc'],
+                    ['-av', 'app-misc/mc'])])
 def test_emerge_opts_world(ns_args, emerge_opts, result):
     from pyerge import utils, tmerge
     from argparse import Namespace
