@@ -70,8 +70,8 @@ def test_deep_run_output_with_only_gentoo():
         emerge_mock.assert_not_called()
 
 
-@mark.parametrize('list_str, result', [(['-pvNDu', '@world'], (True, True)),
-                                       (['-pv', 'conky'], (True, False)),
+@mark.parametrize('list_str, result', [(['--pretend', '--verbose', '--newuse', '--deep', '--update', '@world'], (True, True)),
+                                       (['--pretend', '--verbose', 'conky'], (True, False)),
                                        (['-f', 'conky'], (False, False)),
                                        (['', '@world'], (False, True)),
                                        (['', 'conky'], (False, False))])
