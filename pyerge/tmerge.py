@@ -111,9 +111,7 @@ def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
     :param args:
     :return:
     """
-    pretend = True if 'pretend' in ' '.join(args) else False
-    world = True if 'world' in ' '.join(args) else False
-    return pretend, world
+    return bool('pretend' in ' '.join(args)), bool('world' in ' '.join(args))
 
 
 def is_portage_running() -> bool:
