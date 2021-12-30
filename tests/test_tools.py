@@ -8,7 +8,9 @@ def test_synced(str_sync):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_sync.split('\n'))))
-        assert tools.e_sync() == 'Tuesday 22:01' or 'Tuesday 23:01'
+        sync_date = tools.e_sync()
+        # assert sync_date == 'Tue, 22-01 22:01' or sync_date == 'Tue, 22-01 23:01'
+        assert sync_date == 'Tue, 22-01 23:01'
 
 
 def test_no_synced(str_no_sync):

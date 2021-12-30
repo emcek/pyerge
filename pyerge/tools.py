@@ -16,7 +16,7 @@ def e_sync() -> str:
                 break
         else:
             return 'Unknown'
-    sync_date = datetime.fromtimestamp(int(sync_time)).strftime('%A %H:%M')
+    sync_date = datetime.fromtimestamp(int(sync_time)).strftime('%a, %d-%m %H:%M')
     print(sync_date)
     return sync_date
 
