@@ -38,7 +38,7 @@ def test_e_dl_eq_zero(str_dl_eq_0):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_dl_eq_0.split('\n'))))
-        assert tools.e_dl() == 'None'
+        assert tools.e_dl() == '0 KiB'
 
 
 def test_e_dl_unknown(str_dl_unknown):

@@ -23,19 +23,18 @@ def e_sync() -> str:
 
 def e_dl() -> str:
     """Fetch size of archives to be downloaded for next system update."""
+    size = 'Calculating...'
     with open(file=TMERGE_LOGFILE, mode='r', encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
             reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
             if reqex is not None:
                 size = reqex.group(2)
                 break
-        else:
-            size = None  # type: ignore
 
-    if size == '0 KiB':
-        size = 'None'
-    elif not size:
-        size = 'Calculating...'
+    # if size == '0 KiB':
+    #     size = 'None'
+    # elif not size:
+    #     size = 'Calculating...'
     print(size)
     return size
 
