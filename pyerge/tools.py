@@ -30,11 +30,6 @@ def e_dl() -> str:
             if reqex is not None:
                 size = reqex.group(2)
                 break
-
-    # if size == '0 KiB':
-    #     size = 'None'
-    # elif not size:
-    #     size = 'Calculating...'
     print(size)
     return size
 
