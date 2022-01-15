@@ -4,7 +4,7 @@ check-manifest
 codacy-coverage
 coveralls
 lxml
-mypy
+mypy==0.931
 pydocstyle
 pycodestyle
 pylint
