@@ -1,6 +1,6 @@
 -r requirements.txt
 flake8
-check-manifest
+check-manifest==0.47
 codacy-coverage
 coveralls
 lxml
