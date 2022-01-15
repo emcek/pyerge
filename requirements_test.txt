@@ -5,7 +5,7 @@ codacy-coverage
 coveralls
 lxml
 mypy
-pydocstyle
+pydocstyle==6.1.1
 pycodestyle
 pylint
 pytest-cov
