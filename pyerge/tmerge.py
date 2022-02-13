@@ -19,7 +19,7 @@ def emerge(arguments: List[str], build=True) -> Tuple[bytes, bytes]:
     cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}"
     if build:
         return_code, stderr = utils.run_cmd(cmd, use_system=True)
-        debug(f'RC: {return_code.decode("utf-8")}, Errors: {stderr.decode("utf-8")}')
+        debug(f'RC: {return_code.decode("utf-8")}, stderr: {stderr.decode("utf-8")}')
         return return_code, stderr
     output, stderr = utils.run_cmd(cmd)
     return output, stderr
@@ -42,7 +42,7 @@ def check_upd(local_chk: bool) -> None:
             utils.run_cmd(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}', use_system=True)
         info('Checking updates...')
         output, error = emerge('-pvNDu --color n --with-bdeps=y @world'.split(), build=False)
-        debug(f'Error: {error.decode("utf-8")}')
+        debug(f'stderr: {error.decode("utf-8")}')
         log.write(output.decode('utf-8'))
         log.write(error.decode('utf-8'))
 
@@ -80,8 +80,8 @@ def deep_clean(args: List[str], opts: Namespace, return_code: bytes) -> None:
     if not int(return_code) and not pretend and world:
         output, error = emerge(['-pc'], build=False)
         info('Deep clean')
-        info(f'Output details:{output.decode("utf-8")}')
-        debug(f'Errors details:{error.decode("utf-8")}')
+        info(f'output details:{output.decode("utf-8")}')
+        debug(f'stderr details:{error.decode("utf-8")}')
         deep_run(opts, output)
 
 
