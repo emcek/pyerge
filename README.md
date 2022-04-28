@@ -13,7 +13,7 @@
 It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it. 
 Pyerge provide various tools to check and show emerge/portage status for conky.
 
-# Sponsored by Jetbrains Open Source Support Program
+## Sponsored by Jetbrains Open Source Support Program
 [![logo](https://resources.jetbrains.com/storage/products/company/brand/logos/PyCharm.svg)](https://jb.gg/OpenSourceSupport)
 [![logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
 
