@@ -1,4 +1,4 @@
-[![image](https://img.shields.io/badge/pypi-v0.5.5-blue.svg)](https://pypi.org/project/pyerge/)
+[![image](https://img.shields.io/badge/pypi-v0.6.0-blue.svg)](https://pypi.org/project/pyerge/)
 [![Python CI](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml/badge.svg?branch=master)](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/emcek/pyerge/badge.svg?branch=master)](https://coveralls.io/github/emcek/pyerge?branch=master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a695786f861e4001b3fc3974f628e09f)](https://www.codacy.com/gh/emcek/pyerge/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=emcek/pyerge&amp;utm_campaign=Badge_Grade)
@@ -106,6 +106,7 @@ ${color0}Portage:
  ${color0}Update:    ${color1}${execi 30 e_upd}
  ${color0}Download:  ${color1}${execi 30 e_dl}
  ${color0}EUT:       ${color1}${execi 30 e_eut}
+ ${color0}Live:      ${color1}${execi 5400 e_live all}
 ${color1}$hr
 ${color0}Gentoo Linux Security Advisories:
 ${color1}${execi 5400 glsa list -e 25}
@@ -177,7 +178,14 @@ i.e. output - 19 U, 2 R, 1 Un, 2 D - it means 19 upgrades, 2 reinstals, 1 uninst
 e_raid <raid dev>
 ```
 Print RAID status form /proc/mdstat
-i.e. output for e_raid md126 - \[UUU\]
+i.e. output for e_raid md126L: [UUU]
+
+### e_live
+```shell
+e_live <action>
+```
+Print names and number of live ebuild to rebuild
+i.e. output for e_live all: cvechecker,openmw (2 of 3)
 
 ### glsa
 ```shell
