@@ -235,3 +235,17 @@ def test_e_raid_not_match():
     with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
         run_cmd_mock.return_value = b'', b''
         assert tools.e_raid('md16') == 'Unknown'
+
+
+@mark.parametrize('action, result', [('all', 'cvechecker,openmw (2 of 3)'), ('name', 'cvechecker,openmw'), ('number', '2 of 3')])
+def test_e_live_2_of_3(action, result):
+    with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
+        run_cmd_mock.return_value = b'app-admin/cvechecker:0\ngames-engines/openmw:0\n', b'*** Found 2 packages to rebuild (out of 3 live packages).\n'
+        assert tools.e_live(action) == result
+
+
+@mark.parametrize('action, result', [('all', 'None (0 of 0)'), ('name', 'None'), ('number', '0 of 0')])
+def test_e_live_0_of_0(action, result):
+    with mock.patch('pyerge.tools.run_cmd') as run_cmd_mock:
+        run_cmd_mock.return_value = b'', b'*** Not found'
+        assert tools.e_live(action) == result

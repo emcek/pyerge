@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from datetime import datetime
-from re import search, sub, match
+from re import search, sub, match, findall
 
 from pyerge import EMERGE_LOGFILE, TMERGE_LOGFILE, TMPLOGFILE
 from pyerge.utils import run_cmd
@@ -156,3 +156,32 @@ def run_e_raid():
     parser.add_argument('-n', '--name', action='store', help='Provides name of MD RAID Array')
     args = parser.parse_args()
     print(e_raid(args.name))
+
+
+def e_live(action: str) -> str:
+    """Get number and names of live ebuilds to build."""
+    out, err = run_cmd('smart-live-rebuild --no-color --jobs=6 --pretend --quiet --unprivileged-user')
+    out, err = out.decode('utf-8'), err.decode('utf-8')  # type: ignore
+    live_no, live_tot = 0, 0
+    live_names = 'None'
+    reqex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err)
+    if reqex is not None:
+        live_no, live_tot = int(reqex.group(1)), int(reqex.group(2))  # type: ignore
+    if live_no:
+        live_names = ','.join(findall(r'/(.*):0', out))
+
+    if action == 'all':
+        result = f'{live_names} ({live_no} of {live_tot})'
+    elif action == 'name':
+        result = live_names
+    else:
+        result = f'{live_no} of {live_tot}'
+
+    return result
+
+
+def run_e_live():
+    """Run e_live from cli."""
+    parser = ArgumentParser()
+    parser.add_argument('action', help='action: "all", "name" or "number" of live ebuilds')
+    print(e_live(parser.parse_args().action))
