@@ -161,14 +161,14 @@ def run_e_raid():
 def e_live(action: str) -> str:
     """Get number and names of live ebuilds to build."""
     out, err = run_cmd('smart-live-rebuild --no-color --jobs=6 --pretend --quiet --unprivileged-user')
-    out, err = out.decode('utf-8'), err.decode('utf-8')  # type: ignore
+    out, err = out.decode('utf-8'), err.decode('utf-8')
     live_no, live_tot = 0, 0
     live_names = 'None'
-    reqex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err)
+    reqex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err)  # type: ignore
     if reqex is not None:
-        live_no, live_tot = int(reqex.group(1)), int(reqex.group(2))  # type: ignore
+        live_no, live_tot = int(reqex.group(1)), int(reqex.group(2))
     if live_no:
-        live_names = ','.join(findall(r'/(.*):0', out))
+        live_names = ','.join(findall(r'/(.*):0', out))  # type: ignore
 
     if action == 'all':
         result = f'{live_names} ({live_no} of {live_tot})'
