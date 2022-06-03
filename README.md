@@ -35,7 +35,7 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage/dev-python/portage) and run as root:
 ```shell
 cd /usr/local/portage/dev-python/portage
-ebuild pyerge-0.5.5.ebuild manifest
+ebuild pyerge-0.6.0.ebuild manifest
 eix-update
 echo "dev-python/pyerge ~amd64" >> /etc/portage/package.accept_keywords
 emerge dev-python/portage

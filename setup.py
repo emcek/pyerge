@@ -33,6 +33,7 @@ setup(
                                       'e_prog = pyerge.tools:e_prog',
                                       'e_upd = pyerge.tools:e_upd',
                                       'e_raid = pyerge.tools:run_e_raid',
+                                      'e_live = pyerge.tools:run_e_live',
                                       'glsa = pyerge.glsa:run_glsa']},
     classifiers=['Development Status :: 5 - Production/Stable',
                  'Environment :: Console',
