@@ -160,7 +160,7 @@ def run_e_raid():
 def e_live(action: str) -> str:
     """Get number and names of live ebuilds to build."""
     out, err = run_cmd('smart-live-rebuild --no-color --jobs=6 --pretend --quiet --unprivileged-user')
-    out, err = out.decode('utf-8'), err.decode('utf-8')
+    out, err = out.decode('utf-8'), err.decode('utf-8')  # type: ignore
     live_no, live_tot = 0, 0
     live_names = 'None'
     reqex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err)  # type: ignore
