@@ -58,7 +58,3 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         utils.unmounttmpfs(opts)
     else:
         info('emerge already running!')
-
-
-if __name__ == '__main__':
-    run_parser()
