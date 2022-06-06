@@ -19,6 +19,7 @@ def run_parser() -> None:
     parser.add_argument('-c', '--clean-run', action='store_true', dest='deep_run', default=False, help='run deep clean after emerge')
     parser.add_argument('-w', '--world', action='store_true', dest='world', default=False, help='run emerge -NDu @world')
     parser.add_argument('-r', '--pretend_world', action='store_true', dest='pretend_world', default=False, help='run emerge -pvNDu @world')
+    parser.add_argument('-e', '--live_ebuild', action='store_true', dest='live', default=False, help='run smart-live-rebuild')
     parser.add_argument('-q', '--quiet', action='store_true', dest='quiet', default=False, help='no output from pyerge itself only form other tools')
     parser.add_argument('-v', '--verbose', action='count', dest='verbose', default=0, help='Increase output verbosity')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
@@ -53,6 +54,11 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
         utils.handling_mounting(opts)
         tmerge.run_emerge(emerge_opts, opts)
         tmerge.run_check(opts)
+        tmerge.run_live(opts)
         utils.unmounttmpfs(opts)
     else:
         info('emerge already running!')
+
+
+if __name__ == '__main__':
+    run_parser()

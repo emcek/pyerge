@@ -132,10 +132,11 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if opts.action == 'emerge' and opts.online:
-        ret_code, _ = emerge(emerge_opts, build=True)
-        post_emerge(emerge_opts, ret_code)
-        if opts.deep_print or opts.deep_run:
-            deep_clean(emerge_opts, opts, ret_code)
+        if opts.world or opts.pretend_world:
+            ret_code, _ = emerge(emerge_opts, build=True)
+            post_emerge(emerge_opts, ret_code)
+            if opts.deep_print or opts.deep_run:
+                deep_clean(emerge_opts, opts, ret_code)
 
 
 def run_check(opts: Namespace) -> None:
@@ -146,3 +147,20 @@ def run_check(opts: Namespace) -> None:
     """
     if opts.action == 'check' and (opts.online or opts.local):
         check_upd(opts.local)
+
+
+def run_live(opts: Namespace) -> None:
+    """
+    Run smart-live-rebuild.
+
+    :param opts: cli arguments
+    """
+    params = '--no-color'
+    params += ' --pretend' if opts.action == 'check' else ''
+    if opts.live and opts.online:
+        cmd = f'smart-live-rebuild {params}'
+        info(f"running smart-live-rebuild with: {params}")
+        out, err = utils.run_cmd(cmd)
+        packages = " ".join(out.decode("utf-8").strip().split('\n'))
+        info(f'Live packages: {packages}')
+        debug(f'Details:\n{err.decode("utf-8").strip()}')

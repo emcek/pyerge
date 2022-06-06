@@ -63,7 +63,8 @@ def test_emerge_opts_world(ns_args, emerge_opts, result):
             patch.object(utils, 'unmounttmpfs') as unmounttmpfs_mock, \
             patch.object(tmerge, 'is_portage_running') as is_portage_running_mock, \
             patch.object(tmerge, 'run_emerge') as run_emerge_mock, \
-            patch.object(tmerge, 'run_check') as run_check_mock:
+            patch.object(tmerge, 'run_check') as run_check_mock, \
+            patch.object(tmerge, 'run_live') as run_live_mock:
         is_internet_connected_mock.return_value = False
         is_portage_running_mock.return_value = False
         from pyerge import cli
@@ -76,3 +77,4 @@ def test_emerge_opts_world(ns_args, emerge_opts, result):
         is_portage_running_mock.assert_called_once()
         run_emerge_mock.assert_called_once_with(result, opts)
         run_check_mock.assert_called_once_with(opts)
+        run_live_mock.assert_called_once_with(opts)

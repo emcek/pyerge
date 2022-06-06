@@ -105,7 +105,7 @@ def test_run_emerge():
         emerge_mock.return_value = (ret_code, b'')
         from pyerge import tmerge
         emerge_opts = ['-NDu', '@world']
-        opts = Namespace(action='emerge', online=True, deep_print=True)
+        opts = Namespace(action='emerge', online=True, deep_print=True, world=True)
         tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
         post_emerge_mock.assert_called_once_with(emerge_opts, ret_code)
         deep_clean.assert_called_once_with(emerge_opts, opts, ret_code)
@@ -118,3 +118,16 @@ def test_run_check():
         opts = Namespace(action='check', local=True, online=True)
         tmerge.run_check(opts)
         check_upd_mock.assert_called_once_with(opts.local)
+
+
+@mark.parametrize('action, cmd', [('check', 'smart-live-rebuild --no-color --pretend'),
+                                  ('emerge', 'smart-live-rebuild --no-color')])
+def test_run_live_check(action, cmd):
+    from argparse import Namespace
+    with patch('pyerge.tmerge.utils') as utils_mock:
+        from pyerge import tmerge
+        utils_mock.run_cmd.return_value = (b'games-engines/openmw:0\ngames-strategy/freeorion:0',
+                                           b'*** Found 2 packages to rebuild (out of 4 live packages).')
+        opts = Namespace(action=action, live=True, online=True)
+        tmerge.run_live(opts)
+        utils_mock.run_cmd.assert_called_once_with(cmd)
