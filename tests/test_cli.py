@@ -60,7 +60,7 @@ def test_emerge_opts_world(ns_args, emerge_opts, result):
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, \
             patch.object(utils, 'set_portage_tmpdir') as set_portage_tmpdir_mock, \
             patch.object(utils, 'handling_mounting') as handling_mounting_mock, \
-            patch.object(utils, 'unmounttmpfs') as unmounttmpfs_mock, \
+            patch.object(utils, 'unmountdevice') as unmountdevice_mock, \
             patch.object(tmerge, 'is_portage_running') as is_portage_running_mock, \
             patch.object(tmerge, 'run_emerge') as run_emerge_mock, \
             patch.object(tmerge, 'run_check') as run_check_mock, \
@@ -73,7 +73,7 @@ def test_emerge_opts_world(ns_args, emerge_opts, result):
         is_internet_connected_mock.assert_called_once_with()
         set_portage_tmpdir_mock.assert_called_once()
         handling_mounting_mock.assert_called_once_with(opts)
-        unmounttmpfs_mock.assert_called_once_with(opts)
+        unmountdevice_mock.assert_called_once_with(opts)
         is_portage_running_mock.assert_called_once()
         run_emerge_mock.assert_called_once_with(result, opts)
         run_check_mock.assert_called_once_with(opts)

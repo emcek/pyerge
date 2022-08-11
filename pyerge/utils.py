@@ -47,7 +47,7 @@ def mountdevice(dev: str, size: str) -> None:
     run_cmd(cmd)
 
 
-def unmounttmpfs(opts: Namespace) -> None:
+def unmountdevice(opts: Namespace) -> None:
     """
     Unmount directory from RAM or linux device.
 
