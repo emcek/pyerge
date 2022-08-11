@@ -39,12 +39,12 @@ def mounttmpfs(dev: str, size: str) -> None:
     """
     if dev == 'tmpfs':
         info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
-        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
-        run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+        cmd = f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}'
     else:
         info(f'Mounting {dev} as {PORTAGE_TMPDIR}')
-        debug(f'sudo mount {dev} {PORTAGE_TMPDIR}')
-        run_cmd(f'sudo mount {dev} {PORTAGE_TMPDIR}')
+        cmd = f'sudo mount {dev} {PORTAGE_TMPDIR}'
+    debug(cmd)
+    run_cmd(cmd)
 
 
 def unmounttmpfs(opts: Namespace) -> None:
