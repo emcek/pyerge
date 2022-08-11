@@ -162,6 +162,12 @@ def opt_emerge_nonlocal_with_tmpfs_1g():
     return Namespace(action='emerge', local=False, size='1G', dev='tmpfs', verbose=2)
 
 
+@fixture()
+def opt_emerge_nonlocal_with_sda3():
+    from argparse import Namespace
+    return Namespace(action='emerge', local=False, size='1G', dev='/dev/sda3', verbose=2)
+
+
 @fixture
 def str_e_upd_calc():
     return """"""

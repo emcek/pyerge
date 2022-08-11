@@ -38,26 +38,26 @@ def test_unmountdecice(opt_emerge_nonlocal_with_tmpfs_1g):
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
-def test_mountdevice_tmpfs():
+def test_mountdevice_tmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mountdevice(dev='tmpfs', size='2G')
-        run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
+        utils.mountdevice(opt_emerge_nonlocal_with_tmpfs_1g)
+        run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=1G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
-def test_mountdevice_sda():
+def test_mountdevice_sda(opt_emerge_nonlocal_with_sda3):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mountdevice(dev='/dev/sda3', size='2G')
+        utils.mountdevice(opt_emerge_nonlocal_with_sda3)
         run_cmd_mock.assert_called_once_with(f'sudo mount /dev/sda3 {PORT_TMP_DIR}')
 
 
-def test_remounttmpfs():
+def test_remounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs(size='2G')
+        utils.remounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
-                                       mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
+                                       mock.call.run_cmd(f'sudo mount -t tmpfs -o size=1G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
 
 def test_size_of_not_mounted_tmpfs():
