@@ -49,7 +49,7 @@ def test_mounttmpfs():
 def test_remounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs(dev='tmpfs', size='2G')
+        utils.remounttmpfs(size='2G')
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                        mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 

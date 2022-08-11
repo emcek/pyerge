@@ -59,17 +59,16 @@ def unmounttmpfs(opts: Namespace) -> None:
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
-def remounttmpfs(dev: str, size: str) -> None:
+def remounttmpfs(size: str) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
-    :param dev: linux dev name
     :param size: with unit K, M, G
     """
     info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
     run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
-    mounttmpfs(dev=dev, size=size)
+    mounttmpfs(dev='tmpfs', size=size)
 
 
 def is_internet_connected() -> bool:
@@ -155,6 +154,6 @@ def handling_mounting(opts: Namespace) -> None:
         if not is_device_mounted(dev=opts.dev):
             mounttmpfs(dev=opts.dev, size=opts.size)
         elif opts.dev == 'tmpfs' and size_of_mounted_tmpfs() != convert2blocks(opts.size):
-            remounttmpfs(dev=opts.dev, size=opts.size)
+            remounttmpfs(size=opts.size)
         else:
             info('dev/tmpfs is already mounted with requested size!')
