@@ -2,7 +2,6 @@ from unittest import mock
 
 from pytest import mark
 
-
 PORT_TMP_DIR = '/var/tmp/portage'
 
 
@@ -42,7 +41,7 @@ def test_unmounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
 def test_mounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mounttmpfs(dev='tmpfs', size='2G')
+        utils.mountdevice(dev='tmpfs', size='2G')
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
@@ -148,10 +147,10 @@ def test_portage_tmpdir_already_set(monkeypatch):
 
 def test_handling_mounting_mount(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
-    with mock.patch('pyerge.utils.mounttmpfs') as mounttmpfs_mock:
+    with mock.patch('pyerge.utils.mountdevice') as mountdevice_mock:
         with mock.patch('pyerge.utils.is_device_mounted') as is_device_mounted_mock:
             is_device_mounted_mock.return_value = False
-            mounttmpfs_mock.return_value = None
+            mountdevice_mock.return_value = None
             utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)
 
 

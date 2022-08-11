@@ -30,7 +30,7 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mounttmpfs(dev: str, size: str) -> None:
+def mountdevice(dev: str, size: str) -> None:
     """
     Mount directory with size as tmp file system in RAM or linu device.
 
@@ -68,7 +68,7 @@ def remounttmpfs(size: str) -> None:
     info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
     run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
-    mounttmpfs(dev='tmpfs', size=size)
+    mountdevice(dev='tmpfs', size=size)
 
 
 def is_internet_connected() -> bool:
@@ -152,7 +152,7 @@ def handling_mounting(opts: Namespace) -> None:
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if not is_device_mounted(dev=opts.dev):
-            mounttmpfs(dev=opts.dev, size=opts.size)
+            mountdevice(dev=opts.dev, size=opts.size)
         elif opts.dev == 'tmpfs' and size_of_mounted_tmpfs() != convert2blocks(opts.size):
             remounttmpfs(size=opts.size)
         else:
