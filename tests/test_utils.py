@@ -31,18 +31,25 @@ def test_tmpfs_mounted():
         assert utils.is_device_mounted() is True
 
 
-def test_unmounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
+def test_unmountdecice(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
         utils.unmountdevice(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
-def test_mounttmpfs():
+def test_mountdevice_tmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
         utils.mountdevice(dev='tmpfs', size='2G')
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
+
+
+def test_mountdevice_sda():
+    from pyerge import utils
+    with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
+        utils.mountdevice(dev='/dev/sda3', size='2G')
+        run_cmd_mock.assert_called_once_with(f'sudo mount /dev/sda3 {PORT_TMP_DIR}')
 
 
 def test_remounttmpfs():
