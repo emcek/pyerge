@@ -32,7 +32,7 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
 
 def mounttmpfs(dev: str, size: str) -> None:
     """
-    Mount directory with size as tmp file system in RAM.
+    Mount directory with size as tmp file system in RAM or linu device.
 
     :param dev: linux dev name
     :param size: with unit K, M, G
@@ -49,12 +49,12 @@ def mounttmpfs(dev: str, size: str) -> None:
 
 def unmounttmpfs(opts: Namespace) -> None:
     """
-    Unmount directory from RAM.
+    Unmount directory from RAM or linux device.
 
     :param opts: cli arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
+        info(f'Unmounting {opts.dev} / {opts.size} of memory from {PORTAGE_TMPDIR}')
         debug(f'sudo umount -f {PORTAGE_TMPDIR}')
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
