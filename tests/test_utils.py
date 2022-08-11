@@ -32,24 +32,24 @@ def test_tmpfs_mounted():
         assert utils.is_device_mounted() is True
 
 
-def test_unmounttmpfs(opt_emerge_nonlocal_with_1g):
+def test_unmounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.unmounttmpfs(opt_emerge_nonlocal_with_1g)
+        utils.unmounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
 def test_mounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mounttmpfs(size='2G')
+        utils.mounttmpfs(dev='tmpfs', size='2G')
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
 def test_remounttmpfs():
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs(size='2G')
+        utils.remounttmpfs(dev='tmpfs', size='2G')
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                        mock.call.run_cmd(f'sudo mount -t tmpfs -o size=2G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
@@ -146,27 +146,27 @@ def test_portage_tmpdir_already_set(monkeypatch):
     assert utils.set_portage_tmpdir() == 'some_value'
 
 
-def test_handling_mounting_mount(opt_emerge_nonlocal_with_1g):
+def test_handling_mounting_mount(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.mounttmpfs') as mounttmpfs_mock:
         with mock.patch('pyerge.utils.is_device_mounted') as is_tmpfs_mounted_mock:
             is_tmpfs_mounted_mock.return_value = False
             mounttmpfs_mock.return_value = None
-            utils.handling_mounting(opt_emerge_nonlocal_with_1g)
+            utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)
 
 
-def test_handling_mounting_remounte(opt_emerge_nonlocal_with_1g):
+def test_handling_mounting_remounte(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.size_of_mounted_tmpfs') as size_of_mounted_tmpfs_mock:
         with mock.patch('pyerge.utils.convert2blocks') as convert2blocks_mock:
-            with mock.patch('pyerge.utils.is_device_mounted') as is_tmpfs_mounted_mock:
-                is_tmpfs_mounted_mock.return_value = True
+            with mock.patch('pyerge.utils.is_device_mounted') as is_device_mounted_mock:
+                is_device_mounted_mock.return_value = True
                 size_of_mounted_tmpfs_mock.return_value = 2
                 convert2blocks_mock.return_value = 1
-                utils.handling_mounting(opt_emerge_nonlocal_with_1g)
+                utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)
 
 
-def test_handling_mounting_else(opt_emerge_nonlocal_with_1g):
+def test_handling_mounting_else(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.size_of_mounted_tmpfs') as size_of_mounted_tmpfs_mock:
         with mock.patch('pyerge.utils.convert2blocks') as convert2blocks_mock:
@@ -174,4 +174,4 @@ def test_handling_mounting_else(opt_emerge_nonlocal_with_1g):
                 is_tmpfs_mounted_mock.return_value = True
                 size_of_mounted_tmpfs_mock.return_value = 1
                 convert2blocks_mock.return_value = 1
-                utils.handling_mounting(opt_emerge_nonlocal_with_1g)
+                utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)

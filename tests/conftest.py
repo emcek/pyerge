@@ -157,9 +157,9 @@ def html_xlm_as_str():
 
 
 @fixture()
-def opt_emerge_nonlocal_with_1g():
+def opt_emerge_nonlocal_with_tmpfs_1g():
     from argparse import Namespace
-    return Namespace(action='emerge', local=False, size='1G', verbose=2)
+    return Namespace(action='emerge', local=False, size='1G', dev='tmpfs', verbose=2)
 
 
 @fixture

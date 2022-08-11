@@ -14,6 +14,7 @@ def run_parser() -> None:
     """
     parser = ArgumentParser(description='Emerge in temporary RAM disk')
     parser.add_argument('-s', '--size', action='store', dest='size', default='4G', help='Size or RAM disk, default 4G')
+    parser.add_argument('-i', '--device', action='store', dest='dev', default='tmpfs', help='Linux device to use as tmp, default tmpfs')
     parser.add_argument('-l', '--check_local', action='store_true', dest='local', default=False, help='check locally')
     parser.add_argument('-d', '--clean-print', action='store_true', dest='deep_print', default=False, help='print deep clean info after emerge')
     parser.add_argument('-c', '--clean-run', action='store_true', dest='deep_run', default=False, help='run deep clean after emerge')

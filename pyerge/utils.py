@@ -30,15 +30,21 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mounttmpfs(size: str) -> None:
+def mounttmpfs(dev: str, size: str) -> None:
     """
     Mount directory with size as tmp file system in RAM.
 
+    :param dev: linux dev name
     :param size: with unit K, M, G
     """
-    info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
-    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    if dev == 'tmpfs':
+        info(f'Mounting {size} of memory to {PORTAGE_TMPDIR}')
+        debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+        run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    else:
+        info(f'Mounting {dev} as {PORTAGE_TMPDIR}')
+        debug(f'sudo mount {dev} {PORTAGE_TMPDIR}')
+        run_cmd(f'sudo mount {dev} {PORTAGE_TMPDIR}')
 
 
 def unmounttmpfs(opts: Namespace) -> None:
@@ -53,17 +59,17 @@ def unmounttmpfs(opts: Namespace) -> None:
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
-def remounttmpfs(size: str) -> None:
+def remounttmpfs(dev: str, size: str) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
+    :param dev: linux dev name
     :param size: with unit K, M, G
     """
     info(f'Remounting {size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
     run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
-    debug(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
-    run_cmd(f'sudo mount -t tmpfs -o size={size},nr_inodes=1M tmpfs {PORTAGE_TMPDIR}')
+    mounttmpfs(dev=dev, size=size)
 
 
 def is_internet_connected() -> bool:
@@ -146,9 +152,9 @@ def handling_mounting(opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        if not is_device_mounted():
-            mounttmpfs(opts.size)
-        elif size_of_mounted_tmpfs() != convert2blocks(opts.size):
-            remounttmpfs(opts.size)
+        if not is_device_mounted(dev=opts.dev):
+            mounttmpfs(dev=opts.dev, size=opts.size)
+        elif opts.dev == 'tmpfs' and size_of_mounted_tmpfs() != convert2blocks(opts.size):
+            remounttmpfs(dev=opts.dev, size=opts.size)
         else:
-            info('tmpfs is already mounted with requested size!')
+            info('dev/tmpfs is already mounted with requested size!')
