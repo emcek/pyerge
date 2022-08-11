@@ -94,7 +94,7 @@ def size_of_mounted_tmpfs() -> int:
     return 0
 
 
-def is_tmpfs_mounted() -> bool:
+def is_device_mounted() -> bool:
     """
     Check if portage temp dir is mounted.
 
@@ -145,7 +145,7 @@ def handling_mounting(opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        if not is_tmpfs_mounted():
+        if not is_device_mounted():
             mounttmpfs(opts.size)
         elif size_of_mounted_tmpfs() != convert2blocks(opts.size):
             remounttmpfs(opts.size)
