@@ -94,14 +94,15 @@ def size_of_mounted_tmpfs() -> int:
     return 0
 
 
-def is_device_mounted() -> bool:
+def is_device_mounted(dev='tmpfs') -> bool:
     """
-    Check if portage temp dir is mounted.
+    Check if Linux DEV is mounted.
 
+    :param dev: linux dev name
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(rf'(tmpfs on\s+)({PORTAGE_TMPDIR})(\s+type\s)', mount_cmd.decode('utf-8'))
+    match = search(rf'({dev} on\s+)({PORTAGE_TMPDIR})(\s+type\s)', mount_cmd.decode('utf-8'))
     return bool(match is not None and match.group(2) == PORTAGE_TMPDIR)
 
 
