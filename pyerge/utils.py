@@ -101,7 +101,7 @@ def is_tmpfs_mounted() -> bool:
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
-    match = search(rf'(tmpfs on\s+)({PORTAGE_TMPDIR})(\s+type tmpfs)', mount_cmd.decode('utf-8'))
+    match = search(rf'(tmpfs on\s+)({PORTAGE_TMPDIR})(\s+type\s)', mount_cmd.decode('utf-8'))
     return bool(match is not None and match.group(2) == PORTAGE_TMPDIR)
 
 
