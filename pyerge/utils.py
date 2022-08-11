@@ -30,7 +30,7 @@ def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
     return out, err
 
 
-def mountdevice(opts: Namespace) -> None:
+def mount_device(opts: Namespace) -> None:
     """
     Mount directory with size as tmp file system in RAM or linu device.
 
@@ -46,7 +46,7 @@ def mountdevice(opts: Namespace) -> None:
     run_cmd(cmd)
 
 
-def unmountdevice(opts: Namespace) -> None:
+def unmount_device(opts: Namespace) -> None:
     """
     Unmount directory from RAM or linux device.
 
@@ -58,7 +58,7 @@ def unmountdevice(opts: Namespace) -> None:
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
 
-def remounttmpfs(opts: Namespace) -> None:
+def remount_tmpfs(opts: Namespace) -> None:
     """
     Re-mount directory with size as tmp file system in RAM.
 
@@ -67,7 +67,7 @@ def remounttmpfs(opts: Namespace) -> None:
     info(f'Remounting {opts.size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
     run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
-    mountdevice(opts)
+    mount_device(opts)
 
 
 def is_internet_connected() -> bool:
@@ -151,8 +151,8 @@ def handling_mounting(opts: Namespace) -> None:
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if not is_device_mounted(dev=opts.dev):
-            mountdevice(opts)
+            mount_device(opts)
         elif opts.dev == 'tmpfs' and size_of_mounted_tmpfs() != convert2blocks(opts.size):
-            remounttmpfs(opts)
+            remount_tmpfs(opts)
         else:
             info('dev/tmpfs is already mounted with requested size!')

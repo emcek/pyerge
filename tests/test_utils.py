@@ -34,28 +34,28 @@ def test_tmpfs_mounted():
 def test_unmountdecice(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.unmountdevice(opt_emerge_nonlocal_with_tmpfs_1g)
+        utils.unmount_device(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_called_once_with(f'sudo umount -f {PORT_TMP_DIR}')
 
 
-def test_mountdevice_tmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
+def test_unmount_device_tmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mountdevice(opt_emerge_nonlocal_with_tmpfs_1g)
+        utils.mount_device(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_called_once_with(f'sudo mount -t tmpfs -o size=1G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')
 
 
-def test_mountdevice_sda(opt_emerge_nonlocal_with_sda3):
+def test_unmount_device_sda(opt_emerge_nonlocal_with_sda3):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.mountdevice(opt_emerge_nonlocal_with_sda3)
+        utils.mount_device(opt_emerge_nonlocal_with_sda3)
         run_cmd_mock.assert_called_once_with(f'sudo mount /dev/sda3 {PORT_TMP_DIR}')
 
 
 def test_remounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.run_cmd') as run_cmd_mock:
-        utils.remounttmpfs(opt_emerge_nonlocal_with_tmpfs_1g)
+        utils.remount_tmpfs(opt_emerge_nonlocal_with_tmpfs_1g)
         run_cmd_mock.assert_has_calls([mock.call.run_cmd(f'sudo umount -f {PORT_TMP_DIR}'),
                                        mock.call.run_cmd(f'sudo mount -t tmpfs -o size=1G,nr_inodes=1M tmpfs {PORT_TMP_DIR}')])
 
@@ -154,10 +154,10 @@ def test_portage_tmpdir_already_set(monkeypatch):
 
 def test_handling_mounting_mount(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
-    with mock.patch('pyerge.utils.mountdevice') as mountdevice_mock:
+    with mock.patch('pyerge.utils.unmount_device') as unmount_device_mock:
         with mock.patch('pyerge.utils.is_device_mounted') as is_device_mounted_mock:
             is_device_mounted_mock.return_value = False
-            mountdevice_mock.return_value = None
+            unmount_device_mock.return_value = None
             utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)
 
 
