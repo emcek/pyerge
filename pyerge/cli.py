@@ -24,7 +24,7 @@ def run_parser() -> None:
     parser.add_argument('-q', '--quiet', action='store_true', dest='quiet', default=False, help='no output from pyerge itself only form other tools')
     parser.add_argument('-v', '--verbose', action='count', dest='verbose', default=0, help='Increase output verbosity')
     parser.add_argument('-V', '--version', action='version', version='%(prog)s ' + __version__)
-    parser.add_argument('action', help='check or emerge')
+    parser.add_argument('action', help='check or emerge', choices=['check', 'emerge'])
     opts, emerge_opts = parser.parse_known_args()
     level = DEBUG if opts.verbose else INFO
     if opts.quiet:
