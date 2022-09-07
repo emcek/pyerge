@@ -149,7 +149,7 @@ def run_check(opts: Namespace) -> None:
         check_upd(opts.local)
 
 
-def run_live(opts: Namespace) -> None:
+def run_live(opts: Namespace) -> Tuple[bytes, bytes]:
     """
     Run smart-live-rebuild.
 
@@ -160,7 +160,6 @@ def run_live(opts: Namespace) -> None:
     if opts.live and opts.online:
         cmd = f'smart-live-rebuild {params}'
         info(f"running smart-live-rebuild with: {params}")
-        out, err = utils.run_cmd(cmd)
-        packages = " ".join(out.decode("utf-8").strip().split('\n'))
-        info(f'Live packages: {packages}')
-        debug(f'Details:\n{err.decode("utf-8").strip()}')
+        return_code, stderr = utils.run_cmd(cmd, use_system=True)
+        debug(f'RC: {return_code.decode("utf-8")}, stderr: {stderr.decode("utf-8")}')
+        return return_code, stderr
