@@ -1,4 +1,4 @@
-[![image](https://img.shields.io/badge/pypi-v0.7.0-blue.svg)](https://pypi.org/project/pyerge/)
+[![image](https://img.shields.io/badge/pypi-v0.7.1-blue.svg)](https://pypi.org/project/pyerge/)
 [![Python CI](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml/badge.svg?branch=master)](https://github.com/emcek/pyerge/actions/workflows/python-ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/emcek/pyerge/badge.svg?branch=master)](https://coveralls.io/github/emcek/pyerge?branch=master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a695786f861e4001b3fc3974f628e09f)](https://www.codacy.com/gh/emcek/pyerge/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=emcek/pyerge&amp;utm_campaign=Badge_Grade)
@@ -35,7 +35,7 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage/dev-python/portage) and run as root:
 ```shell
 cd /usr/local/portage/dev-python/portage
-ebuild pyerge-0.7.0.ebuild manifest
+ebuild pyerge-0.7.1.ebuild manifest
 eix-update
 echo "dev-python/pyerge ~amd64" >> /etc/portage/package.accept_keywords
 emerge dev-python/portage
