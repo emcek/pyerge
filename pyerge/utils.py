@@ -53,7 +53,10 @@ def unmount_device(opts: Namespace) -> None:
     :param opts: cli arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
-        info(f'Unmounting {opts.dev} / {opts.size} of memory from {PORTAGE_TMPDIR}')
+        if opts.dev == 'tmpfs':
+            info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
+        else:
+            info(f'Unmounting {opts.dev} from {PORTAGE_TMPDIR}')
         debug(f'sudo umount -f {PORTAGE_TMPDIR}')
         run_cmd(f'sudo umount -f {PORTAGE_TMPDIR}')
 
