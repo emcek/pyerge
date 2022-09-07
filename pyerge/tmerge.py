@@ -151,10 +151,12 @@ def run_check(opts: Namespace) -> None:
 
 def run_live(opts: Namespace) -> Tuple[bytes, bytes]:
     """
-    Run smart-live-rebuild.
+    Emerge live packages with smart-live-rebuild.
 
     :param opts: cli arguments
+    :return:
     """
+    return_code, stderr = b'', b''
     params = '--no-color'
     params += ' --pretend' if opts.action == 'check' else ''
     if opts.live and opts.online:
@@ -162,4 +164,4 @@ def run_live(opts: Namespace) -> Tuple[bytes, bytes]:
         info(f"running smart-live-rebuild with: {params}")
         return_code, stderr = utils.run_cmd(cmd, use_system=True)
         debug(f'RC: {return_code.decode("utf-8")}, stderr: {stderr.decode("utf-8")}')
-        return return_code, stderr
+    return return_code, stderr
