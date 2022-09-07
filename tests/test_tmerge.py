@@ -130,4 +130,4 @@ def test_run_live_check(action, cmd):
                                            b'*** Found 2 packages to rebuild (out of 4 live packages).')
         opts = Namespace(action=action, live=True, online=True)
         tmerge.run_live(opts)
-        utils_mock.run_cmd.assert_called_once_with(cmd)
+        utils_mock.run_cmd.assert_called_once_with(cmd, use_system=True)
