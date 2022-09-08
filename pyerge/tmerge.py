@@ -137,6 +137,8 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
             post_emerge(emerge_opts, ret_code)
             if opts.deep_print or opts.deep_run:
                 deep_clean(emerge_opts, opts, ret_code)
+        else:
+            _ = emerge(emerge_opts, build=True)
 
 
 def run_check(opts: Namespace) -> None:
