@@ -96,7 +96,7 @@ def test_is_portage_not_running():
         utils_mock.run_cmd.assert_called_once_with('pgrep -f /usr/bin/emerge')
 
 
-def test_run_emerge():
+def test_run_emerge_world():
     from argparse import Namespace
     with patch('pyerge.tmerge.emerge') as emerge_mock, \
             patch('pyerge.tmerge.post_emerge') as post_emerge_mock, \
@@ -106,9 +106,22 @@ def test_run_emerge():
         from pyerge import tmerge
         emerge_opts = ['-NDu', '@world']
         opts = Namespace(action='emerge', online=True, deep_print=True, world=True)
-        tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
+        result = tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
+        assert result == (ret_code, b'')
         post_emerge_mock.assert_called_once_with(emerge_opts, ret_code)
         deep_clean.assert_called_once_with(emerge_opts, opts, ret_code)
+
+
+def test_run_emerge():
+    from argparse import Namespace
+    with patch('pyerge.tmerge.emerge') as emerge_mock:
+        ret_code = b'0'
+        emerge_mock.return_value = (ret_code, b'')
+        from pyerge import tmerge
+        emerge_opts = ['-pv', 'app-portage/pyerge']
+        opts = Namespace(action='emerge', online=True, deep_print=False, world=False, pretend_world=False)
+        result = tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
+        assert result == (ret_code, b'')
 
 
 def test_run_check():

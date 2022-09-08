@@ -124,21 +124,23 @@ def is_portage_running() -> bool:
     return bool(out)
 
 
-def run_emerge(emerge_opts: List[str], opts: Namespace) -> None:
+def run_emerge(emerge_opts: List[str], opts: Namespace) -> Tuple[bytes, bytes]:
     """
     Run update of system.
 
     :param emerge_opts: list of arguments for emege
     :param opts: cli arguments
     """
+    ret_code, stderr = b'', b''
     if opts.action == 'emerge' and opts.online:
         if opts.world or opts.pretend_world:
-            ret_code, _ = emerge(emerge_opts, build=True)
+            ret_code, stderr = emerge(emerge_opts, build=True)
             post_emerge(emerge_opts, ret_code)
             if opts.deep_print or opts.deep_run:
                 deep_clean(emerge_opts, opts, ret_code)
         else:
-            _ = emerge(emerge_opts, build=True)
+            ret_code, stderr = emerge(emerge_opts, build=True)
+    return ret_code, stderr
 
 
 def run_check(opts: Namespace) -> None:
