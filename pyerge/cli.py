@@ -51,8 +51,8 @@ def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
     opts.online = utils.is_internet_connected()
 
     if not tmerge.is_portage_running():
-        debug(f'Options: {opts}')
-        debug(f'emerge: {emerge_opts}')
+        debug(f'Opts: {opts}')
+        debug(f'Emerge: {emerge_opts}')
         utils.set_portage_tmpdir()
         utils.handling_mounting(opts)
         tmerge.run_emerge(emerge_opts, opts)
