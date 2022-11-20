@@ -4,7 +4,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a695786f861e4001b3fc3974f628e09f)](https://www.codacy.com/gh/emcek/pyerge/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=emcek/pyerge&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/Licence-MIT-blue.svg)](./LICENSE.md)
 [![Downloads](https://img.shields.io/github/downloads/emcek/pyerge/total?label=Downloads)](https://github.com/emcek/pyerge/releases)  
-[![image](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9%20%7C%203.10-blue.svg)](https://github.com/emcek/pyerge)
+[![image](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://github.com/emcek/pyerge)
 [![BCH compliance](https://bettercodehub.com/edge/badge/emcek/pyerge?branch=master)](https://bettercodehub.com/)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 [![pyerge](https://snyk.io/advisor/python/pyerge/badge.svg)](https://snyk.io/advisor/python/pyerge)
@@ -28,7 +28,7 @@ Pyerge provide various tools to check and show emerge/portage status for conky.
 It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name, and I keep it like that.
 
 ## Requirements
-* Python-3.6+
+* Python-3.7+
 * app-portage/eix
 
 ## Installation
