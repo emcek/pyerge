@@ -3,14 +3,14 @@
 [![Coverage Status](https://coveralls.io/repos/github/emcek/pyerge/badge.svg?branch=master)](https://coveralls.io/github/emcek/pyerge?branch=master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a695786f861e4001b3fc3974f628e09f)](https://www.codacy.com/gh/emcek/pyerge/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=emcek/pyerge&amp;utm_campaign=Badge_Grade)
 [![License](https://img.shields.io/badge/Licence-MIT-blue.svg)](./LICENSE.md)
-[![Downloads](https://img.shields.io/github/downloads/emcek/pyerge/total?label=Downloads)](https://github.com/emcek/pyerge/releases)  
+[![Downloads](https://img.shields.io/github/downloads/emcek/pyerge/total?label=Downloads)](https://github.com/emcek/pyerge/releases)
 [![image](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://github.com/emcek/pyerge)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/emcek/dcspy/master.svg)](https://results.pre-commit.ci/latest/github/emcek/dcspy/master)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 [![pyerge](https://snyk.io/advisor/python/pyerge/badge.svg)](https://snyk.io/advisor/python/pyerge)
 
 ## pyerge
-It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it. 
+It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it.
 Pyerge provide various tools to check and show emerge/portage status for conky.
 
 ## Sponsored by Jetbrains Open Source Support Program
@@ -189,7 +189,7 @@ i.e. output for e_live all: cvechecker,openmw (2 of 3)
 
 ### glsa
 ```shell
-glsa -e 5 list 
+glsa -e 5 list
 ```
 List last 5 of GLSA enrties
 output:
@@ -202,7 +202,7 @@ output:
 ```
 
 ```shell
-glsa -e 40 test 
+glsa -e 40 test
 ```
 Check system against last 40 of GLSA.
 output:

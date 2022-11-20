@@ -1,4 +1,3 @@
-import io
 from os.path import abspath, dirname, join
 
 from setuptools import setup, find_packages
@@ -7,10 +6,10 @@ from pyerge import __version__
 
 here = abspath(dirname(__file__))
 
-with io.open(join(here, 'README.md'), encoding='utf-8') as f:
+with open(join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-with io.open(join(here, 'requirements.txt'), encoding='utf-8') as f:
+with open(join(here, 'requirements.txt'), encoding='utf-8') as f:
     requires = f.read().splitlines()
 
 setup(
