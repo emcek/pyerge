@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/Licence-MIT-blue.svg)](./LICENSE.md)
 [![Downloads](https://img.shields.io/github/downloads/emcek/pyerge/total?label=Downloads)](https://github.com/emcek/pyerge/releases)
 [![image](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue.svg)](https://github.com/emcek/pyerge)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/emcek/dcspy/master.svg)](https://results.pre-commit.ci/latest/github/emcek/dcspy/master)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/emcek/pyerge/master.svg)](https://results.pre-commit.ci/latest/github/emcek/pyerge/master)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 [![pyerge](https://snyk.io/advisor/python/pyerge/badge.svg)](https://snyk.io/advisor/python/pyerge)
 
