@@ -1,3 +1,4 @@
+from sys import version_info
 from unittest import mock
 from unittest.mock import mock_open, Mock
 
@@ -21,13 +22,14 @@ def test_no_synced(str_no_sync):
         assert tools.e_sync() == 'Unknown'
 
 
+@mark.skipif(condition=version_info.major == 3 and version_info.minor == 6,
+             reason='Mock not working with Python3.6')
 def test_synced_ver1(str_sync):
     with mock.patch('pyerge.tools.open', mock_open(read_data=str_sync)) as m:
         sync_date = tools.e_sync()
 
     m.assert_called_once_with(file='/var/log/emerge.log', encoding='utf-8')
-    assert sync_date == 'Tue, 22-01 23:01'
-    # assert sync_date == 'Tue, 22-01 22:01'
+    assert sync_date == 'Tue, 22-01 22:01' or sync_date == 'Tue, 22-01 23:01'
 
 
 def test_e_dl_gt_zero(str_dl_gt_0):
