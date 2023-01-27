@@ -16,4 +16,4 @@ ignore-setters = false
 fail-under = 90
 verbose = 1
 quiet = false
-exclude = ['setup.py', 'tests/*']
+exclude = ['setup.py', 'tests/test_*']
