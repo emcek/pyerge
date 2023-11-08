@@ -12,7 +12,7 @@ repos:
       - id: flake8
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.10.1
+    rev: v3.15.0
     hooks:
       - id: pyupgrade
         args: [--py37-plus]
@@ -24,7 +24,7 @@ repos:
         args: [--verbose, --fail-under=25]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
