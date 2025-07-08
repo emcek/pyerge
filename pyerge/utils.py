@@ -1,10 +1,10 @@
 from argparse import Namespace
-from logging import warning, info, debug
-from os import system, environ
+from logging import debug, info, warning
+from os import environ, system
 from re import search
 from shlex import split
-from subprocess import Popen, PIPE  # nosec
-from typing import Union, Tuple
+from subprocess import PIPE, Popen  # nosec
+from typing import Tuple, Union
 
 from pyerge import PORTAGE_TMPDIR
 

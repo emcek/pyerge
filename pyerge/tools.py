@@ -1,6 +1,6 @@
 from argparse import ArgumentParser
 from datetime import datetime
-from re import search, sub, match, findall
+from re import findall, match, search, sub
 
 from pyerge import EMERGE_LOGFILE, TMERGE_LOGFILE, TMPLOGFILE
 from pyerge.utils import run_cmd
@@ -121,7 +121,7 @@ def e_upd() -> str:
         content = log_file.read()
 
     if search(r'Total: 0 packages, Size of downloads: 0 KiB', content):
-        result = "None"
+        result = 'None'
     regex_total = search(r'Total:\s\d*\spackages?\s\((.*)\),.*', content)
     regex_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
     total_list = regex_total.group(1).split(',') if regex_total else []

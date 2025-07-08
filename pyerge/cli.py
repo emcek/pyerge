@@ -1,9 +1,9 @@
 import sys
 from argparse import ArgumentParser, Namespace
-from logging import basicConfig, DEBUG, INFO, ERROR, info, error, debug
+from logging import DEBUG, ERROR, INFO, basicConfig, debug, error, info
 from typing import List
 
-from pyerge import tmerge, utils, __version__
+from pyerge import __version__, tmerge, utils
 
 
 def run_parser() -> None:

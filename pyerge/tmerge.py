@@ -4,7 +4,7 @@ from re import search
 from time import strftime
 from typing import List, Tuple
 
-from pyerge import utils, TMPLOGFILE, TMERGE_LOGFILE, DEVNULL
+from pyerge import DEVNULL, TMERGE_LOGFILE, TMPLOGFILE, utils
 
 
 def emerge(arguments: List[str], build=True) -> Tuple[bytes, bytes]:

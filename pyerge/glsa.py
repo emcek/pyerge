@@ -2,7 +2,7 @@ from argparse import ArgumentParser
 from re import match
 from sys import modules
 from typing import List
-from urllib import request, error
+from urllib import error, request
 
 from bs4 import BeautifulSoup
 
