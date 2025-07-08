@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from pytest import raises, mark
+from pytest import mark, raises
 
 
 def test_cli_system_exit():
@@ -11,7 +11,7 @@ def test_cli_system_exit():
 
 
 def test_run_parser_with_correct_action():
-    from argparse import Namespace, ArgumentParser
+    from argparse import ArgumentParser, Namespace
     with patch.object(ArgumentParser, 'parse_known_args') as argument_parser_mock, patch('pyerge.cli.main_exec') as main_exec_mock:
         opts = Namespace(action='emerge', world=True, verbose=1, quiet=True)
         emerge_opts = ['-NDu', '@world']
@@ -22,8 +22,9 @@ def test_run_parser_with_correct_action():
 
 
 def test_main_exec_portage_is_running():
-    from pyerge import utils, tmerge
     from argparse import Namespace
+
+    from pyerge import tmerge, utils
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, patch.object(tmerge, 'is_portage_running') as is_portage_running_mock:
         is_internet_connected_mock.return_value = True
         is_portage_running_mock.return_value = True
@@ -55,8 +56,9 @@ def test_main_exec_portage_is_running():
                     ['-av', 'app-misc/mc'],
                     ['-av', 'app-misc/mc'])])
 def test_emerge_opts_world(ns_args, emerge_opts, result):
-    from pyerge import utils, tmerge
     from argparse import Namespace
+
+    from pyerge import tmerge, utils
     with patch.object(utils, 'is_internet_connected') as is_internet_connected_mock, \
             patch.object(utils, 'set_portage_tmpdir') as set_portage_tmpdir_mock, \
             patch.object(utils, 'handling_mounting') as handling_mounting_mock, \

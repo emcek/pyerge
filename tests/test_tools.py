@@ -1,6 +1,6 @@
 from sys import version_info
 from unittest import mock
-from unittest.mock import mock_open, Mock
+from unittest.mock import Mock, mock_open
 
 from pytest import mark
 
@@ -156,14 +156,14 @@ def test_e_sta_starting_rysnc(str_e_sta_starting_rsync):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_starting_rsync.split('\n'))))
-        assert tools.e_sta() == "Syncing"
+        assert tools.e_sta() == 'Syncing'
 
 
 def test_e_sta_rysnc_completed(str_e_sta_sync_completed):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_sta_sync_completed.split('\n'))))
-        assert tools.e_sta() == "Synced"
+        assert tools.e_sta() == 'Synced'
 
 
 def test_e_sta_unmerging(str_e_sta_unmerging):

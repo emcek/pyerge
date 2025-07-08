@@ -121,8 +121,9 @@ def test_run_cmd_as_subprocess_ver1():
 
 @mark.skipif(condition=platform != 'linux', reason='Run only on Linux')
 def test_run_cmd_as_subprocess_ver2():
-    from pyerge import utils
     from subprocess import Popen
+
+    from pyerge import utils
     with mock.patch.object(Popen, 'communicate') as communicate_mock:
         out = b'Filesystem      1K-blocks     Used  Available Use% Mounted on\n' \
               b'/dev/sda2          126931    76647      43731  64% /boot\n'
@@ -142,6 +143,7 @@ def test_run_cmd_as_sysyem():
 
 def test_set_portage_tmpdir(monkeypatch):
     from os import environ
+
     from pyerge import utils
     monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', '')
     assert utils.set_portage_tmpdir() == '/var/tmp/portage'
@@ -149,6 +151,7 @@ def test_set_portage_tmpdir(monkeypatch):
 
 def test_portage_tmpdir_already_set(monkeypatch):
     from os import environ
+
     from pyerge import utils
     monkeypatch.setitem(environ, 'PORTAGE_TMPDIR', 'some_value')
     assert utils.set_portage_tmpdir() == 'some_value'

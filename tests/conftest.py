@@ -48,12 +48,12 @@ Total: 44 packages (42 upgrades, 2 new), Size of downloads: 283,699 KiB
 
 @fixture
 def str_dl_eq_0():
-    return "Total: 0 packages, Size of downloads: 0 KiB"
+    return 'Total: 0 packages, Size of downloads: 0 KiB'
 
 
 @fixture
 def str_dl_unknown():
-    return ""
+    return ''
 
 
 @fixture
