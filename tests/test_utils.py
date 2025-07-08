@@ -118,6 +118,7 @@ def test_run_cmd_as_subprocess_ver1():
         assert utils.run_cmd(cmd='df') == (out, err)
         popen_mock.assert_called_once_with(['df'], stderr=-1, stdout=-1)
 
+
 @mark.skipif(condition=platform != 'linux', reason='Run only on Linux')
 def test_run_cmd_as_subprocess_ver2():
     from pyerge import utils
