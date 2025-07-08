@@ -1,3 +1,4 @@
+from sys import platform
 from unittest import mock
 
 from pytest import mark
@@ -117,7 +118,7 @@ def test_run_cmd_as_subprocess_ver1():
         assert utils.run_cmd(cmd='df') == (out, err)
         popen_mock.assert_called_once_with(['df'], stderr=-1, stdout=-1)
 
-
+@mark.skipif(condition=platform != 'linux', reason='Run only on Linux')
 def test_run_cmd_as_subprocess_ver2():
     from pyerge import utils
     from subprocess import Popen
@@ -152,6 +153,7 @@ def test_portage_tmpdir_already_set(monkeypatch):
     assert utils.set_portage_tmpdir() == 'some_value'
 
 
+@mark.skipif(condition=platform != 'linux', reason='Run only on Linux')
 def test_handling_mounting_mount(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.unmount_device') as unmount_device_mock:
@@ -161,6 +163,7 @@ def test_handling_mounting_mount(opt_emerge_nonlocal_with_tmpfs_1g):
             utils.handling_mounting(opt_emerge_nonlocal_with_tmpfs_1g)
 
 
+@mark.skipif(condition=platform != 'linux', reason='Run only on Linux')
 def test_handling_mounting_remounte(opt_emerge_nonlocal_with_tmpfs_1g):
     from pyerge import utils
     with mock.patch('pyerge.utils.size_of_mounted_tmpfs') as size_of_mounted_tmpfs_mock:
