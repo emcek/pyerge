@@ -1,6 +1,6 @@
 from os.path import abspath, dirname, join
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 from pyerge import __version__
 
