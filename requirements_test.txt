@@ -1,13 +1,13 @@
 -r requirements.txt
-flake8
 check-manifest
 codacy-coverage
 coveralls
+flake8
 interrogate
 lxml
 mypy
-pydocstyle
 pycodestyle
+pydocstyle
 pylint
 pytest-cov
 pytest-random
