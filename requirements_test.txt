@@ -3,9 +3,12 @@ codacy-coverage
 coveralls
 interrogate
 lxml
+lxml-stubs
 mypy
 pre-commit
 pytest-cov
 pytest-randomly
 ruff
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
+types-html5lib
+types-setuptools
