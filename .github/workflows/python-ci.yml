@@ -24,7 +24,7 @@ jobs:
           interrogate -c pyproject.toml -vv
       - name: Check Ruff
         run: |
-          ruff check src
+          ruff check pyerge
       - name: Check mypy
         run: |
           mypy .
