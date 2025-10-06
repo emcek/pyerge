@@ -1,14 +1,13 @@
 import sys
 from argparse import ArgumentParser, Namespace
 from logging import DEBUG, ERROR, INFO, basicConfig, debug, error, info
-from typing import List
 
 from pyerge import __version__, tmerge, utils
 
 
 def run_parser() -> None:
     """
-    Function to collect command line arguments.
+    Collect arguments from command line interface.
 
     Construct main object with correct set of parameters.
     """
@@ -36,12 +35,12 @@ def run_parser() -> None:
     main_exec(opts, emerge_opts)
 
 
-def main_exec(opts: Namespace, emerge_opts: List[str]) -> None:
+def main_exec(opts: Namespace, emerge_opts: list[str]) -> None:
     """
-    Main execution function.
+    Run pyerge command line interface.
 
     :param opts: cli arguments
-    :param emerge_opts: list of arguments for emege
+    :param emerge_opts: list of arguments for emerge
     """
     if opts.world:
         emerge_opts = ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']

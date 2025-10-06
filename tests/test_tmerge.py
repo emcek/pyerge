@@ -30,7 +30,7 @@ def test_deep_clean_run():
         check_emerge_opts_mock.return_value = (False, True)
         emerge_mock.return_value = (output_and_rc, output_and_rc)
         tmerge.deep_clean([''], opts, output_and_rc)
-        emerge_mock.assert_called_once_with(['-pc'], build=False)
+        emerge_mock.assert_called_once_with(arguments=['-pc'], build=False)
         deep_run_mock.assert_called_once_with(opts, output_and_rc)
 
 
@@ -57,7 +57,7 @@ def test_deep_run_output_with_two_packages():
         output = b'\n\nAll selected packages: =sys-kernel/gentoo-sources-5.10.76-r1 =dev-python/hypothesis-6.27.1\n\n'
         opts = Namespace(deep_run=True)
         tmerge.deep_run(opts=opts, output=output)
-        emerge_mock.assert_called_once_with(['-c', '=dev-python/hypothesis-6.27.1'], build=True)
+        emerge_mock.assert_called_once_with(arguments=['-c', '=dev-python/hypothesis-6.27.1'], build=True)
 
 
 def test_deep_run_output_with_only_gentoo():

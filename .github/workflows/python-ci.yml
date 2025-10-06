@@ -19,31 +19,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -Ur requirements_test.txt
-      - name: Check PyCodeStyle
-        run: |
-          pycodestyle --statistics --count pyerge
-      - name: Check PyDocStyle
-        run: |
-          pydocstyle --count pyerge
       - name: Check interrogate
         run: |
           interrogate -c pyproject.toml -vv
-      - name: Check PyLint
+      - name: Check Ruff
         run: |
-          pylint pyerge || echo $(($? % 4))
-      - name: Check flake8
+          ruff check src
+      - name: Check mypy
         run: |
-          flake8 . --select=E9,F63,F7,F82 --show-source
-          flake8 . --exit-zero --ignore=E501
-      - name: Check MANIFEST
-        run: |
-          check-manifest -q || echo $(($? -1))
+          mypy .
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.os }} ${{ matrix.python-version }}

@@ -1,7 +1,6 @@
 from argparse import ArgumentParser
 from re import match
 from sys import modules
-from typing import List
 from urllib import error, request
 
 from bs4 import BeautifulSoup
@@ -33,7 +32,7 @@ def glsa_test(elements: int) -> str:
     return out.decode('utf-8').strip().replace('\n', ',')
 
 
-def _rss(regex: str, elements: int) -> List[str]:
+def _rss(regex: str, elements: int) -> list[str]:
     """
     Parse web page and find all matching tags.
 
@@ -47,7 +46,7 @@ def _rss(regex: str, elements: int) -> List[str]:
     return all_versions[0:elements]
 
 
-def _collect_all_maching_entries(html: str, regex: str) -> List[str]:
+def _collect_all_maching_entries(html: str, regex: str) -> list[str]:
     """
     Parse web page and find all matching tags.
 

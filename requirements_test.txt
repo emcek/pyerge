@@ -1,14 +1,11 @@
 -r requirements.txt
-check-manifest
 codacy-coverage
 coveralls
-flake8
 interrogate
 lxml
 mypy
-pycodestyle
-pydocstyle
-pylint
+pre-commit
 pytest-cov
-pytest-random
+pytest-randomly
+ruff
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability

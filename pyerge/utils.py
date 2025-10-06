@@ -1,15 +1,16 @@
+from __future__ import annotations
+
 from argparse import Namespace
 from logging import debug, info, warning
 from os import environ, system
 from re import search
 from shlex import split
 from subprocess import PIPE, Popen  # nosec
-from typing import Tuple, Union
 
 from pyerge import PORTAGE_TMPDIR
 
 
-def run_cmd(cmd: str, use_system=False) -> Tuple[bytes, bytes]:
+def run_cmd(cmd: str, use_system=False) -> tuple[bytes, bytes]:
     """
     Run any system command.
 
@@ -129,7 +130,7 @@ def convert2blocks(size: str) -> int:
     return int(regex.group(1)) * map_dict[regex.group(2).upper()]  # type: ignore
 
 
-def delete_content(fname: Union[str, bytes, int]) -> None:
+def delete_content(fname: str | bytes | int) -> None:
     """
     Clean-up file content.
 
@@ -148,7 +149,7 @@ def set_portage_tmpdir() -> str:
 
 def handling_mounting(opts: Namespace) -> None:
     """
-    Handling mounting temporary file fistem with requestes size.
+    Mounting temporary file filesystem with requested size.
 
     :param opts: cli arguments
     """

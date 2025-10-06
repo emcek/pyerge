@@ -2,12 +2,11 @@ from argparse import Namespace
 from logging import debug, info
 from re import search
 from time import strftime
-from typing import List, Tuple
 
 from pyerge import DEVNULL, TMERGE_LOGFILE, TMPLOGFILE, utils
 
 
-def emerge(arguments: List[str], build=True) -> Tuple[bytes, bytes]:
+def emerge(arguments: list[str], build=True) -> tuple[bytes, bytes]:
     """
     Run emerge command.
 
@@ -41,7 +40,7 @@ def check_upd(local_chk: bool) -> None:
             debug(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}')
             utils.run_cmd(f'sudo eix-sync >> {TMPLOGFILE} > {DEVNULL}', use_system=True)
         info('Checking updates...')
-        output, error = emerge('-pvNDu --color n --with-bdeps=y @world'.split(), build=False)
+        output, error = emerge(arguments='-pvNDu --color n --with-bdeps=y @world'.split(), build=False)
         debug(f'stderr: {error.decode("utf-8")}')
         log.write(output.decode('utf-8'))
         log.write(error.decode('utf-8'))
@@ -54,7 +53,7 @@ def check_upd(local_chk: bool) -> None:
 
 
 # <=><=><=><=><=><=><=><=><=><=><=><=> tmerge <=><=><=><=><=><=><=><=><=><=><=><=>
-def post_emerge(args: List[str], return_code: bytes) -> None:
+def post_emerge(args: list[str], return_code: bytes) -> None:
     """
     Run actions after emerge.
 
@@ -68,7 +67,7 @@ def post_emerge(args: List[str], return_code: bytes) -> None:
             log.write('Total: 0 packages, Size of downloads: 0 KiB')
 
 
-def deep_clean(args: List[str], opts: Namespace, return_code: bytes) -> None:
+def deep_clean(args: list[str], opts: Namespace, return_code: bytes) -> None:
     """
     Run deep clean after emerge.
 
@@ -78,7 +77,7 @@ def deep_clean(args: List[str], opts: Namespace, return_code: bytes) -> None:
     """
     pretend, world = check_emerge_opts(args)
     if not int(return_code) and not pretend and world:
-        output, error = emerge(['-pc'], build=False)
+        output, error = emerge(arguments=['-pc'], build=False)
         info('Deep clean')
         info(f'output details:{output.decode("utf-8")}')
         debug(f'stderr details:{error.decode("utf-8")}')
@@ -98,13 +97,13 @@ def deep_run(opts: Namespace, output: bytes):
             package_list = [package for package in regexp.group(1).split(' ') if 'gentoo-sources' not in package]
             if package_list:
                 debug(f'Cleaning {len(package_list)} packages')
-                emerge(['-c'] + package_list, build=True)
+                emerge(arguments=['-c', *package_list], build=True)
             else:
                 info('Nothing to clean')
                 debug(f'All packages: {regexp.group(1)}')
 
 
-def check_emerge_opts(args: List[str]) -> Tuple[bool, bool]:
+def check_emerge_opts(args: list[str]) -> tuple[bool, bool]:
     """
     Check options in emerge command.
 
@@ -124,7 +123,7 @@ def is_portage_running() -> bool:
     return bool(out)
 
 
-def run_emerge(emerge_opts: List[str], opts: Namespace) -> Tuple[bytes, bytes]:
+def run_emerge(emerge_opts: list[str], opts: Namespace) -> tuple[bytes, bytes]:
     """
     Run update of system.
 
@@ -134,12 +133,12 @@ def run_emerge(emerge_opts: List[str], opts: Namespace) -> Tuple[bytes, bytes]:
     ret_code, stderr = b'', b''
     if opts.action == 'emerge' and opts.online:
         if opts.world or opts.pretend_world:
-            ret_code, stderr = emerge(emerge_opts, build=True)
+            ret_code, stderr = emerge(arguments=emerge_opts, build=True)
             post_emerge(emerge_opts, ret_code)
             if opts.deep_print or opts.deep_run:
                 deep_clean(emerge_opts, opts, ret_code)
         else:
-            ret_code, stderr = emerge(emerge_opts, build=True)
+            ret_code, stderr = emerge(arguments=emerge_opts, build=True)
     return ret_code, stderr
 
 
@@ -153,7 +152,7 @@ def run_check(opts: Namespace) -> None:
         check_upd(opts.local)
 
 
-def run_live(opts: Namespace) -> Tuple[bytes, bytes]:
+def run_live(opts: Namespace) -> tuple[bytes, bytes]:
     """
     Emerge live packages with smart-live-rebuild.
 
