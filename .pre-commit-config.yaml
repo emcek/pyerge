@@ -27,7 +27,7 @@ repos:
         additional_dependencies: [lxml, types-setuptools, types-html5lib, lxml-stubs]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.10
+    rev: v0.14.14
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
