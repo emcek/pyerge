@@ -1,14 +1,8 @@
 -r requirements.txt
-codacy-coverage
-coveralls
 interrogate
 lxml
-lxml-stubs
 mypy
 pre-commit
 pytest-cov
 pytest-randomly
 ruff
-setuptools
-types-html5lib
-types-setuptools
