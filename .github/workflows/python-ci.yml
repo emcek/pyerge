@@ -11,21 +11,21 @@ jobs:
         python-version: ['3.14']
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.os }} ${{ matrix.python-version }}
+      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: "Install dependencies"
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -Ur requirements_test.txt
-      - name: Check interrogate
+      - name: "Check interrogate"
         run: |
           interrogate -c pyproject.toml -vv
-      - name: Check Ruff
+      - name: "Check Ruff"
         run: |
           ruff check pyerge
-      - name: Check mypy
+      - name: "Check mypy"
         run: |
           mypy .
   test:
@@ -36,15 +36,15 @@ jobs:
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.os }} ${{ matrix.python-version }}
+      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: "Install dependencies"
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -Ur requirements_test.txt
-      - name: Test with pytest
+      - name: "Test with pytest"
         run: |
           python -m pytest
   coverage:
@@ -55,18 +55,18 @@ jobs:
         python-version: ['3.14']
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.os }} ${{ matrix.python-version }}
+      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
+      - name: "Install dependencies"
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -Ur requirements_test.txt
-      - name: Check mypy
+      - name: "Check mypy"
         run: |
           mypy pyerge  # || echo $(($? - 1))
-      - name: Test with pytest
+      - name: "Test with pytest"
         run: |
           python -m pytest -v --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term-missing
       - name: "Upload pytest results"
