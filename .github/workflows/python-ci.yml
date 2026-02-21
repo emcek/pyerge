@@ -68,9 +68,9 @@ jobs:
           mypy pyerge  # || echo $(($? - 1))
       - name: Test with pytest
         run: |
-          python -m pytest --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term
-      - name: Upload pytest and mypy results
-        uses: actions/upload-artifact@v4
+          python -m pytest -v --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term-missing
+      - name: "Upload pytest results"
+        uses: actions/upload-artifact@v6
         if: always()
         with:
           name: test_mypy-${{ matrix.os }}-py${{ matrix.python-version }}
@@ -79,14 +79,10 @@ jobs:
             mypyhtml/*
             coverage.xml
           retention-days: 4
-      - name: Run codacy-coverage
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: |
-          python-codacy-coverage -r coverage.xml
-      - name: Test Coveralls
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_SERVICE_NAME: github
-        run: |
-          coveralls
+      - name: "Run Codacy coverage"
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
+      - name: "Run Coveralls coverage"
+        uses: coverallsapp/github-action@v2
