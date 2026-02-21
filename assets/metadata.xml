@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+  <email>mplichta@gmail.com</email>
+  <name>Michal Plichta</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">emcek/pyerge</remote-id>
+    <remote-id type="pypi">pyerge</remote-id>
+  </upstream>
+  <longdescription lang="en">
+    It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it. Pyerge provide various tools to check and show emerge/portage status for conky.
+  </longdescription>
+</pkgmetadata>
