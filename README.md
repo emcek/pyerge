@@ -28,13 +28,18 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 * app-portage/eix
 
 ## Installation
-Copy ebuild from GitHub Releases into your local repository (i.e. /usr/local/portage/dev-python/portage) and run as root:
+Copy ebuild from GitHub Releases into your local repository (i.e. /var/db/repos/local/app-portage/pyerge) and run as root:
 ```shell
-cd /usr/local/portage/app-portage/portage
+eselect repository create local
+cd /var/db/repos/local/app-portage/pyerge
+cp /path/to/pyerge-0.7.2.ebuild .
+cp /path/to/metadata.xml .
+pkgdev manifest  # (from: dev-util/pkgdev)
+# or
 ebuild pyerge-0.7.2.ebuild manifest
 eix-update
 echo "app-portage/pyerge ~amd64" >> /etc/portage/package.accept_keywords
-emerge app-portage/portage
+emerge app-portage/pyerge
 ```
 Ebuild is good quality as RepoMan sez: "If everyone were like you, I'd be out of business!"
 
