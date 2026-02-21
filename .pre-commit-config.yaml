@@ -27,7 +27,7 @@ repos:
         additional_dependencies: [lxml, types-setuptools, types-html5lib, lxml-stubs]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.14
+    rev: v0.15.2
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -39,12 +39,12 @@ repos:
           args: [--local]
 
   - repo: https://github.com/pycqa/isort
-    rev: 7.0.0
+    rev: 8.0.0
     hooks:
       - id: isort
 
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24.1
+    rev: v0.25
     hooks:
       - id: validate-pyproject
 
