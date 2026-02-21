@@ -119,7 +119,7 @@ def test_run_emerge():
         emerge_mock.return_value = (ret_code, b'')
         from pyerge import tmerge
         emerge_opts = ['-pv', 'app-portage/pyerge']
-        opts = Namespace(action='emerge', online=True, deep_print=False, world=False, pretend_world=False)
+        opts = Namespace(action='emerge', online=True, deep_print=False, world=False, pretend_world=False, deep_run=False)
         result = tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts)
         assert result == (ret_code, b'')
 
