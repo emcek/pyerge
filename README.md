@@ -24,7 +24,13 @@ It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create
 
 ## Requirements
 * Python-3.9+
-* app-portage/eix
+* sys-apps/portage (for: `emerge`)
+* app-portage/eix (for: `eix-sync`)
+* app-portage/genlop (for: `genlop`)
+* app-portage/smart-live-rebuild (for: `smart-live-rebuild`)
+* app-admin/sudo (for: `sudo`)
+* sys-apps/coreutils (for: `df`)
+* net-misc/iputils (for: `ping`)
 
 ## Installation
 Copy ebuild from GitHub Releases into your local repository (i.e. /var/db/repos/local/app-portage/pyerge) and run as root:
@@ -53,7 +59,7 @@ sudo pye check
 It basically run:
 * sync portage `eix-sync`
 * `sudo emerge -pvNDu --nospinner --with-bdeps=y --color n @world` (and save output to log_file_1)
-* Estimete time for running ememrge @world `genlop -pn` (and save to log_file_2)
+* Estimete time for running `emerge @world` with `genlop -pn` (and save to log_file_2)
 
 Some useful switches:
 * -l, --local - run everthing without `eix-sync`
@@ -75,7 +81,7 @@ Some useful switches:
 * -d, --clean-print - after running `emerge -pvNDu @world` it will show output from deep clean - `emegre -pc`
 * -c, --clean-run - after running `emerge -pvNDu @world` it will run deep clean - `emerge -c` (imply -d)
 
-After `emerge` action you can pass any ememrge parameter, it will be passed directly into `emerge`. So, you can build:
+After `emerge` action you can pass any `emerge` CLI parameter, it will be passed directly into `emerge`. So, you can build:
 ```shell
 sudo pye -s 1G emerge -a app-admin/conky
 ```
@@ -144,7 +150,7 @@ i.e. output - 2 days 10h 36min
 ```shell
 e_eta
 ```
-Run during `sudo pye emereg` or `sudo emerge` - print estimetet left time to the end of compilation, based on `genlop`
+Run during `sudo pye emerge` or `sudo emerge` - print estimetet left time to the end of compilation, based on `genlop`
 
 ### e_log
 ```shell
@@ -162,7 +168,7 @@ Status of emerge/portage. Possible values: Compiling, Cleaning, Autoclean, Compl
 ```shell
 e_prog
 ```
-Run during `sudo pye emereg` or `sudo emerge` - print current progress of `emerge` as float
+Run during `sudo pye emerge` or `sudo emerge` - print current progress of `emerge` as float
 i.e. output - if emerge is buildeing (5 of 6) package it will return 83.3333
 You can use it in conky as: ${execibar 30 e_prog}
 
