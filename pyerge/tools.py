@@ -7,7 +7,7 @@ from pyerge.utils import run_cmd
 
 
 def e_sync() -> str:
-    """Fetch date of last sync form logs."""
+    """Fetch a date of last sync from logs."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
             reqex = search(r'(\d+)(:\s===\sSync completed)', line)
@@ -22,7 +22,7 @@ def e_sync() -> str:
 
 
 def e_dl() -> str:
-    """Fetch size of archives to be downloaded for next system update."""
+    """Fetch a size of archives to be downloaded for the next system update."""
     size = 'Calculating...'
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
@@ -35,7 +35,7 @@ def e_dl() -> str:
 
 
 def e_curr() -> str:
-    """Get name of the current or last compiled package."""
+    """Get a name of the current or last compiled package."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
             reqex = search(r'Compiling.*\((.*)::', line)
@@ -65,7 +65,7 @@ def e_eut() -> str:
 
 
 def e_eta() -> str:
-    """Get estimated time of compilation of current package."""
+    """Get an estimated time of compilation of a current package."""
     output, _ = run_cmd('genlop -cn')
     out = output.decode('utf-8')
     eta = ''
@@ -80,7 +80,7 @@ def e_eta() -> str:
 
 
 def e_sta() -> str:
-    """Get current stage of emerging package."""
+    """Get a current stage of emerging package."""
     result = 'Unknown'
     map_dict = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean', 'completed emerge': 'Completed', 'Finished': 'Finished',
                 'Sync completed': 'Synced', 'Starting rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging', 'unmerge': 'Unmerge'}
@@ -106,14 +106,14 @@ def e_prog() -> float:
 
 
 def e_log() -> str:
-    """Check next update content."""
+    """Check the next update content."""
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         content = log_file.read()
     return content
 
 
 def e_upd() -> str:
-    """Check types and number of packages to update."""
+    """Check the types and number of packages to update."""
     result = 'Calculating...'
     map_dict = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'in new slots': 'NS', 'reinstalls': 'R',
                 'reinstall': 'R', 'uninstalls': 'Un', 'uninstall': 'Un', 'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
@@ -136,10 +136,10 @@ def e_upd() -> str:
 
 def e_raid(raid_id: str) -> str:
     """
-    Check of Raid array.
+    Check of the Raid array.
 
-    :param raid_id: name i.e. md126 or md127
-    :return: status of RAID
+    :param raid_id: Name i.e., md126 or md127
+    :return: Status of RAID
     """
     raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
@@ -158,7 +158,7 @@ def run_e_raid():
 
 
 def e_live(action: str) -> str:
-    """Get number and names of live ebuilds to build."""
+    """Get the number and names of live ebuilds to build."""
     out, err = run_cmd('smart-live-rebuild --no-color --jobs=6 --pretend --quiet --unprivileged-user')
     out, err = out.decode('utf-8'), err.decode('utf-8')  # type: ignore
     live_no, live_tot = 0, 0

@@ -35,17 +35,17 @@ def test_glsa_test_system_affected():
             assert glsa_test(elements=2) == f'{date3},{date4}'
 
 
-def test_rss(orginal_html_xml):
+def test_rss(original_html_xml):
     from pyerge.glsa import _rss
     with mock.patch('pyerge.glsa.request') as urlopen_mock:
-        with mock.patch('pyerge.glsa._collect_all_maching_entries') as collect_all_mock:
-            urlopen_mock.return_value.read.return_value = orginal_html_xml
+        with mock.patch('pyerge.glsa._collect_all_matching_entries') as collect_all_mock:
+            urlopen_mock.return_value.read.return_value = original_html_xml
             collect_all_mock.return_value = ['201904-25', '201904-24', '201904-23']
             assert _rss(r'GLSA\s(\d{6}-\d{2}):\s.*', 2) == ['201904-25', '201904-24']
 
 
 @mark.parametrize('regex, result', [(r'GLSA\s(\d{6}-\d{2}):\s.*', [date1, date2]),
                                     (r'GLSA\s(\d{6}-\d{2}:\s.*)', [vulnerabilities, escalation])])
-def test_collect_all_maching_entries(regex, result, html_xlm_as_str):
-    from pyerge.glsa import _collect_all_maching_entries
-    assert _collect_all_maching_entries(html_xlm_as_str, regex) == result
+def test_collect_all_matching_entries(regex, result, html_xlm_as_str):
+    from pyerge.glsa import _collect_all_matching_entries
+    assert _collect_all_matching_entries(html_xlm_as_str, regex) == result

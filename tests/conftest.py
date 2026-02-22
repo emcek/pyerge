@@ -81,7 +81,7 @@ def str_eut_unknown():
 
 
 @fixture
-def orginal_html_xml():
+def original_html_xml():
     html = b'<?xml version="1.0" encoding="UTF-8"?>\n<rdf:RDF xmlns="http://purl.org/rss/1.0/"\n  ' \
            b'xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"\n  ' \
            b'xmlns:content="http://purl.org/rss/1.0/modules/content/"\n  ' \

@@ -90,7 +90,7 @@ def deep_clean(args: list[str], opts: Namespace, return_code: bytes) -> None:
 
 def deep_run(opts: Namespace, output: bytes) -> None:
     """
-    Run deep clean emegre without gent0o sources.
+    Run deep clean `emerge` without gentoo sources.
 
     :param opts:
     :param output:
@@ -111,7 +111,7 @@ def deep_run(opts: Namespace, output: bytes) -> None:
 
 def check_emerge_opts(args: list[str]) -> tuple[bool, bool]:
     """
-    Check options in emerge command.
+    Check options in `emerge` command.
 
     :param args:
     :return:
@@ -121,7 +121,7 @@ def check_emerge_opts(args: list[str]) -> tuple[bool, bool]:
 
 def is_portage_running() -> bool:
     """
-    Check if potrage command in currently running.
+    Check if `portage` command in currently running.
 
     :return: True if it is running, False otherwise
     """
@@ -131,10 +131,10 @@ def is_portage_running() -> bool:
 
 def run_emerge(emerge_opts: list[str], opts: Namespace) -> tuple[bytes, bytes]:
     """
-    Run update of system.
+    Run update of the system.
 
-    :param emerge_opts: list of arguments for emege
-    :param opts: cli arguments
+    :param emerge_opts: List of arguments for `emerge`
+    :param opts: CLI arguments
     """
     if opts.action != 'emerge' or not opts.online:
         return b'', b''
@@ -156,7 +156,7 @@ def run_check(opts: Namespace) -> None:
     """
     Run checking system updates.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     """
     if opts.action == 'check' and (opts.online or opts.local):
         check_upd(opts.local)
@@ -166,7 +166,7 @@ def run_live(opts: Namespace) -> tuple[bytes, bytes]:
     """
     Emerge live packages with smart-live-rebuild.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     :return:
     """
     if not (opts.live and opts.online):

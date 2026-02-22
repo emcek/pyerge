@@ -10,10 +10,10 @@ from pyerge import utils
 
 def glsa_list(elements: int) -> str:
     """
-    List GLSAs with number and name as string with new lines.
+    List GLSAs with number and name as a string with new lines.
 
-    :param elements: number of elements
-    :return: string with new lines
+    :param elements: Number of elements
+    :return: String with new lines
     """
     return '\n'.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}:\s.*)', elements=elements))
 
@@ -22,8 +22,8 @@ def glsa_test(elements: int) -> str:
     """
     Test system against GLSAs.
 
-    :param elements: number of elements
-    :return: string with result
+    :param elements: Number of elements
+    :return: String with a result
     """
     glsalist = ' '.join(_rss(regex=r'GLSA\s(\d{6}-\d{2}):\s.*', elements=elements))
     out, err = utils.run_cmd(f'glsa-check -t {glsalist}')
@@ -34,25 +34,25 @@ def glsa_test(elements: int) -> str:
 
 def _rss(regex: str, elements: int) -> list[str]:
     """
-    Parse web page and find all matching tags.
+    Parse a web page and find all matching tags.
 
-    :param regex: regural expresion
-    :param elements: number of elements to return
-    :return: list of strings
+    :param regex: Regular expression
+    :param elements: Number of elements to return
+    :return: A list of strings
     """
     with request.urlopen('https://security.gentoo.org/glsa/feed.rss1') as rss_page:  # nosec
         rss_html = rss_page.read().decode('utf-8')
-    all_versions = _collect_all_maching_entries(rss_html, regex)
+    all_versions = _collect_all_matching_entries(rss_html, regex)
     return all_versions[0:elements]
 
 
-def _collect_all_maching_entries(html: str, regex: str) -> list[str]:
+def _collect_all_matching_entries(html: str, regex: str) -> list[str]:
     """
-    Parse web page and find all matching tags.
+    Parse a web page and find all matching tags.
 
-    :param html: web page
-    :param regex: regural expresion
-    :return: list of strings
+    :param html: Web page
+    :param regex: Regular expression
+    :return: List of strings
     """
     tmp_list = []
     soup = BeautifulSoup(html, 'html.parser')
@@ -64,7 +64,7 @@ def _collect_all_maching_entries(html: str, regex: str) -> list[str]:
     return tmp_list
 
 
-def run_glsa():
+def run_glsa() -> None:
     """Run GLSA module to test or to list."""
     parser = ArgumentParser(description='Check and list GLSA easly')
     parser.add_argument('action', help='list or test')

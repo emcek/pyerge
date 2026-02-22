@@ -14,14 +14,14 @@ def run_cmd(cmd: str, use_system=False) -> tuple[bytes, bytes]:
     """
     Run any system command.
 
-    When use_system is set cmd is run via "os.system" and function
-    return RC from comand as bytes and b''.
-    When use_system is not set (default) cmd is run via subprocess.Popen and
-    function return cmd stdout and stderr as bytes.
+    When `use_system` is set, `cmd` is run via `os.system` and a function
+    returns RC from command as bytes and b''.
+    When `use_system` is not set (default), `cmd` is run via `subprocess.Popen` and
+    a function returns cmd stdout and stderr as bytes.
 
-    :param cmd: command string
-    :param use_system: "os.system" use insted of subprocess
-    :return: tuple of bytes with output and error
+    :param cmd: Command string
+    :param use_system: Use `os.system` instead of `subprocess`
+    :return: Tuple of bytes with output and error
     """
     if use_system:
         ret_code = system(cmd)  # nosec
@@ -33,9 +33,9 @@ def run_cmd(cmd: str, use_system=False) -> tuple[bytes, bytes]:
 
 def mount_device(opts: Namespace) -> None:
     """
-    Mount directory with size as tmp file system in RAM or linu device.
+    Mount the directory with size as tmp file system in RAM or linux device.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     """
     if opts.dev == 'tmpfs':
         info(f'Mounting {opts.size} of memory to {PORTAGE_TMPDIR}')
@@ -51,7 +51,7 @@ def unmount_device(opts: Namespace) -> None:
     """
     Unmount directory from RAM or linux device.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if opts.dev == 'tmpfs':
@@ -64,9 +64,9 @@ def unmount_device(opts: Namespace) -> None:
 
 def remount_tmpfs(opts: Namespace) -> None:
     """
-    Re-mount directory with size as tmp file system in RAM.
+    Re-mount the directory with size as tmp file system in RAM.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     """
     info(f'Remounting {opts.size} of memory to {PORTAGE_TMPDIR}')
     debug(f'sudo umount -f {PORTAGE_TMPDIR}')
@@ -76,14 +76,14 @@ def remount_tmpfs(opts: Namespace) -> None:
 
 def is_internet_connected() -> bool:
     """
-    Check if there is connection to internet.
+    Check if there is a connection to the internet.
 
     :return: True is connected, False otherwise
     """
     cmd, _ = run_cmd('ping -W1 -c1 89.16.167.134')
     match = search(b'[1].*, [1].*, [0]%.*,', cmd)
     if match is not None:
-        info('There is internet connecton or not needed')
+        info('There is internet connection or not needed')
         return True
     warning('No internet connection!')
     return False
@@ -91,9 +91,9 @@ def is_internet_connected() -> bool:
 
 def size_of_mounted_tmpfs() -> int:
     """
-    Return size of mounted directory.
+    Return the size of a mounted directory.
 
-    :return: size in bytes as intiger
+    :return: Size in bytes as integer
     """
     df_cmd, _ = run_cmd('df')
     match = search(rf'(tmpfs\s*)(\d+)(\s*.*{PORTAGE_TMPDIR})', df_cmd.decode('utf-8'))
@@ -106,7 +106,7 @@ def is_device_mounted(dev='tmpfs') -> bool:
     """
     Check if Linux DEV is mounted.
 
-    :param dev: linux dev name
+    :param dev: Linux dev name
     :return: True is mounted, False otherwise
     """
     mount_cmd, _ = run_cmd('mount')
@@ -116,10 +116,10 @@ def is_device_mounted(dev='tmpfs') -> bool:
 
 def convert2blocks(size: str) -> int:
     """
-    Convert size with unit into system blocks (used in i.e. df/mounts commands).
+    Convert size with unit into system blocks (used in i.e., df/mounts commands).
 
-    :param size: with units K, M, G
-    :return: size in kB
+    :param size: With units K, M, G
+    :return: Size in kB
     """
     try:
         return int(float(size))
@@ -132,9 +132,9 @@ def convert2blocks(size: str) -> int:
 
 def delete_content(fname: str | bytes | int) -> None:
     """
-    Clean-up file content.
+    Clean up file content.
 
-    :param fname: path to file as string
+    :param fname: Path to file as string
     """
     with open(file=fname, mode='w', encoding='utf-8'):
         pass
@@ -149,9 +149,9 @@ def set_portage_tmpdir() -> str:
 
 def handling_mounting(opts: Namespace) -> None:
     """
-    Mounting temporary file filesystem with requested size.
+    Mounting temporary file filesystem with the requested size.
 
-    :param opts: cli arguments
+    :param opts: CLI arguments
     """
     if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
         if not is_device_mounted(dev=opts.dev):

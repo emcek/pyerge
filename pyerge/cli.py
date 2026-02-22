@@ -7,9 +7,9 @@ from pyerge import __version__, tmerge, utils
 
 def run_parser() -> None:
     """
-    Collect arguments from command line interface.
+    Collect arguments from a command line interface.
 
-    Construct main object with correct set of parameters.
+    Construct a main object with a correct set of parameters.
     """
     parser = ArgumentParser(description='Emerge in temporary RAM disk')
     parser.add_argument('-s', '--size', action='store', dest='size', default='4G', help='Size or RAM disk, default 4G')
@@ -40,7 +40,7 @@ def main_exec(opts: Namespace, emerge_opts: list[str]) -> None:
     Run pyerge command line interface.
 
     :param opts: cli arguments
-    :param emerge_opts: list of arguments for emerge
+    :param emerge_opts: list of arguments for `emerge`
     """
     if opts.world:
         emerge_opts = ['--with-bdeps=y', '--keep-going=y', '--newuse', '--deep', '--update', '@world']
