@@ -9,7 +9,7 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=emcek_pyerge&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=emcek_pyerge)
 
 ## pyerge
-It is small python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it.
+It is a small python wrapper tool for `emerge` (Gentoo package manager - Portage). It can mount RAM disk of a defined size and compile packages inside it.
 Pyerge provide various tools to check and show emerge/portage status for conky.
 
 ## Table of Contents
@@ -20,7 +20,7 @@ Pyerge provide various tools to check and show emerge/portage status for conky.
 * [Tools for Conky](#tools-for-conky)
 
 ## Name
-It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create repository I missspelled the name, and I keep it like that.
+It should be called **PYMERGE** for **PY**thon and e**MERGE**, but when I create the repository, I misspelled the name, and I keep it like that.
 
 ## Requirements
 * Python-3.9+
@@ -50,23 +50,23 @@ Main pyerge script is called `pye` and has two main actions: `check` and `emerge
 ```shell
 sudo pye check
 ```
-It basicly run:
+It basically run:
 * sync portage `eix-sync`
 * `sudo emerge -pvNDu --nospinner --with-bdeps=y --color n @world` (and save output to log_file_1)
-* Estypete time for runing ememrge @world `genlop -pn` (and save to log_file_2)
+* Estimete time for running ememrge @world `genlop -pn` (and save to log_file_2)
 
 Some useful switches:
 * -l, --local - run everthing without `eix-sync`
-* -q, --quiet - no output from pyerge itself only form other tools like `eix`, or `emerge`
+* -q, --quiet - no output from pyerge itself only from other tools like `eix`, or `emerge`
 * -v, --verbose - be more verbose
 
 ### pye emerge
 ```shell
 sudo pye -w emerge
 ```
-It basicly run:
-* check if emerge isn't runnig
-* set envirinment variable PORTAGE_TMPDIR to /var/tmp/portage
+It basically run:
+* check if emerge isn't running
+* set environment variable PORTAGE_TMPDIR to /var/tmp/portage
 * mount 4G RAM disk to /var/tmp/portage
 * run `emerge -NDu --nospinner  --with-bdeps=y --keep-going=y @world`
 * unmount RAM disk
@@ -75,15 +75,15 @@ Some useful switches:
 * -d, --clean-print - after running `emerge -pvNDu @world` it will show output from deep clean - `emegre -pc`
 * -c, --clean-run - after running `emerge -pvNDu @world` it will run deep clean - `emerge -c` (imply -d)
 
-After `emerge` action you can pass any ememrge parameter, it will be passed directly into emerge. So, you can build:
+After `emerge` action you can pass any ememrge parameter, it will be passed directly into `emerge`. So, you can build:
 ```shell
 sudo pye -s 1G emerge -a app-admin/conky
 ```
-It will mount only 1G RAM disk and ask while comipling app-admin/conky package.
+It will mount only 1G RAM disk and ask while compiling app-admin/conky package.
 * -s, --size - size of RAM disk with postfix i.e. 1024K, 512M, 2G
 
 ## Tools for Conky
-Those tools are crated especialy for Conky monitoring. i.e. part of my .conkyrc:
+Those tools are created especially for Conky monitoring. i.e. part of my .conkyrc:
 ```shell
 color0 5b6dad
 color1 7f8ed3
@@ -144,7 +144,7 @@ i.e. output - 2 days 10h 36min
 ```shell
 e_eta
 ```
-Run during `sudo pye emereg` or `sudo emerge` - print estimetet left time to end of compilation, based on `genlop`
+Run during `sudo pye emereg` or `sudo emerge` - print estimetet left time to the end of compilation, based on `genlop`
 
 ### e_log
 ```shell
@@ -162,7 +162,7 @@ Status of emerge/portage. Possible values: Compiling, Cleaning, Autoclean, Compl
 ```shell
 e_prog
 ```
-Run during `sudo pye emereg` or `sudo emerge` - print current progress of emerge as float
+Run during `sudo pye emereg` or `sudo emerge` - print current progress of `emerge` as float
 i.e. output - if emerge is buildeing (5 of 6) package it will return 83.3333
 You can use it in conky as: ${execibar 30 e_prog}
 
@@ -191,8 +191,7 @@ i.e. output for e_live all: cvechecker,openmw (2 of 3)
 ```shell
 glsa -e 5 list
 ```
-List last 5 of GLSA enrties
-output:
+List last 5 of GLSA entries
 ```shell
 202107-55: SDL 2: Multiple vulnerabilities
 202107-54: libyang: Multiple vulnerabilities
@@ -204,8 +203,7 @@ output:
 ```shell
 glsa -e 40 test
 ```
-Check system against last 40 of GLSA.
-output:
+Check system against the last 40 of GLSA.
 ```shell
 System is not affected by any of listed GLSAs
 ```
