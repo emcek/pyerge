@@ -16,6 +16,13 @@ IUSE="test"
 
 RDEPEND="
         dev-python/beautifulsoup4[${PYTHON_USEDEP}]
+        sys-apps/portage
+        app-portage/eix
+        app-portage/genlop
+        app-portage/smart-live-rebuild
+        app-admin/sudo
+        sys-apps/coreutils
+        net-misc/iputils
 "
 BDEPEND="
         ${RDEPEND}
