@@ -31,8 +31,8 @@ def check_upd(local_chk: bool) -> None:
 
     :param local_chk:
     """
-    utils.delete_content(TMPLOGFILE)
-    utils.delete_content(TMERGE_LOGFILE)
+    utils.truncate_file(file_path=TMPLOGFILE)
+    utils.truncate_file(file_path=TMERGE_LOGFILE)
     with open(file=TMPLOGFILE, mode='w', encoding='utf-8') as tmp, open(file=TMERGE_LOGFILE, mode='w', encoding='utf-8') as log:
         tmp.write(f"{strftime('%a %b %d %H:%M:%S %Z %Y')}\n")
         if not local_chk:

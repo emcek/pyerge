@@ -135,13 +135,13 @@ def convert2blocks(size: str) -> int:
         raise ValueError(f'Invalid size format: {size}') from err
 
 
-def delete_content(fname: str | bytes | int) -> None:
+def truncate_file(file_path: str) -> None:
     """
-    Clean up file content.
+    Truncate the file, deleting its content.
 
-    :param fname: Path to file as string
+    :param file_path: Path to the file as string
     """
-    with open(file=fname, mode='w', encoding='utf-8'):
+    with open(file=file_path, mode='w', encoding='utf-8'):
         pass
 
 

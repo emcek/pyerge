@@ -106,10 +106,10 @@ def test_is_internet_not_connected():
         assert utils.is_internet_connected() is False
 
 
-def test_delete_content():
+def test_truncate_file():
     from pyerge import utils
     with mock.patch('pyerge.utils.open') as open_mock:
-        utils.delete_content(fname='/tmp/emerge.log')
+        utils.truncate_file(file_path='/tmp/emerge.log')
         open_mock.assert_called_once_with(file='/tmp/emerge.log', mode='w', encoding='utf-8')
 
 
