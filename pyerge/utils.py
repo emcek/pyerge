@@ -132,7 +132,7 @@ def convert2blocks(size: str) -> int:
         return int(float(size))
     except ValueError as err:
         debug(f'Size: {size} Exception: {err}')
-        raise ValueError(f"Invalid size format: {size}") from err
+        raise ValueError(f'Invalid size format: {size}') from err
 
 
 def delete_content(fname: str | bytes | int) -> None:
