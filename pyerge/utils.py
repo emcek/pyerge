@@ -83,7 +83,7 @@ def is_internet_connected() -> bool:
     :return: True is connected, False otherwise
     """
     cmd, _ = run_cmd('ping -W1 -c1 89.16.167.134')
-    match = search(b'[1].*, [1].*, [0]%.*,', cmd)
+    match = search(b'1.*, 1.*, 0%.*,', cmd)
     if match is not None:
         info('There is internet connection or not needed')
         return True
