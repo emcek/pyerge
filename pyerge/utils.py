@@ -5,7 +5,7 @@ from logging import debug, info, warning
 from os import environ, system
 from re import search
 from shlex import split
-from subprocess import PIPE, Popen  # nosec
+from subprocess import PIPE, Popen
 
 from pyerge import PORTAGE_TMPDIR
 
@@ -26,10 +26,10 @@ def run_cmd(cmd: str, use_system=False) -> tuple[bytes, bytes]:
     :return: Tuple of bytes with output and error
     """
     if use_system:
-        ret_code = system(cmd)  # nosec
+        ret_code = system(cmd)
         out, err = str(ret_code).encode('utf-8'), b''
     else:
-        out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()  # nosec
+        out, err = Popen(split(cmd), stdout=PIPE, stderr=PIPE).communicate()
     return out, err
 
 
