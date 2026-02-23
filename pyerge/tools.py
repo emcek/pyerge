@@ -106,7 +106,7 @@ def e_prog() -> float:
     result = 100.0
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         emerge_log = ''.join(list(log_file)[::-1][:51])
-    regex = search(r'\(([0-9]*)\sof\s([0-9]*)\)', emerge_log)
+    regex = search(r'\((\d*)\sof\s(\d*)\)', emerge_log)
     if regex is not None:
         result = round(100.0 * int(regex.group(1)) / int(regex.group(2)), 4)
         print(result)

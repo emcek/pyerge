@@ -55,7 +55,7 @@ def unmount_device(opts: Namespace) -> None:
 
     :param opts: CLI arguments
     """
-    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
+    if opts.action != 'check' and (not opts.local or not opts.pretend_world):
         if opts.dev == 'tmpfs':
             info(f'Unmounting {opts.size} of memory from {PORTAGE_TMPDIR}')
         else:
@@ -142,7 +142,7 @@ def truncate_file(file_path: str) -> None:
     :param file_path: Path to the file as string
     """
     with open(file=file_path, mode='w', encoding='utf-8'):
-        pass
+        ...
 
 
 def set_portage_tmpdir() -> str:
@@ -158,7 +158,7 @@ def handling_mounting(opts: Namespace) -> None:
 
     :param opts: CLI arguments
     """
-    if not opts.action == 'check' and (not opts.local or not opts.pretend_world):
+    if opts.action != 'check' and (not opts.local or not opts.pretend_world):
         if not is_device_mounted(dev=opts.dev):
             mount_device(opts)
         elif opts.dev == 'tmpfs' and size_of_mounted_tmpfs() != convert2blocks(opts.size):

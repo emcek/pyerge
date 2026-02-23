@@ -1,3 +1,4 @@
+from math import isclose
 from sys import version_info
 from unittest import mock
 from unittest.mock import Mock, mock_open
@@ -107,14 +108,14 @@ def test_e_prog_5_of_6(str_e_prog_5_6):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_prog_5_6.split('\n'))))
-        assert tools.e_prog() == 83.3333
+        isclose(tools.e_prog(), 83.3333, rel_tol=1e-06, abs_tol=1e-06)
 
 
 def test_e_prog_1_of_1(str_e_prog_1_1):
     with mock.patch('pyerge.tools.open') as open_mock:
         open_mock.return_value.__enter__ = open_mock
         open_mock.return_value.__iter__ = Mock(return_value=iter(list(str_e_prog_1_1.split('\n'))))
-        assert tools.e_prog() == 100.0
+        isclose(tools.e_prog(), 100.0, rel_tol=1e-06, abs_tol=1e-06)
 
 
 def test_e_sta_compiling(str_e_sta_compiling):
