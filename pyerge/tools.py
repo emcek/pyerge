@@ -10,9 +10,9 @@ def e_sync() -> str:
     """Fetch a date of last sync from logs."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
-            reqex = search(r'(\d+)(:\s===\sSync completed)', line)
-            if reqex is not None:
-                sync_time = reqex.group(1)
+            regex = search(r'(\d+)(:\s===\sSync completed)', line)
+            if regex is not None:
+                sync_time = regex.group(1)
                 break
         else:
             return 'Unknown'
@@ -26,9 +26,9 @@ def e_dl() -> str:
     size = 'Calculating...'
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
-            reqex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
-            if reqex is not None:
-                size = reqex.group(2)
+            regex = search(r'(Size of downloads:.)([0-9,]*\s[KMG]iB)', line)
+            if regex is not None:
+                size = regex.group(2)
                 break
     print(size)
     return size
@@ -72,9 +72,9 @@ def e_eta() -> str:
     if search(r'Error.*no working merge found', out):
         eta = 'Unknown'
 
-    reqex = search(r'ETA:\s(.*)\.', out)
-    if reqex is not None:
-        eta = reqex.group(1)
+    regex = search(r'ETA:\s(.*)\.', out)
+    if regex is not None:
+        eta = regex.group(1)
     print(eta)
     return eta
 
@@ -128,7 +128,7 @@ def e_upd() -> str:
     conflict_list = regex_conflict.group(1).split(',') if regex_conflict else []
     if total_list:
         list_str = [element.strip() for element in [*total_list, *conflict_list]]
-        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}  # type: ignore
+        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}   # type: ignore[union-attr]
         result = ', '.join([f'{v} {map_dict[k]}' for k, v in upd_dict.items() if k in map_dict])
     print(result)
     return result
@@ -143,10 +143,9 @@ def e_raid(raid_id: str) -> str:
     """
     raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
-    out = out.decode('utf-8')  # type: ignore
-    reqex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out)  # type: ignore
-    if reqex is not None:
-        raid = reqex.group(1)  # type: ignore
+    regex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out.decode('utf-8'))
+    if regex is not None:
+        raid = regex.group(1)
     return raid
 
 
@@ -160,14 +159,13 @@ def run_e_raid():
 def e_live(action: str) -> str:
     """Get the number and names of live ebuilds to build."""
     out, err = run_cmd('smart-live-rebuild --no-color --jobs=6 --pretend --quiet --unprivileged-user')
-    out, err = out.decode('utf-8'), err.decode('utf-8')  # type: ignore
     live_no, live_tot = 0, 0
     live_names = 'None'
-    reqex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err)  # type: ignore
-    if reqex is not None:
-        live_no, live_tot = int(reqex.group(1)), int(reqex.group(2))
+    regex = search(r'\*{3}\sFound\s(\d+).*out\sof\s(\d+)', err.decode('utf-8'))
+    if regex is not None:
+        live_no, live_tot = int(regex.group(1)), int(regex.group(2))
     if live_no:
-        live_names = ','.join(findall(r'/(.*):0', out))  # type: ignore
+        live_names = ','.join(findall(r'/(.*):0', out.decode('utf-8')))
 
     if action == 'all':
         result = f'{live_names} ({live_no} of {live_tot})'
