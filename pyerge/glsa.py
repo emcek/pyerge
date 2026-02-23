@@ -40,7 +40,7 @@ def _rss(regex: str, elements: int) -> list[str]:
     :param elements: Number of elements to return
     :return: A list of strings
     """
-    with request.urlopen('https://security.gentoo.org/glsa/feed.rss1') as rss_page:  # nosec
+    with request.urlopen('https://security.gentoo.org/glsa/feed.rss1') as rss_page:
         rss_html = rss_page.read().decode('utf-8')
     all_versions = _collect_all_matching_entries(rss_html, regex)
     return all_versions[0:elements]
