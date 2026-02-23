@@ -1,6 +1,7 @@
 from sys import platform
 from unittest import mock
 
+import pytest
 from pytest import mark
 
 PORT_TMP_DIR = '/var/tmp/portage'
@@ -11,6 +12,13 @@ PORT_TMP_DIR = '/var/tmp/portage'
 def test_convert2blocks(size, result):
     from pyerge import utils
     assert utils.convert2blocks(size) == result
+
+
+@mark.parametrize('size', ['a', '', '1a', 'g2', '1,2'])
+def test_convert2blocks_raise_error(size):
+    from pyerge import utils
+    with pytest.raises(ValueError):
+        utils.convert2blocks(size=size)
 
 
 def test_tmpfs_not_mounted():

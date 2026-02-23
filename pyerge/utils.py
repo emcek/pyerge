@@ -9,6 +9,8 @@ from subprocess import PIPE, Popen  # nosec
 
 from pyerge import PORTAGE_TMPDIR
 
+UNIT_MULTIPLIERS = {'K': 1, 'M': 1024, 'G': 1024 * 1024}
+
 
 def run_cmd(cmd: str, use_system=False) -> tuple[bytes, bytes]:
     """
@@ -121,13 +123,16 @@ def convert2blocks(size: str) -> int:
     :param size: With units K, M, G
     :return: Size in kB
     """
+    match = search(r'(?i)(\d+)([KMG])', size)
+    if match:
+        num = match.group(1)
+        unit = match.group(2).upper()
+        return int(num) * UNIT_MULTIPLIERS[unit]
     try:
         return int(float(size))
     except ValueError as err:
         debug(f'Size: {size} Exception: {err}')
-    regex = search(r'(?i)(\d+)([KMG])', size)
-    map_dict = {'K': 1, 'M': 1024, 'G': 1024 * 1024}
-    return int(regex.group(1)) * map_dict[regex.group(2).upper()]  # type: ignore
+        raise ValueError(f"Invalid size format: {size}") from err
 
 
 def delete_content(fname: str | bytes | int) -> None:
