@@ -1,10 +1,18 @@
 from argparse import ArgumentParser
+from collections import deque
 from datetime import datetime
+from itertools import chain
 from re import findall, match, search, sub
 
 from pyerge import EMERGE_LOGFILE, TMERGE_LOGFILE, TMPLOGFILE
 from pyerge.utils import run_cmd
 
+UPDATES_MAPPING = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'in new slots': 'NS',
+                   'reinstalls': 'R', 'reinstall': 'R', 'uninstalls': 'Un', 'uninstall': 'Un',
+                   'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
+STAGE_MAPPING = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean',
+                 'completed emerge': 'Completed', 'Finished': 'Finished', 'Sync completed': 'Synced',
+                 'Starting rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging', 'unmerge': 'Unmerge'}
 
 def e_sync() -> str:
     """Fetch a date of last sync from logs."""
@@ -38,9 +46,9 @@ def e_curr() -> str:
     """Get a name of the current or last compiled package."""
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
-            reqex = search(r'Compiling.*\((.*)::', line)
-            if reqex is not None:
-                pack = reqex.group(1)
+            regex = search(r'Compiling.*\((.*)::', line)
+            if regex is not None:
+                pack = regex.group(1)
                 break
         else:
             pack = ''
@@ -52,9 +60,9 @@ def e_eut() -> str:
     """Get estimated update time."""
     with open(file=TMPLOGFILE, encoding='utf-8') as log_file:
         for line in list(log_file)[::-1]:
-            reqex = search(r'Estimated update time:\s+(.*)\.', line)
-            if reqex is not None:
-                eut = reqex.group(1).replace(',', '')
+            regex = search(r'Estimated update time:\s+(.*)\.', line)
+            if regex is not None:
+                eut = regex.group(1).replace(',', '')
                 eut = sub(' minutes| minute', 'min', eut)
                 eut = sub(' hours| hour', 'h', eut)
                 break
@@ -82,13 +90,13 @@ def e_eta() -> str:
 def e_sta() -> str:
     """Get a current stage of emerging package."""
     result = 'Unknown'
-    map_dict = {'Compiling': 'Compiling', 'Cleaning': 'Cleaning', 'AUTOCLEAN': 'Autoclean', 'completed emerge': 'Completed', 'Finished': 'Finished',
-                'Sync completed': 'Synced', 'Starting rsync': 'Syncing', 'Unmerging': 'Unmerging', 'Merging': 'Merging', 'unmerge': 'Unmerge'}
+    stage_pattern = r'(Compiling|Cleaning|AUTOCLEAN|completed\semerge|Finished|Starting\srsync|Sync\scompleted|Unmerging|Merging|unmerge)'
     with open(file=EMERGE_LOGFILE, encoding='utf-8') as log_file:
-        emerge_log = ''.join(list(log_file)[::-1][:16])
-    regex = search(r'(Compiling|Cleaning|AUTOCLEAN|completed\semerge|Finished|Starting\srsync|Sync\scompleted|Unmerging|Merging|unmerge)', emerge_log)
+        recent_lines = deque(log_file, maxlen=16)
+        emerge_log = ''.join(reversed(recent_lines))
+    regex = search(stage_pattern, emerge_log)
     if regex is not None:
-        result = map_dict[regex.group(1)]
+        result = STAGE_MAPPING[regex.group(1)]
     print(result)
     return result
 
@@ -114,22 +122,28 @@ def e_log() -> str:
 
 def e_upd() -> str:
     """Check the types and number of packages to update."""
-    result = 'Calculating...'
-    map_dict = {'upgrades': 'U', 'upgrade': 'U', 'new': 'N', 'in new slot': 'NS', 'in new slots': 'NS', 'reinstalls': 'R',
-                'reinstall': 'R', 'uninstalls': 'Un', 'uninstall': 'Un', 'downgrades': 'D', 'downgrade': 'D', 'blocks': 'B', 'block': 'B'}
     with open(file=TMERGE_LOGFILE, encoding='utf-8') as log_file:
         content = log_file.read()
-
     if search(r'Total: 0 packages, Size of downloads: 0 KiB', content):
-        result = 'None'
+        return 'None'
+
+    result = 'Calculating...'
     regex_total = search(r'Total:\s\d*\spackages?\s\((.*)\),.*', content)
-    regex_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
+    if not regex_total:
+        return result
     total_list = regex_total.group(1).split(',') if regex_total else []
-    conflict_list = regex_conflict.group(1).split(',') if regex_conflict else []
     if total_list:
-        list_str = [element.strip() for element in [*total_list, *conflict_list]]
-        upd_dict = {match(r'\d*\s([A-Za-z ]*)', element).group(1): match(r'(\d*)\s\w*', element).group(1) for element in list_str}   # type: ignore[union-attr]
-        result = ', '.join([f'{v} {map_dict[k]}' for k, v in upd_dict.items() if k in map_dict])
+        regex_conflict = search(r'Conflict:\s(\d*\sblocks?)', content)
+        conflict_list = regex_conflict.group(1).split(',') if regex_conflict else []
+        list_str = [element.strip() for element in chain(total_list, conflict_list)]
+        upd_dict = {}
+        for element in list_str:
+            key_match = match(r'\d*\s([A-Za-z ]*)', element)
+            value_match = match(r'(\d*)\s\w*', element)
+            if key_match and value_match:
+                upd_dict[key_match.group(1)] = value_match.group(1)
+
+        result = ', '.join([f'{v} {UPDATES_MAPPING[k]}' for k, v in upd_dict.items() if k in UPDATES_MAPPING])
     print(result)
     return result
 
@@ -143,7 +157,7 @@ def e_raid(raid_id: str) -> str:
     """
     raid = 'Unknown'
     out, _ = run_cmd('cat /proc/mdstat')
-    regex = search(rf'{raid_id}.*\n.*(\[[U_]*\])', out.decode('utf-8'))
+    regex = search(rf'{raid_id}.*\n.*(\[[U_]*])' , out.decode('utf-8'))
     if regex is not None:
         raid = regex.group(1)
     return raid
