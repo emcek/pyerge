@@ -1,0 +1,450 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/" version="2.0">
+    <channel>
+        <title>Gentoo Linux security advisories</title>
+        <link>https://security.gentoo.org/glsa</link>
+        <description>This feed contains new Gentoo Linux security advisories. Contact security@gentoo.org with
+            questions.
+        </description>
+        <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+        <item>
+            <title>GLSA 202601-05: Commons-BeanUtils: Arbitary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202601-05</link>
+            <description>A vulnerability has been discovered in Commons-BeanUtils, which can lead to execution of
+                arbitrary code.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202601-04: Asterisk: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202601-04</link>
+            <description>Multiple vulnerabilities have been discovered in Asterisk, the worst of which can lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202601-03: GIMP: Arbitrary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202601-03</link>
+            <description>A vulnerability has been discovered in GIMP, which can lead to execution of arbitrary code.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202601-02: Vim, gVim: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202601-02</link>
+            <description>Multiple vulnerabilities have been discovered in Vim and gVim, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202601-01: inetutils: Remote Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202601-01</link>
+            <description>A vulnerability has been discovered in the telnetd module of inetutils, which allows remote
+                code execution as root.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202512-01: GnuPG: Arbitrary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202512-01</link>
+            <description>A vulnerability has been discovered in GnuPG, which can lead to arbitrary code execution.
+            </description>
+            <pubDate>Sat, 27 Dec 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-12-27T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-07: librnp: Weak random number generation</title>
+            <link>https://security.gentoo.org/glsa/202511-07</link>
+            <description>librnp uses weak random number generation such that generated keys can be easily cracked.
+            </description>
+            <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-06: libpng: Multiple vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-06</link>
+            <description>Multiple vulnerabilities have been discovered in libpng, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Wed, 26 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-05: redict, redis: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-05</link>
+            <description>Multiple vulnerabilities have been discovered in redis and redict, the worst of which could
+                lead to execution of arbitrary code.
+            </description>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-24T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-04: Chromium, Google Chrome, Microsoft Edge. Opera: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-04</link>
+            <description>Multiple vulnerabilities have been discovered in Chromium and its derivatives, the worst of
+                which can lead to remote code execution.
+            </description>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-24T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-03: qtsvg: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-03</link>
+            <description>Multiple vulnerabilities have been discovered in qtsvg, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-24T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-02: WebKitGTK+: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-02</link>
+            <description>Multiple vulnerabilities have been discovered in WebKitGTK+, the worst of which can lead to
+                execution of arbitary code.
+            </description>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-24T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202511-01: UDisks: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202511-01</link>
+            <description>Multiple vulnerabilities have been discovered in UDisks, the worst of which can lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-11-24T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-08: GnuTLS: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202509-08</link>
+            <description>Multiple vulnerabilities have been discovered in GnuTLS, the worst of which could lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-07: libvpx: Use after free</title>
+            <link>https://security.gentoo.org/glsa/202509-07</link>
+            <description>A vulnerability has been discovered in libvpx, which could lead to execution of arbitrary
+                code.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-06: ProFTPd: SSH Terrapin vulnerability</title>
+            <link>https://security.gentoo.org/glsa/202509-06</link>
+            <description>A vulnerability has been discovered in ProFTPd, which can lead to loss of confidentiality.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-05: Plex Media Server: Incorrect resource transfer</title>
+            <link>https://security.gentoo.org/glsa/202509-05</link>
+            <description>A vulnerability has been discovered in Plex Media Server.</description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-04: glibc: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202509-04</link>
+            <description>Multiple vulnerabilities have been discovered in glibc, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-03: Django: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202509-03</link>
+            <description>Multiple vulnerabilities have been discovered in Django, the worst of which could lead to a
+                denial of service.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-02: Spidermonkey: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202509-02</link>
+            <description>Multiple vulnerabilities have been discovered in Spidermonkey, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202509-01: Poppler: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202509-01</link>
+            <description>Multiple vulnerabilities have been discovered in Poppler, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Wed, 17 Sep 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-09-17T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-06: Composer: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202508-06</link>
+            <description>Multiple vulnerabilities have been discovered in Composer, the worst of which can lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-05: Spreadsheet-ParseExcel: Arbitrary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202508-05</link>
+            <description>A vulnerability has been discovered in Spreadsheet-ParseExcel, which can lead to arbitrary code
+                execution.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-04: Mozilla Network Security Service (NSS): TLS RSA decryption timing attack</title>
+            <link>https://security.gentoo.org/glsa/202508-04</link>
+            <description>A vulnerability has been discovered in NSS, which can lead to the recovery of private data.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-03: FontForge: Arbitrary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202508-03</link>
+            <description>A vulnerability has been discovered in FontForge, which can lead to arbitrary code execution.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-02: GPL Ghostscript: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202508-02</link>
+            <description>Multiple vulnerabilities have been discovered in GPL Ghostscript, the worst of which can lead
+                to execution of arbitrary code.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202508-01: PAM: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202508-01</link>
+            <description>Multiple vulnerabilities have been discovered in PAM, the worst of which could lead to
+                privilege escalation.
+            </description>
+            <pubDate>Wed, 06 Aug 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-08-06T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-10: Roundcube: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-10</link>
+            <description>Multiple vulnerabilities have been discovered in Roundcube, the worst of which could lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Tue, 22 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-22T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-09: Git: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-09</link>
+            <description>Multiple vulnerabilities have been discovered in Git, the worst of which could lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-08: REXML: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-08</link>
+            <description>Multiple vulnerabilities have been discovered in REXML, the worst of which can lead to a denial
+                of service.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-07: Chromium, Google Chrome, Microsoft Edge. Opera: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-07</link>
+            <description>Multiple vulnerabilities have been discovered in Chromium and its derivatives, the worst of
+                which can lead to remote code execution.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-06: openh264: Heap Overflow</title>
+            <link>https://security.gentoo.org/glsa/202507-06</link>
+            <description>A heap overflow has been discovered in openh264, which can lead to arbitrary code execution.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-05: NTP: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-05</link>
+            <description>Multiple vulnerabilities have been discovered in NTP, the worst of which could lead to the
+                execution of arbitrary code.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-04: strongSwan: Buffer Overflow</title>
+            <link>https://security.gentoo.org/glsa/202507-04</link>
+            <description>A buffer overflow has been discovered in strongSwan, which can lead to remote code execution.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-03: ClamAV: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202507-03</link>
+            <description>Multiple vulnerabilities have been discovered in ClamAV, the worst of which could lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Tue, 08 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-08T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-02: UDisks, libblockdev: Privilege escalation</title>
+            <link>https://security.gentoo.org/glsa/202507-02</link>
+            <description>Multiple vulnerabilities have been discovered in UDisks, libblockdev, the worst of which could
+                result in privilege escalation.
+            </description>
+            <pubDate>Tue, 01 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-01T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202507-01: sudo: Privilege escalation</title>
+            <link>https://security.gentoo.org/glsa/202507-01</link>
+            <description>Multiple vulnerabilities have been discovered in sudo, the worst of which could result in
+                privilege escalation.
+            </description>
+            <pubDate>Tue, 01 Jul 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-07-01T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-13: Konsole: Code execution</title>
+            <link>https://security.gentoo.org/glsa/202506-13</link>
+            <description>An input sanitization flaw in Konsole might allow remote attackers to execute commands via a
+                malicious URL
+            </description>
+            <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-15T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-12: sysstat: Arbitrary Code Execution</title>
+            <link>https://security.gentoo.org/glsa/202506-12</link>
+            <description>An integer overflow vulnerability has been found in sysstat which could result in arbitrary
+                code execution.
+            </description>
+            <pubDate>Sun, 15 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-15T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-11: YAML-LibYAML: Shell injection</title>
+            <link>https://security.gentoo.org/glsa/202506-11</link>
+            <description>A vulnerability has been discovered in YAML-LibYAML, which can lead to shell injection.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-10: File-Find-Rule: Shell Injection</title>
+            <link>https://security.gentoo.org/glsa/202506-10</link>
+            <description>A vulnerability has been discovered in File-Find-Rule, which can lead to shell injection.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-09: OpenImageIO: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-09</link>
+            <description>Multiple vulnerabilities have been discovered in OpenImageIO, the worst of which can lead to
+                execution of arbitrary code.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-08: Node.js: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-08</link>
+            <description>Multiple vulnerabilities have been discovered in Node.js, the worst of which can lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-07: Python, PyPy: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-07</link>
+            <description>Multiple vulberabilities have been discovered in Python and PyPy, the worst of which can lead
+                to privilege escalation.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-06: Qt: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-06</link>
+            <description>Multiple vulnerabilities have been discovered in Qt, the worst of which can lead to arbitrary
+                code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-05: GTK+ 3: Search path vulnerability</title>
+            <link>https://security.gentoo.org/glsa/202506-05</link>
+            <description>A vulnerability has been discovered in Gtk+, which can lead to arbitrary code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-04: X.Org X server, XWayland: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-04</link>
+            <description>A vulnerability has been discovered in the Xorg Server and XWayland, the worst of which can
+                result in privilege escalation.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-03: LibreOffice: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-03</link>
+            <description>Multiple vulnerabilities have been found in LibreOffice, the worst of which could result in
+                user-assisted code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-02: GStreamer, GStreamer Plugins: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-02</link>
+            <description>Multiple vulnerabilities have been discovered in GStreamer and GStreamer Plugins, the worst of
+                which could lead to code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <title>GLSA 202506-01: Emacs: Multiple Vulnerabilities</title>
+            <link>https://security.gentoo.org/glsa/202506-01</link>
+            <description>Multiple vulnerabilities have been discovered in Emacs, the worst of which could lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
+            <dc:date>2025-06-12T00:00:00+00:00</dc:date>
+        </item>
+        <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+    </channel>
+</rss>
