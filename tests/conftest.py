@@ -2,8 +2,7 @@ from pathlib import Path
 
 from pytest import fixture
 
-ASSETS = Path(__file__) / '..' / 'assets'
-
+ASSETS = Path(__file__).resolve().parent / "assets"
 
 @fixture
 def str_no_sync():
