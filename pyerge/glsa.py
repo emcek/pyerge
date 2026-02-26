@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 
 from pyerge import utils
 
-
 GLSA_LIST_REGEX = r'GLSA\s(\d{6}-\d{2}:\s.*)'
 GLSA_TEST_REGEX = r'GLSA\s(\d{6}-\d{2}):\s.*'
 

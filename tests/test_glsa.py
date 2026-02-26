@@ -2,7 +2,7 @@ from unittest import mock
 
 from pytest import mark
 
-from pyerge.glsa import GLSA_TEST_REGEX, GLSA_LIST_REGEX
+from pyerge.glsa import GLSA_LIST_REGEX, GLSA_TEST_REGEX
 
 date1 = '201904-23'
 date2 = '201904-22'
