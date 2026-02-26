@@ -1,7 +1,6 @@
 from argparse import ArgumentParser
 from re import match
-from sys import modules
-from urllib import error, request
+from urllib import request
 
 from bs4 import BeautifulSoup
 
@@ -73,7 +72,8 @@ def run_glsa() -> None:
     parser.add_argument('action', help='list or test')
     parser.add_argument('-e', '--elements', action='store', dest='elements', type=int, default='5', help='number of elements')
     args = parser.parse_args()
-    try:
-        print(getattr(modules['pyerge.glsa'], f'glsa_{args.action}')(args.elements))
-    except (AttributeError, KeyError, error.HTTPError) as err:
-        print(f'{err}')
+
+    if args.action == 'list':
+        print(glsa_list(args.elements))
+    elif args.action == 'test':
+        print(glsa_test(args.elements))
