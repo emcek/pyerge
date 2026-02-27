@@ -18,9 +18,11 @@ RUN mkdir -p /var/db/repos/emc/app-portage/pyerge
 COPY assets/*.ebuild /var/db/repos/emc/app-portage/pyerge
 COPY assets/metadata.xml /var/db/repos/emc/app-portage/pyerge
 RUN chown -R portage:portage /var/db/repos/emc
+RUN chmod -x /var/db/repos/emc/app-portage/pyerge/*
 RUN cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf
 WORKDIR /var/db/repos/emc/app-portage/pyerge
-RUN dos2unix *.ebuild
-RUN sed -i 's/    /\t/g' *.ebuild
+RUN dos2unix ./pyerge-*.ebuild
+RUN sed -i 's/    /\t/g' ./pyerge-*.ebuild
+COPY dist/*.tar.gz /var/cache/distfiles/
 RUN pkgdev manifest
 RUN pkgcheck scan
