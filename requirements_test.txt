@@ -1,9 +1,9 @@
 -r requirements.txt
 interrogate
-lxml
 mypy
 pre-commit
 pytest-cov
 pytest-randomly
 ruff
 types-setuptools
+ty>=0.0.19
