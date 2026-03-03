@@ -1,9 +1,0 @@
--r requirements.txt
-interrogate
-mypy
-pre-commit
-pytest-cov
-pytest-randomly
-ruff
-ty>=0.0.19
-types-setuptools
