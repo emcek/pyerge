@@ -109,7 +109,7 @@ ignore-setters = false
 fail-under = 90
 verbose = 1
 quiet = false
-exclude = ['tests/test_*']
+exclude = ['tests/*']
 
 [tool.pytest.ini_options]
 addopts = ['-q']
