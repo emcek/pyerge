@@ -1,3 +1,13 @@
+## 0.8.0
+* Refactor tools be more effective
+* Supported Python version are: 3.10 - 3.14
+* Internal:
+  * add Dockerfile to test `pyerge` and tools in real environment
+  * move to `src` layout and to `pyproject.toml`
+  * update unit test to be more real life
+  * Update CI process
+  * Add `dependabot`
+
 ## 0.7.2
 * run regular emerge command via pye
 
