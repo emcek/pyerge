@@ -12,7 +12,11 @@ RUN emerge -qv1 sys-apps/portage
 RUN emerge -qv app-eselect/eselect-repository \
     dev-util/pkgdev \
     app-editors/vim \
-    app-text/dos2unix
+    app-text/dos2unix \
+    app-portage/eix \
+    app-portage/genlop \
+    app-portage/smart-live-rebuild \
+    app-admin/sudo
 RUN eselect repository create emc
 RUN mkdir -p /var/db/repos/emc/app-portage/pyerge
 COPY assets/*.ebuild /var/db/repos/emc/app-portage/pyerge
@@ -24,7 +28,7 @@ WORKDIR /var/db/repos/emc/app-portage/pyerge
 RUN dos2unix ./pyerge-*.ebuild
 RUN sed -i 's/    /\t/g' ./pyerge-*.ebuild
 COPY dist/*.tar.gz /var/cache/distfiles/
-RUN echo '' >> pyerge-0.7.2.ebuild && echo '' >> pyerge-0.7.3.ebuild && echo '' >> pyerge-0.8.0.ebuild
+RUN echo '' >> pyerge-0.7.2.ebuild && echo '' >> pyerge-0.8.0.ebuild
 COPY dist/*.tar.gz /var/cache/distfiles/
 RUN chown -R portage:portage /var/cache/distfiles/pyerge*
 RUN pkgdev manifest
