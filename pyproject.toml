@@ -1,6 +1,99 @@
 [build-system]
-requires = ["setuptools>=42.0.0", "wheel"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+
+[project]
+name = 'pyerge'
+authors = [{ name = 'Michal Plichta' }]
+maintainers = [{ name = 'Michal Plichta' }]
+description = 'It is Python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it'
+license = 'MIT'
+license-files = ['LICENSE.md', 'src/dcspy/resources/license.txt']
+requires-python = '>=3.10, <3.15'
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Environment :: Console',
+    'Environment :: X11 Applications',
+    'Operating System :: POSIX',
+    'Operating System :: Unix',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
+    'Topic :: Desktop Environment',
+    'Topic :: Software Development',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: System :: Monitoring',
+    'Topic :: Utilities',
+]
+keywords = [
+    'gentoo', 'portage', 'emerge', 'conky', 'linux',
+]
+dynamic = ['version', 'readme']
+dependencies = [
+    'beautifulsoup4==4.14.3',
+    'lxml==6.0.2',
+]
+
+[project.urls]
+Homepage = 'https://github.com/emcek/pyerge'
+Documentation = 'https://github.com/emcek/pyerge/blob/master/README.md'
+Source = 'https://github.com/emcek/pyerge.git'
+Changelog = 'https://github.com/emcek/pyerge/blob/master/CHANGELOG.md'
+
+[project.scripts]
+dcspy_cli = 'dcspy.run:run'
+pye = 'pyerge.cli:run_parser'
+e_sync = 'pyerge.tools:e_sync'
+e_dl = 'pyerge.tools:e_dl'
+e_curr = 'pyerge.tools:e_curr'
+e_eut = 'pyerge.tools:e_eut'
+e_eta = 'pyerge.tools:e_eta'
+e_log = 'pyerge.tools:e_log'
+e_sta = 'pyerge.tools:e_sta'
+e_prog = 'pyerge.tools:e_prog'
+e_upd = 'pyerge.tools:e_upd'
+e_raid = 'pyerge.tools:run_e_raid'
+e_live = 'pyerge.tools:run_e_live'
+glsa = 'pyerge.glsa:run_glsa'
+
+
+[[tool.uv.index]]
+url = "https://pypi.org/simple"
+
+[project.optional-dependencies]
+test = [
+    'interrogate==1.7.0',
+    'isort==8.0.1',
+    'mypy==1.19.1',
+    'pip-audit==2.10.0',
+    'pytest==9.0.2',
+    'pytest-codspeed==4.3.0',
+    'pytest-cov==7.0.0',
+    'pytest-randomly==4.0.1',
+    'ruff==0.15.4',
+]
+
+[tool.setuptools.dynamic]
+version = { attr = 'pyerge.__version__' }
+readme = { file = 'README.md', content-type = 'text/markdown' }
+
+[tool.setuptools.packages.find]
+where = ['src/']
+include = ['pyerge*']
+exclude = ['pyerge.tests*']
+
+
+[dependency-groups]
+dev = [
+    'pyerge[test]',
+    'detect-test-pollution',
+    'pre-commit',
+    "ty>=0.0.19",
+]
+
 
 [tool.interrogate]
 ignore-init-method = false
@@ -16,17 +109,18 @@ ignore-setters = false
 fail-under = 90
 verbose = 1
 quiet = false
-exclude = ['setup.py', 'tests/*']
+exclude = ['tests/test_*']
 
 [tool.pytest.ini_options]
 addopts = ['-q']
+pythonpath = ['src']
 testpaths = ['tests']
 
 
 [tool.ruff]
 line-length = 160
 lint.select = ['E', 'F', 'C90', 'D', 'RUF']
-lint.ignore = ['D100', 'D101','D104', 'D105', 'D203', 'D204', 'D212', 'RUF001', 'RUF010']
+lint.ignore = ['D100', 'D101', 'D104', 'D105', 'D203', 'D204', 'D212', 'RUF001', 'RUF010']
 extend-exclude = [
     'tests/',
 ]
