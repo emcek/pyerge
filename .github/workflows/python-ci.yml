@@ -24,7 +24,7 @@ jobs:
           interrogate -c pyproject.toml -vv
       - name: "Check Ruff"
         run: |
-          ruff check pyerge
+          ruff check src
       - name: "Check mypy"
         run: |
           mypy .
@@ -33,7 +33,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
     steps:
       - uses: actions/checkout@v6
       - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
