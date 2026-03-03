@@ -3,6 +3,8 @@ name: Coverage
 on:
   workflow_call:
     secrets:
+      COVERALLS_REPO_TOKEN:
+        required: true
       CODACY_PROJECT_TOKEN:
         required: true
 
