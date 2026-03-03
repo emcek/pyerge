@@ -65,7 +65,7 @@ Two new commands:
 * `e_prog` - Get current progress of emerging packages
 
 ## 0.4.1
-* Fix `e_upd` command for **in new slots** 
+* Fix `e_upd` command for **in new slots**
 
 ## 0.4.0
 All tools generated script using entry_points:
@@ -87,7 +87,7 @@ All tools generated script using entry_points:
 * do not mount tmp file system when action is check
 * add tools for:
   * Get name of the current/last compiled package (e_curr)
-  * Get estimated update time (e_eut) 
+  * Get estimated update time (e_eut)
   * Get estimated time of compilation of current package (e_eta)
 
 ## 0.3.5
