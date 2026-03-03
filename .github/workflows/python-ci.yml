@@ -65,7 +65,7 @@ jobs:
           pip install -Ur requirements_test.txt
       - name: "Check mypy"
         run: |
-          mypy pyerge  # || echo $(($? - 1))
+          mypy .
       - name: "Test with pytest"
         run: |
           python -m pytest -v --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term-missing
