@@ -7,24 +7,25 @@ on:
     tags: ['v*']
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-2025
     steps:
-    - uses: actions/checkout@v6
-    - name: Set up Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.14'
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -U setuptools wheel twine
-        pip install -Ur requirements.txt
-        python setup.py sdist bdist_wheel
-    - name: Publish a Python distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_TOKEN }}
-        skip_existing: true
-        verbose: true
+      - name: "Checkout"
+        uses: actions/checkout@v6
+
+      - name: "Set up Python environment"
+        uses: ./.github/actions/setup-python
+
+      - name: "Build dcspy wheel package"
+        shell: bash
+        run: |
+          uv build
+          python -m twine check dist/*
+
+      - name: "Deploy to PyPI"
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
+          skip_existing: true
+          verbose: true

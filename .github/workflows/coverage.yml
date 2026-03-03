@@ -1,0 +1,41 @@
+name: Coverage
+
+on:
+  workflow_call:
+    secrets:
+      CODACY_PROJECT_TOKEN:
+        required: true
+
+jobs:
+  coverage:
+    name: ubuntu-latest py3.14
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+
+      - name: "Set up Python environment"
+        uses: ./.github/actions/setup-python
+
+      - name: "Test with pytest"
+        run: |
+          python -m pytest -v -m 'not e2e' -m 'not qt6' --img_precision 0 --disable-warnings --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term-missing
+
+      - name: "Upload pytest results"
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: coverage_3_14
+          path: |
+            covhtml/*
+            coverage.xml
+          retention-days: 4
+
+      - name: "Run Coveralls coverage"
+        uses: coverallsapp/github-action@v2
+
+      - name: "Run Codacy coverage"
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml

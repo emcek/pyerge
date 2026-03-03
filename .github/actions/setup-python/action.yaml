@@ -1,0 +1,20 @@
+name: Python environment set-up
+description: Sets up the dcspy Python environment.
+runs:
+  using: composite
+  steps:
+      - name: "Install uv and set the Python"
+        uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.14"
+          enable-cache: true
+          activate-environment: true
+
+      - name: "Install the project and test dependencies"
+        shell: bash
+        run: uv sync
+
+      - name: "Install twine"
+        shell: bash
+        run: |
+          uv pip install twine

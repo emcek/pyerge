@@ -1,88 +1,25 @@
 name: Python CI
 
-on: [push]
+on:
+  push:
+    branches: [ "*" ]
+    tags-ignore: [ "v*" ]
 
 jobs:
   style:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.14']
-    steps:
-      - uses: actions/checkout@v6
-      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: "Install dependencies"
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install -Ur requirements_test.txt
-      - name: "Check interrogate"
-        run: |
-          interrogate -c pyproject.toml -vv
-      - name: "Check Ruff"
-        run: |
-          ruff check src
-      - name: "Check mypy"
-        run: |
-          mypy .
+    uses: ./.github/workflows/style.yml
+
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
-    steps:
-      - uses: actions/checkout@v6
-      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: "Install dependencies"
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install -Ur requirements_test.txt
-      - name: "Test with pytest"
-        run: |
-          python -m pytest
+    needs: [ style ]
+    uses: ./.github/workflows/test.yml
+
+  license:
+    needs: [ style ]
+    uses: ./.github/workflows/license.yml
+
   coverage:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ['3.14']
-    steps:
-      - uses: actions/checkout@v6
-      - name: "Set up Python ${{ matrix.os }} ${{ matrix.python-version }}"
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: "Install dependencies"
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install -Ur requirements_test.txt
-      - name: "Check mypy"
-        run: |
-          mypy .
-      - name: "Test with pytest"
-        run: |
-          python -m pytest -v --cov=pyerge --cov-report=xml --cov-report=html --cov-report=term-missing
-      - name: "Upload pytest results"
-        uses: actions/upload-artifact@v7
-        if: always()
-        with:
-          name: test_mypy-${{ matrix.os }}-py${{ matrix.python-version }}
-          path: |
-            htmlcov/*
-            mypyhtml/*
-            coverage.xml
-          retention-days: 4
-      - name: "Run Codacy coverage"
-        uses: codacy/codacy-coverage-reporter-action@v1.3.0
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
-      - name: "Run Coveralls coverage"
-        uses: coverallsapp/github-action@v2
+    needs: [ style ]
+    uses: ./.github/workflows/coverage.yml
+    secrets:
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
