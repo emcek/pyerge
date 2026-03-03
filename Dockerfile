@@ -1,7 +1,7 @@
-FROM gentoo/portage:20260227 AS portage
+FROM gentoo/portage:20260302 AS portage
 LABEL authors="mplic"
 
-FROM gentoo/stage3:nomultilib-20260223
+FROM gentoo/stage3:nomultilib-20260302
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
@@ -24,5 +24,8 @@ WORKDIR /var/db/repos/emc/app-portage/pyerge
 RUN dos2unix ./pyerge-*.ebuild
 RUN sed -i 's/    /\t/g' ./pyerge-*.ebuild
 COPY dist/*.tar.gz /var/cache/distfiles/
+RUN echo '' >> pyerge-0.7.2.ebuild && echo '' >> pyerge-0.7.3.ebuild && echo '' >> pyerge-0.8.0.ebuild
+COPY dist/*.tar.gz /var/cache/distfiles/
+RUN chown -R portage:portage /var/cache/distfiles/pyerge*
 RUN pkgdev manifest
 RUN pkgcheck scan
