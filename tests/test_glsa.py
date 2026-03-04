@@ -50,18 +50,21 @@ all_vuls = ['202601-05: Commons-BeanUtils: Arbitary Code Execution', '202601-04:
             '202506-01: Emacs: Multiple Vulnerabilities']
 
 
-def test_glsa_list():
+def test_glsa_list(original_html_xml):
     from pyerge.glsa import glsa_list
-    with mock.patch('pyerge.glsa._rss') as rss_mock:
-        rss_mock.return_value = [vulnerabilities, escalation]
-        assert glsa_list(elements=2) == f'{vulnerabilities}\n{escalation}'
+    with mock.patch('urllib.request.urlopen') as urlopen_mock:
+        mock_response = urlopen_mock.return_value.__enter__.return_value
+        mock_response.read.return_value = original_html_xml.encode('utf-8')
+
+        assert glsa_list(elements=2) == '202601-05: Commons-BeanUtils: Arbitary Code Execution\n202601-04: Asterisk: Multiple Vulnerabilities'
 
 
-def test_glsa_test_system_not_affected():
+def test_glsa_test_system_not_affected(original_html_xml):
     from pyerge.glsa import glsa_test
     with mock.patch('pyerge.glsa.utils') as utils_mock:
-        with mock.patch('pyerge.glsa._rss') as rss_mock:
-            rss_mock.return_value = [date1, date2]
+        with mock.patch('urllib.request.urlopen') as urlopen_mock:
+            mock_response = urlopen_mock.return_value.__enter__.return_value
+            mock_response.read.return_value = original_html_xml.encode('utf-8')
             utils_mock.run_cmd.return_value = b'', b'This system is not affected by any of the listed GLSAs\n'
             assert glsa_test(elements=2) == 'System is not affected by any of listed GLSAs'
 
@@ -73,15 +76,6 @@ def test_glsa_test_system_affected():
             rss_mock.return_value = [date1, date2, date3]
             utils_mock.run_cmd.return_value = b'201904-13\n201904-14\n', b'This system is affected by the following GLSAs:\n'
             assert glsa_test(elements=2) == f'{date3},{date4}'
-
-
-def test_rss(original_html_xml):
-    from pyerge.glsa import _rss
-
-    with mock.patch('urllib.request.urlopen') as urlopen_mock:
-        mock_response = urlopen_mock.return_value.__enter__.return_value
-        mock_response.read.return_value = original_html_xml.encode('utf-8')
-        assert _rss(GLSA_TEST_REGEX, 4) == ['202601-05', '202601-04', '202601-03', '202601-02']
 
 
 @mark.parametrize('regex, result', [(GLSA_TEST_REGEX, all_dates),
