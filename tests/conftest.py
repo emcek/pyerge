@@ -90,6 +90,13 @@ def original_html_xml():
     return xml
 
 
+@fixture
+def no_title_text_xml():
+    with open(ASSETS / 'no_title_text.xml', 'rb') as xml_file:
+        xml = xml_file.read().decode('utf-8')
+    return xml
+
+
 @fixture()
 def opt_emerge_nonlocal_with_tmpfs_1g():
     from argparse import Namespace

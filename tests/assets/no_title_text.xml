@@ -1,0 +1,30 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+     xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/" version="2.0">
+    <channel>
+        <title>Gentoo Linux security advisories</title>
+        <link>https://security.gentoo.org/glsa</link>
+        <description>This feed contains new Gentoo Linux security advisories. Contact security@gentoo.org with
+            questions.
+        </description>
+        <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+        <item>
+            <title></title>
+            <link>https://security.gentoo.org/glsa/202601-05</link>
+            <description>A vulnerability has been discovered in Commons-BeanUtils, which can lead to execution of
+                arbitrary code.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <item>
+            <link>https://security.gentoo.org/glsa/202601-04</link>
+            <description>Multiple vulnerabilities have been discovered in Asterisk, the worst of which can lead to
+                arbitrary code execution.
+            </description>
+            <pubDate>Mon, 26 Jan 2026 00:00:00 +0000</pubDate>
+            <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+        </item>
+        <dc:date>2026-01-26T00:00:00+00:00</dc:date>
+    </channel>
+</rss>
