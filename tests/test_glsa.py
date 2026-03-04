@@ -2,7 +2,7 @@ from unittest import mock
 
 from pytest import mark
 
-from pyerge.glsa import GLSA_LIST_REGEX, GLSA_TEST_REGEX
+from pyerge import glsa
 
 all_dates = ['202601-05', '202601-04', '202601-03', '202601-02', '202601-01', '202512-01', '202511-07', '202511-06',
              '202511-05', '202511-04', '202511-03', '202511-02', '202511-01', '202509-08', '202509-07', '202509-06',
@@ -44,33 +44,28 @@ all_vuls = ['202601-05: Commons-BeanUtils: Arbitary Code Execution', '202601-04:
 
 
 def test_glsa_list(original_html_xml):
-    from pyerge.glsa import glsa_list
     with mock.patch('urllib.request.urlopen') as urlopen_mock:
         mock_response = urlopen_mock.return_value.__enter__.return_value
         mock_response.read.return_value = original_html_xml.encode('utf-8')
 
-        assert glsa_list(
+        assert glsa.glsa_list(
             elements=2) == '202601-05: Commons-BeanUtils: Arbitary Code Execution\n202601-04: Asterisk: Multiple Vulnerabilities'
 
 
 def test_glsa_list_zero_elements():
-    from pyerge.glsa import glsa_list
-
-    assert glsa_list(elements=0) == ''
+    assert glsa.glsa_list(elements=0) == ''
 
 
 def test_glsa_test_system_not_affected(original_html_xml):
-    from pyerge.glsa import glsa_test
     with mock.patch('pyerge.glsa.utils') as utils_mock:
         with mock.patch('urllib.request.urlopen') as urlopen_mock:
             mock_response = urlopen_mock.return_value.__enter__.return_value
             mock_response.read.return_value = original_html_xml.encode('utf-8')
             utils_mock.run_cmd.return_value = b'', b'This system is not affected by any of the listed GLSAs\n'
-            assert glsa_test(elements=2) == 'System is not affected by any of listed GLSAs'
+            assert glsa.glsa_test(elements=2) == 'System is not affected by any of listed GLSAs'
 
 
 def test_glsa_test_system_affected(original_html_xml):
-    from pyerge.glsa import glsa_test
     date1 = '202507-02'
     date2 = '202511-01'
     dates = bytes(f'{date1}\n{date2}\n', encoding='ascii')
@@ -80,17 +75,15 @@ def test_glsa_test_system_affected(original_html_xml):
             mock_response = urlopen_mock.return_value.__enter__.return_value
             mock_response.read.return_value = original_html_xml.encode('utf-8')
             utils_mock.run_cmd.return_value = dates, b'This system is affected by the following GLSAs:\n'
-            assert glsa_test(elements=2) == f'{date1},{date2}'
+            assert glsa.glsa_test(elements=2) == f'{date1},{date2}'
 
 
 def test_glsa_test_zero_elements():
-    from pyerge.glsa import glsa_test
-
-    assert glsa_test(elements=0) == ''
+    assert glsa.glsa_test(elements=0) == ''
 
 
-@mark.parametrize('regex, result', [(GLSA_TEST_REGEX, all_dates),
-                                    (GLSA_LIST_REGEX, all_vuls)])
+@mark.parametrize('regex, result', [(glsa.GLSA_TEST_REGEX, all_dates),
+                                    (glsa.GLSA_LIST_REGEX, all_vuls)])
 def test_collect_all_matching_entries(regex, result, original_html_xml):
     from pyerge.glsa import _collect_all_matching_entries
 
@@ -100,4 +93,14 @@ def test_collect_all_matching_entries(regex, result, original_html_xml):
 def test_collect_all_matching_entries_empty(no_title_text_xml):
     from pyerge.glsa import _collect_all_matching_entries
 
-    assert list(_collect_all_matching_entries(no_title_text_xml, GLSA_LIST_REGEX)) == []
+    assert list(_collect_all_matching_entries(no_title_text_xml, glsa.GLSA_LIST_REGEX)) == []
+
+
+@mark.parametrize('action, elements', [('list', 2), ('test', 3)])
+def test_run_glsa_with_correct_actions(action, elements):
+    from argparse import ArgumentParser, Namespace
+    with mock.patch.object(ArgumentParser, 'parse_args') as argument_parser_mock, mock.patch(f'pyerge.glsa.glsa_{action}') as glsa_mock:
+        opts = Namespace(action=action, elements=elements)
+        argument_parser_mock.return_value = opts
+        glsa.run_glsa()
+        glsa_mock.assert_called_once_with(opts.elements)
