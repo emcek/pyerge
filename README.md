@@ -131,20 +131,28 @@ Print date of last emerge syc `eix-sync`
 e_dl
 ```
 Run after `pye check` print size of downloads of @world
-i.e. output - 3,239,589 KiB
+
+i.e. output:
+```shell
+3,239,589 KiB
+```
 
 ### e_curr
 ```shell
 e_curr
 ```
-Run during `sudo pye emereg` or `sudo emerge` - print current building (lastly builded) package
+Run during `sudo pye emereg` or `sudo emerge` - print current building (lastly built) package
 
 ### e_eut
 ```shell
 e_eut
 ```
 Run after `pye check` - print estimated update time from `genlop -pn`
-i.e. output - 2 days 10h 36min
+
+i.e. output:
+```shell
+2 days 10h 36min
+```
 
 ### e_eta
 ```shell
@@ -169,7 +177,7 @@ Status of emerge/portage. Possible values: Compiling, Cleaning, Autoclean, Compl
 e_prog
 ```
 Run during `sudo pye emerge` or `sudo emerge` - print current progress of `emerge` as float
-i.e. output - if emerge is buildeing (5 of 6) package it will return 83.3333
+i.e. output - if emerge is building (5 of 6) package it will return `83.3333`
 You can use it in conky as: ${execibar 30 e_prog}
 
 ### e_upd
@@ -177,21 +185,39 @@ You can use it in conky as: ${execibar 30 e_prog}
 e_upd
 ```
 Run after `pye check` - print types of next @world update. Possible values: U, N, NS, R, Un, D, B
-i.e. output - 19 U, 2 R, 1 Un, 2 D - it means 19 upgrades, 2 reinstals, 1 uninstall, 2 downgrades
+
+i.e. output:
+```shell
+19 U, 2 R, 1 Un, 2 D
+```
+it means 19 upgrades, 2 reinstals, 1 uninstall, 2 downgrades
 
 ### e_raid
 ```shell
 e_raid <raid dev>
 ```
 Print RAID status form /proc/mdstat
-i.e. output for e_raid md126L: [UUU]
+
+```shell
+e_raid md126: 
+```
+i.e. output: 
+```shell
+[UUU]
+```
 
 ### e_live
 ```shell
 e_live <action>
 ```
 Print names and number of live ebuild to rebuild
-i.e. output for e_live all: cvechecker,openmw (2 of 3)
+```shell
+e_live all
+```
+i.e. output:
+```shell
+cvechecker,openmw (2 of 3)
+```
 
 ### glsa
 ```shell
