@@ -3,7 +3,6 @@ from sys import version_info
 from unittest import mock
 from unittest.mock import Mock, mock_open
 
-import pytest
 from pytest import mark
 
 from pyerge import tools
@@ -244,7 +243,6 @@ def test_run_e_raid_with_correct_action():
     with mock.patch.object(ArgumentParser, 'parse_args') as argument_parser_mock, mock.patch('pyerge.tools.e_raid') as e_raid_mock:
         opts = Namespace(name='md127')
         argument_parser_mock.return_value = opts
-        from pyerge import tools
         tools.run_e_raid()
         e_raid_mock.assert_called_once_with(opts.name)
 
@@ -268,6 +266,5 @@ def test_run_e_live_with_correct_action():
     with mock.patch.object(ArgumentParser, 'parse_args') as argument_parser_mock, mock.patch('pyerge.tools.e_live') as e_live_mock:
         opts = Namespace(action='all')
         argument_parser_mock.return_value = opts
-        from pyerge import tools
         tools.run_e_live()
         e_live_mock.assert_called_once_with(opts.action)
