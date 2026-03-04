@@ -199,9 +199,9 @@ e_raid <raid dev>
 Print RAID status form /proc/mdstat
 
 ```shell
-e_raid md126: 
+e_raid md126:
 ```
-i.e. output: 
+i.e. output:
 ```shell
 [UUU]
 ```
