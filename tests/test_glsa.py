@@ -4,13 +4,6 @@ from pytest import mark
 
 from pyerge.glsa import GLSA_LIST_REGEX, GLSA_TEST_REGEX
 
-date1 = '201904-23'
-date2 = '201904-22'
-date3 = '201904-13'
-date4 = '201904-14'
-vulnerabilities = f'{date1}: GLib: Multiple vulnerabilities'
-escalation = f'{date2}: OpenDKIM: Root privilege escalation'
-
 all_dates = ['202601-05', '202601-04', '202601-03', '202601-02', '202601-01', '202512-01', '202511-07', '202511-06',
              '202511-05', '202511-04', '202511-03', '202511-02', '202511-01', '202509-08', '202509-07', '202509-06',
              '202509-05', '202509-04', '202509-03', '202509-02', '202509-01', '202508-06', '202508-05', '202508-04',
@@ -69,13 +62,18 @@ def test_glsa_test_system_not_affected(original_html_xml):
             assert glsa_test(elements=2) == 'System is not affected by any of listed GLSAs'
 
 
-def test_glsa_test_system_affected():
+def test_glsa_test_system_affected(original_html_xml):
     from pyerge.glsa import glsa_test
+    date1 = '202507-02'
+    date2 = '202511-01'
+    dates = bytes(f'{date1}\n{date2}\n', encoding='ascii')
+
     with mock.patch('pyerge.glsa.utils') as utils_mock:
-        with mock.patch('pyerge.glsa._rss') as rss_mock:
-            rss_mock.return_value = [date1, date2, date3]
-            utils_mock.run_cmd.return_value = b'201904-13\n201904-14\n', b'This system is affected by the following GLSAs:\n'
-            assert glsa_test(elements=2) == f'{date3},{date4}'
+        with mock.patch('urllib.request.urlopen') as urlopen_mock:
+            mock_response = urlopen_mock.return_value.__enter__.return_value
+            mock_response.read.return_value = original_html_xml.encode('utf-8')
+            utils_mock.run_cmd.return_value = dates, b'This system is affected by the following GLSAs:\n'
+            assert glsa_test(elements=2) == f'{date1},{date2}'
 
 
 @mark.parametrize('regex, result', [(GLSA_TEST_REGEX, all_dates),
@@ -83,4 +81,4 @@ def test_glsa_test_system_affected():
 def test_collect_all_matching_entries(regex, result, original_html_xml):
     from pyerge.glsa import _collect_all_matching_entries
 
-    assert _collect_all_matching_entries(original_html_xml, regex) == result
+    assert list(_collect_all_matching_entries(original_html_xml, regex)) == result
