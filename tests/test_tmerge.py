@@ -124,6 +124,16 @@ def test_run_emerge():
         assert result == (ret_code, b'')
 
 
+def test_run_emerge_not_online():
+    from argparse import Namespace
+
+    from pyerge import tmerge
+
+    emerge_opts = ['-qv', 'app-portage/pyerge']
+    opts = Namespace(action='emerge', online=False)
+    assert tmerge.run_emerge(emerge_opts=emerge_opts, opts=opts) == (b'', b'')
+
+
 def test_run_check():
     from argparse import Namespace
     with patch('pyerge.tmerge.check_upd') as check_upd_mock:
@@ -144,3 +154,13 @@ def test_run_live_check(action, cmd):
         opts = Namespace(action=action, live=True, online=True)
         tmerge.run_live(opts)
         utils_mock.run_cmd.assert_called_once_with(cmd, use_system=True)
+
+
+@mark.parametrize('action', [('check', 'emerge')])
+def test_run_live_check_not_online_and_not_live(action):
+    from argparse import Namespace
+
+    from pyerge import tmerge
+
+    opts = Namespace(action=action, live=False, online=False)
+    assert tmerge.run_live(opts=opts) == (b'', b'')
