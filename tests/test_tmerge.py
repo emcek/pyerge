@@ -1,5 +1,5 @@
 from argparse import Namespace
-from unittest.mock import patch
+from unittest.mock import patch, call
 
 from pytest import mark
 
@@ -136,3 +136,14 @@ def test_run_live_check(action, cmd):
 def test_run_live_check_not_online_and_not_live(action):
     opts = Namespace(action=action, live=False, online=False)
     assert tmerge.run_live(opts=opts) == (b'', b'')
+
+
+@mark.parametrize('build, args, results', [(True, ['--pretend', '--update', '@world'], ( b'0', b'')),
+                                           (False, ['--newuse', '--deep', '@world'], (b'\nThese are the packages', b''))])
+def test_emerge(build, args, results):
+    with patch('pyerge.tmerge.utils') as utils_mock:
+        utils_mock.run_cmd.return_value = results
+        cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(args)}"
+        results = tmerge.emerge(arguments=args, build=build)
+        utils_mock.assert_has_calls([call.run_cmd(cmd=cmd, use_system=build)])
+        assert results == results
