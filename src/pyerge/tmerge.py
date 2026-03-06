@@ -17,10 +17,10 @@ def emerge(arguments: list[str], build=True) -> tuple[bytes, bytes]:
     info(f"running emerge with: {' '.join(arguments)}")
     cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(arguments)}"
     if build:
-        return_code, stderr = utils.run_cmd(cmd, use_system=True)
+        return_code, stderr = utils.run_cmd(cmd=cmd, use_system=True)
         debug(f'RC: {return_code.decode("utf-8")}, stderr: {stderr.decode("utf-8")}')
         return return_code, stderr
-    output, stderr = utils.run_cmd(cmd)
+    output, stderr = utils.run_cmd(cmd=cmd, use_system=False)
     return output, stderr
 
 
@@ -116,7 +116,8 @@ def check_emerge_opts(args: list[str]) -> tuple[bool, bool]:
     :param args:
     :return:
     """
-    return bool('pretend' in ' '.join(args)), bool('world' in ' '.join(args))
+    str_args = ' '.join(args)
+    return bool('pretend' in str_args), bool('world' in str_args)
 
 
 def is_portage_running() -> bool:
@@ -125,7 +126,7 @@ def is_portage_running() -> bool:
 
     :return: True if it is running, False otherwise
     """
-    out, _ = utils.run_cmd('pgrep -f /usr/bin/emerge')
+    out, _ = utils.run_cmd(cmd='pgrep -f /usr/bin/emerge', use_system=False)
     return bool(out)
 
 
