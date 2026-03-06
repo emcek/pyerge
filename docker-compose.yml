@@ -1,0 +1,13 @@
+services:
+  python_314:
+    build:
+#      args:
+#        - PIP_INDEX_URL=${PIP_INDEX_URL}
+      context: .
+      dockerfile: Dockerfile
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    volumes:
+      - ./distfiles:/var/cache/distfiles
