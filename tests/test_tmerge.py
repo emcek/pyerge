@@ -74,14 +74,14 @@ def test_is_portage_running():
     with patch('pyerge.tmerge.utils') as utils_mock:
         utils_mock.run_cmd.return_value = (b'3456\n', b'')
         assert tmerge.is_portage_running() is True
-        utils_mock.run_cmd.assert_called_once_with('pgrep -f /usr/bin/emerge')
+        utils_mock.run_cmd.assert_called_once_with(cmd='pgrep -f /usr/bin/emerge', use_system=False)
 
 
 def test_is_portage_not_running():
     with patch('pyerge.tmerge.utils') as utils_mock:
         utils_mock.run_cmd.return_value = (b'', b'')
         assert tmerge.is_portage_running() is False
-        utils_mock.run_cmd.assert_called_once_with('pgrep -f /usr/bin/emerge')
+        utils_mock.run_cmd.assert_called_once_with(cmd='pgrep -f /usr/bin/emerge', use_system=False)
 
 
 def test_run_emerge_world():
