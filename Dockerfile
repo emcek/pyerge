@@ -1,16 +1,16 @@
-FROM gentoo/portage:20260305 AS portage
+FROM gentoo/portage:20260310 AS portage
 LABEL authors="mplic"
 
-FROM gentoo/stage3:nomultilib-20260302
+FROM gentoo/stage3:nomultilib-20260309
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 COPY assets/make.conf /etc/portage/make.conf
 
 #RUN emerge --sync
-#RUN emerge -qv1 sys-apps/portage
 VOLUME /var/cache/distfiles
 COPY distfiles/* /var/cache/distfiles/
+RUN emerge -qv1 sys-apps/portage
 RUN emerge -qv app-eselect/eselect-repository \
     dev-util/pkgdev \
     app-editors/vim \
