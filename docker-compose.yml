@@ -1,5 +1,5 @@
 services:
-  python_314:
+  py314:
     build:
 #      args:
 #        - PIP_INDEX_URL=${PIP_INDEX_URL}
