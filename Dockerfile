@@ -1,4 +1,4 @@
-FROM gentoo/portage:20260310 AS portage
+FROM gentoo/portage:20260312 AS portage
 LABEL authors="mplic"
 
 FROM gentoo/stage3:nomultilib-20260309
@@ -20,7 +20,7 @@ RUN emerge -qv app-eselect/eselect-repository \
     app-portage/smart-live-rebuild \
     app-admin/sudo \
     dev-python/uv
-RUN eselect repository create emc
+RUN sudo eselect editor set vim && eselect repository create emc
 RUN mkdir -p /var/db/repos/emc/app-portage/pyerge
 COPY assets/*.ebuild /var/db/repos/emc/app-portage/pyerge/
 COPY assets/metadata.xml /var/db/repos/emc/app-portage/pyerge/
