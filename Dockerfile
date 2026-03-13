@@ -27,7 +27,7 @@ COPY assets/metadata.xml /var/db/repos/emc/app-portage/pyerge/
 RUN chown -R portage:portage /var/db/repos/emc && chmod -x /var/db/repos/emc/app-portage/pyerge/*
 RUN cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf
 WORKDIR /var/db/repos/emc/app-portage/pyerge
-RUN dos2unix ./pyerge-*.ebuild && sed -i 's/    /\t/g' ./pyerge-*.ebuild
+RUN dos2unix ./pyerge-*.ebuild && sed -i 's/ \{4\}/\t/g' ./pyerge-*.ebuild
 RUN echo '' >> pyerge-0.7.2.ebuild && echo '' >> pyerge-0.8.0.ebuild
 RUN pkgdev manifest && pkgcheck scan
 RUN groupadd --gid 10001 emcgroup \
