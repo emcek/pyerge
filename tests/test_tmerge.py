@@ -144,6 +144,6 @@ def test_emerge(build, args, results):
     with patch('pyerge.tmerge.utils') as utils_mock:
         utils_mock.run_cmd.return_value = results
         cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(args)}"
-        results = tmerge.emerge(arguments=args, build=build)
+        output, stderr = tmerge.emerge(arguments=args, build=build)
         utils_mock.assert_has_calls([call.run_cmd(cmd=cmd, use_system=build)])
-        assert results == results
+        assert results == output, stderr
