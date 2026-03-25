@@ -146,4 +146,4 @@ def test_emerge(build, args, results):
         cmd = f"sudo /usr/bin/emerge --nospinner {' '.join(args)}"
         output, stderr = tmerge.emerge(arguments=args, build=build)
         utils_mock.assert_has_calls([call.run_cmd(cmd=cmd, use_system=build)])
-        assert results == output, stderr
+        assert results == (output, stderr)
