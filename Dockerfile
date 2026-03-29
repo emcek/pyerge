@@ -1,4 +1,4 @@
-FROM gentoo/portage:20260325 AS portage
+FROM gentoo/portage:20260329 AS portage
 LABEL authors="mplic"
 
 FROM gentoo/stage3:nomultilib-20260323
