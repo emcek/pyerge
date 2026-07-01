@@ -34,7 +34,7 @@ keywords = [
 dynamic = ['version', 'readme']
 dependencies = [
     'beautifulsoup4==4.15.0',
-    'lxml==6.1.0',
+    'lxml==6.1.1',
 ]
 
 [project.urls]
@@ -67,13 +67,13 @@ url = "https://pypi.org/simple"
 test = [
     'interrogate==1.7.0',
     'isort==8.0.1',
-    'mypy==1.20.2',
+    'mypy==2.1.0',
     'pip-audit==2.10.0',
     'pytest==9.0.3',
-    'pytest-codspeed==4.5.0',
+    'pytest-codspeed==5.0.3',
     'pytest-cov==7.1.0',
     'pytest-randomly==4.1.0',
-    'ruff==0.15.12',
+    'ruff==0.15.20',
 ]
 
 [tool.setuptools.dynamic]
