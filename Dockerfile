@@ -5,7 +5,7 @@ FROM gentoo/stage3:nomultilib-20260706
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
-COPY assets/make.conf /etc/portage/make.conf
+COPY assets/portage/ /etc/portage/
 
 VOLUME /var/cache/distfiles
 COPY distfiles/* /var/cache/distfiles/
