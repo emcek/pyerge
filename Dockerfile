@@ -1,15 +1,15 @@
 FROM gentoo/portage:20260719 AS portage
 LABEL authors="mplic"
 
-FROM gentoo/stage3:nomultilib-20260713
+FROM gentoo/stage3:nomultilib
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
 COPY assets/portage/ /etc/portage/
 
 VOLUME /var/cache/distfiles
-COPY distfiles/* /var/cache/distfiles/
-RUN emerge -qv app-eselect/eselect-repository \
+COPY distfiles/pyerge-* /var/cache/distfiles/
+RUN emerge --sync && emerge -qv app-eselect/eselect-repository \
     dev-util/pkgdev \
     app-editors/vim \
     app-text/dos2unix \
@@ -28,6 +28,7 @@ WORKDIR /var/db/repos/emc/app-portage/pyerge
 RUN dos2unix ./pyerge-*.ebuild && sed -i 's/ \{4\}/\t/g' ./pyerge-*.ebuild
 RUN echo '' >> pyerge-0.7.2.ebuild && echo '' >> pyerge-0.8.0.ebuild
 RUN pkgdev manifest && pkgcheck scan && eix-update
+RUN emerge -qvNDu @world && emerge --depclean
 RUN groupadd --gid 10001 emcgroup \
  && useradd  --uid 10000 \
              --gid emcgroup \
