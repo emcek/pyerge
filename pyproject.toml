@@ -66,7 +66,7 @@ url = "https://pypi.org/simple"
 [project.optional-dependencies]
 test = [
     'interrogate==1.7.0',
-    'isort==8.0.1',
+    'isort==9.0.1',
     'mypy==2.3.0',
     'pip-audit==2.10.1',
     'pytest==9.1.1',
