@@ -67,7 +67,7 @@ url = "https://pypi.org/simple"
 test = [
     'interrogate==1.7.0',
     'isort==9.0.1',
-    'mypy==2.3.0',
+    'mypy==2.3.1',
     'pip-audit==2.10.1',
     'pytest==9.1.1',
     'pytest-codspeed==5.0.3',
