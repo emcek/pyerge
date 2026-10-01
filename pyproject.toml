@@ -34,7 +34,7 @@ keywords = [
 dynamic = ['version', 'readme']
 dependencies = [
     'beautifulsoup4==4.15.0',
-    'lxml==6.1.2',
+    'lxml==6.1.3',
 ]
 
 [project.urls]
