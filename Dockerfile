@@ -1,7 +1,7 @@
-FROM gentoo/portage:20260719 AS portage
+FROM gentoo/portage:20261012 AS portage
 LABEL authors="mplic"
 
-FROM gentoo/stage3:nomultilib
+FROM gentoo/stage3:nomultilib-20261012
 
 COPY --from=portage /var/db/repos/gentoo /var/db/repos/gentoo
 
