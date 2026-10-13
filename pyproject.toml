@@ -9,7 +9,7 @@ authors = [{ name = 'Michal Plichta' }]
 maintainers = [{ name = 'Michal Plichta' }]
 description = 'It is Python wrapper tool for emerge (Gentoo package manager - Portage). It can mount RAM disk of defined size and compile packages inside it'
 license = 'MIT'
-license-files = ['LICENSE.md', 'src/dcspy/resources/license.txt']
+license-files = ['LICENSE.md']
 requires-python = '>=3.10, <3.15'
 classifiers = [
     'Development Status :: 5 - Production/Stable',
@@ -44,7 +44,6 @@ Source = 'https://github.com/emcek/pyerge.git'
 Changelog = 'https://github.com/emcek/pyerge/blob/master/CHANGELOG.md'
 
 [project.scripts]
-dcspy_cli = 'dcspy.run:run'
 pye = 'pyerge.cli:run_parser'
 e_sync = 'pyerge.tools:e_sync'
 e_dl = 'pyerge.tools:e_dl'
