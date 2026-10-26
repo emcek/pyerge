@@ -1,6 +1,6 @@
 ## 0.8.0
 * Refactor tools be more effective
-* Supported Python version are: 3.10 - 3.14
+* Supported Python version are: 3.11 - 3.15
 * Internal:
   * add Dockerfile to test `pyerge` and tools in real environment
   * move to `src` layout and to `pyproject.toml`
