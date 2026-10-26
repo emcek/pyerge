@@ -72,7 +72,7 @@ test = [
     'pytest-codspeed==5.0.3',
     'pytest-cov==7.1.0',
     'pytest-randomly==5.0.0',
-    'ruff==0.17.0',
+    'ruff==0.17.2',
 ]
 
 [tool.setuptools.dynamic]
