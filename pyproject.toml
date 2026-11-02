@@ -66,13 +66,13 @@ url = "https://pypi.org/simple"
 test = [
     'interrogate==1.7.0',
     'isort==9.0.2',
-    'mypy==2.4.0',
+    'mypy==2.4.1',
     'pip-audit==2.10.1',
-    'pytest==9.1.1',
-    'pytest-codspeed==5.0.3',
+    'pytest==9.2.0',
+    'pytest-codspeed==5.0.4',
     'pytest-cov==7.1.0',
     'pytest-randomly==5.0.0',
-    'ruff==0.17.2',
+    'ruff==0.17.3',
 ]
 
 [tool.setuptools.dynamic]
@@ -90,7 +90,7 @@ dev = [
     'pyerge[test]',
     'detect-test-pollution',
     'pre-commit',
-    "ty>=0.0.29",
+    "ty>=0.0.95",
 ]
 
 
